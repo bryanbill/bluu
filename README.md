@@ -1,9 +1,6 @@
 <h1> bluu</h1>
 
-
-
 [![GitHub issues](https://img.shields.io/github/issues/CocoGinger/bluu?style=for-the-badge)](https://github.com/CocoGinger/bluu/issues)
-
 [![GitHub license](https://img.shields.io/github/license/CocoGinger/bluu?style=for-the-badge)](https://github.com/CocoGinger/bluu/blob/master/LICENSE)
 
 
