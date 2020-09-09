@@ -1,0 +1,159 @@
+name: chatapp
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  #for ios
+  cupertino_icons: ^0.1.3
+  #fonts
+  font_awesome_flutter: ^8.8.1
+  #for google sign in
+  google_sign_in: ^4.4.6
+
+  #for firebase auth
+  firebase_auth: ^0.16.0
+
+  #for firebase cloud storage
+  cloud_firestore: ^0.13.5
+
+  #for firebase messaging
+  firebase_messaging: ^6.0.15
+
+  #for firebase storage
+  firebase_storage: ^3.1.5
+
+  #firebase analytics
+  firebase_analytics: ^5.0.15 
+
+  #firebase dynamics links
+  firebase_dynamic_links: ^0.5.1
+
+  #firebase remote configs
+  firebase_remote_config: ^0.3.1
+  
+  #for emoji picker
+  emoji_picker: ^0.1.0
+
+  #for image
+  image: ^2.1.13
+
+  #for image picker
+  image_picker: ^0.6.7+7
+
+  #for provider
+  provider: ^4.1.2
+
+  #for cached network image
+  cached_network_image: ^2.2.0+1
+
+  #for agora rtc engine
+  agora_rtc_engine: ^1.0.12
+
+  #for permissions
+  permission_handler: ^3.0.0
+
+  #for keeping screen on
+  wakelock: ^0.1.4+1
+
+
+  # local storage
+  hive: ^1.4.1+1
+  sqflite: ^1.3.0
+  shared_preferences: ^0.5.10
+
+  # intl
+  intl: ^0.16.1
+
+  # http request
+  http: ^0.12.1
+  dio: ^3.0.10
+
+  # async package to add additional Cancellable operations
+  async: ^2.4.1
+
+  #Register classes and methods
+  get_it: ^4.0.2
+
+  #Viewmodels
+  stacked: ^1.6.0
+  stacked_services: ^0.4.3
+
+  #handling external url
+  url_launcher: ^5.1.0
+
+  #google maps
+  google_maps_flutter: ^0.5.19+2
+
+  #internet connectivity
+  connectivity: ^0.4.3+7
+
+  #get the storage path
+  storage_path: ^0.2.0
+  
+  #screens
+  introduction_screen: ^1.0.7
+  settings_ui: ^0.4.0
+
+  #players
+  audioplayers: ^0.16.0
+  video_player: ^0.10.12+2
+
+  #custom views
+  flutter_sparkline: ^0.1.0
+  flutter_staggered_grid_view: ^0.3.2
+  transformer_page_view: ^0.1.6
+
+  #productivity
+  flushbar: ^1.9.1
+  quiver: ^2.0.5
+  flutter_blurhash: ^0.5.0
+
+  #clock helper
+  flutter_clock_helper:
+    git:
+      url: git://github.com/flutter/flutter_clock.git
+      path: flutter_clock_helper
+  #web view for flutter 
+  webview_flutter: ^0.3.22+1
+  
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/images/
+    - assets/svgs/
+    - assets/icons/
+    - assets/palettes.json
+    
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
