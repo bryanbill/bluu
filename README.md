@@ -2,7 +2,11 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8ee9da023d7d45b7a488166be52b53e3)](https://app.codacy.com/manual/CocoGinger/bluu?utm_source=github.com&utm_medium=referral&utm_content=CocoGinger/bluu&utm_campaign=Badge_Grade_Settings)
 [![GitHub issues](https://img.shields.io/github/issues/CocoGinger/bluu?style=flat)](https://github.com/CocoGinger/bluu/issues)
+[![GitHub forks](https://img.shields.io/github/forks/CocoGinger/bluu)](https://github.com/CocoGinger/bluu/network)
+[![GitHub stars](https://img.shields.io/github/stars/CocoGinger/bluu)](https://github.com/CocoGinger/bluu/stargazers)
+[![Twitter](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Fgithub.com%2FCocoGinger%2Fbluu)](https://twitter.com/intent/tweet?text=Flutter%Fully%Functional%Messenger&url=https%3A%2F%2Fgithub.com%2FCocoGinger%2Fbluu)
 [![GitHub license](https://img.shields.io/github/license/CocoGinger/bluu?style=flat)](https://github.com/CocoGinger/bluu/blob/master/LICENSE)
+
 
 
 ## Description
