@@ -1,5 +1,6 @@
 <h1> ChatApp</h1>
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8ee9da023d7d45b7a488166be52b53e3)](https://app.codacy.com/manual/CocoGinger/bluu?utm_source=github.com&utm_medium=referral&utm_content=CocoGinger/bluu&utm_campaign=Badge_Grade_Dashboard)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9775560f9d9245e4be101679d2b04fc6)](https://app.codacy.com/manual/takiuddin93/ChatApp?utm_source=github.com&utm_medium=referral&utm_content=takiuddin93/ChatApp&utm_campaign=Badge_Grade_Dashboard)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/takiuddin93/ChatApp/commits/master)
 [![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://takiuddin.com)
