@@ -1,7 +1,7 @@
-import 'package:chatapp/pages/contact_search_screen.dart';
-import 'package:chatapp/pages/group_search_screen.dart';
+import 'package:bluu/pages/contact_search_screen.dart';
+import 'package:bluu/pages/group_search_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:chatapp/utils/universal_variables.dart';
+import 'package:bluu/utils/universal_variables.dart';
 
 class ContactQuietBox extends StatelessWidget {
   @override

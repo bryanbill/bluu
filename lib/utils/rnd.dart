@@ -1,8 +1,7 @@
 import 'dart:math';
 
-import 'package:chatapp/components/palette.dart';
+import 'package:bluu/components/palette.dart';
 import 'package:flutter/painting.dart';
-
 
 class Rnd {
   static int _seed = DateTime.now().millisecondsSinceEpoch;

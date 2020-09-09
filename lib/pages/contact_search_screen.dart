@@ -1,13 +1,13 @@
-import 'package:chatapp/provider/user_provider.dart';
-import 'package:chatapp/resources/contact_methods.dart';
-import 'package:chatapp/services/authentication_service.dart';
-import 'package:chatapp/services/firestore_service.dart';
-import 'package:chatapp/utils/locator.dart';
-import 'package:chatapp/widgets/mainappbar_style.dart';
+import 'package:bluu/provider/user_provider.dart';
+import 'package:bluu/resources/contact_methods.dart';
+import 'package:bluu/services/authentication_service.dart';
+import 'package:bluu/services/firestore_service.dart';
+import 'package:bluu/utils/locator.dart';
+import 'package:bluu/widgets/mainappbar_style.dart';
 import 'package:flutter/material.dart';
-import 'package:chatapp/models/user.dart';
-import 'package:chatapp/utils/universal_variables.dart';
-import 'package:chatapp/widgets/custom_tile.dart';
+import 'package:bluu/models/user.dart';
+import 'package:bluu/utils/universal_variables.dart';
+import 'package:bluu/widgets/custom_tile.dart';
 import 'package:provider/provider.dart';
 
 import 'callscreens/pickup/pickup_layout.dart';
@@ -21,8 +21,7 @@ class ContactSearchScreen extends StatefulWidget {
 class _ContactSearchScreenState extends State<ContactSearchScreen> {
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
-final FirestoreService _firestoreService =
-      locator<FirestoreService>();
+  final FirestoreService _firestoreService = locator<FirestoreService>();
   final ContactMethods _contactMethods = ContactMethods();
 
   List<User> userList;
@@ -33,14 +32,15 @@ final FirestoreService _firestoreService =
   void initState() {
     super.initState();
 
-     var user = _authenticationService.currentUser;
+    var user = _authenticationService.currentUser;
     _firestoreService.fetchAllUsers(user).then((List<User> list) {
       setState(() {
         userList = list;
       });
-    }); 
+    });
   }
-searchBar(context) {
+
+  searchBar(context) {
     return AppBar(
       backgroundColor: Theme.of(context).canvasColor,
       title: TextField(
@@ -108,7 +108,6 @@ searchBar(context) {
             child: Text(
               searchedUser.name,
               style: TextStyle(
-          
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -117,7 +116,6 @@ searchBar(context) {
             padding: EdgeInsets.only(left: 8, top: 0, right: 0, bottom: 0),
             child: Text(
               searchedUser.username,
-            
             ),
           ),
           leading: CircleAvatar(
@@ -126,12 +124,11 @@ searchBar(context) {
           ),
           trailing: Container(
               decoration: BoxDecoration(
-                  
                   borderRadius: BorderRadius.all(Radius.circular(4))),
               // color: UniversalVariables.blueColor,
               //TODO: ADDCONNTACTTODB
               child: FlatButton(
-                color: Theme.of(context).accentColor,
+                  color: Theme.of(context).accentColor,
                   onPressed: () => _contactMethods.addContactToDb(
                       userProvider.getUser, searchedUser),
                   child: Text(
@@ -141,7 +138,6 @@ searchBar(context) {
                     ),
                   ))),
         );
-
       }),
     );
   }

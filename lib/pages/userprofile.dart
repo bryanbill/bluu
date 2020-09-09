@@ -1,10 +1,10 @@
 import 'dart:math';
 
-import 'package:chatapp/models/user.dart';
-import 'package:chatapp/pages/settings_page.dart';
-import 'package:chatapp/services/authentication_service.dart';
-import 'package:chatapp/services/firestore_service.dart';
-import 'package:chatapp/utils/locator.dart';
+import 'package:bluu/models/user.dart';
+import 'package:bluu/pages/settings_page.dart';
+import 'package:bluu/services/authentication_service.dart';
+import 'package:bluu/services/firestore_service.dart';
+import 'package:bluu/utils/locator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +24,7 @@ class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
     return PickupLayout(
-      scaffold: Scaffold(
+        scaffold: Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).canvasColor,
       ),
@@ -60,7 +60,7 @@ class _UserProfileState extends State<UserProfile> {
                     ),
                     SizedBox(height: 3),
                     Text(
-                     user.status ?? "..",
+                      user.status ?? "..",
                       style: TextStyle(),
                     ),
                     SizedBox(height: 20),
@@ -85,9 +85,7 @@ class _UserProfileState extends State<UserProfile> {
                             color: Colors.white,
                           ),
                           color: Theme.of(context).accentColor,
-                          onPressed: () {
-                           
-                          },
+                          onPressed: () {},
                         ),
                       ],
                     ),

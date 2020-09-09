@@ -1,16 +1,15 @@
-import 'package:chatapp/services/firestore_service.dart';
-import 'package:chatapp/utils/locator.dart';
-import 'package:chatapp/utils/universal_variables.dart';
+import 'package:bluu/services/firestore_service.dart';
+import 'package:bluu/utils/locator.dart';
+import 'package:bluu/utils/universal_variables.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:chatapp/enum/user_state.dart';
-import 'package:chatapp/models/user.dart';
-import 'package:chatapp/utils/utilities.dart';
+import 'package:bluu/enum/user_state.dart';
+import 'package:bluu/models/user.dart';
+import 'package:bluu/utils/utilities.dart';
 
 class OnlineDotIndicator extends StatelessWidget {
   final String uid;
-  final FirestoreService _firestoreService =
-      locator<FirestoreService>();
+  final FirestoreService _firestoreService = locator<FirestoreService>();
   OnlineDotIndicator({
     @required this.uid,
   });
@@ -33,7 +32,7 @@ class OnlineDotIndicator extends StatelessWidget {
     return Align(
       alignment: Alignment.topRight,
       child: StreamBuilder<DocumentSnapshot>(
-        stream:_firestoreService.getUserStream(
+        stream: _firestoreService.getUserStream(
           uid: uid,
         ),
         builder: (context, snapshot) {

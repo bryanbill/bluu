@@ -1,10 +1,10 @@
 import 'dart:math';
-import 'package:chatapp/pages/callscreens/videocall_screen.dart';
-import 'package:chatapp/pages/callscreens/voicecall_screen.dart';
+import 'package:bluu/pages/callscreens/videocall_screen.dart';
+import 'package:bluu/pages/callscreens/voicecall_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:chatapp/models/call.dart';
-import 'package:chatapp/models/user.dart';
-import 'package:chatapp/resources/call_methods.dart';
+import 'package:bluu/models/call.dart';
+import 'package:bluu/models/user.dart';
+import 'package:bluu/resources/call_methods.dart';
 
 class CallUtils {
   static final CallMethods callMethods = CallMethods();

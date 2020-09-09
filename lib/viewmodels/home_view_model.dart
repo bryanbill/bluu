@@ -1,11 +1,11 @@
-import 'package:chatapp/constants/route_names.dart';
-import 'package:chatapp/utils/locator.dart';
-import 'package:chatapp/models/post.dart';
-import 'package:chatapp/services/cloud_storage_service.dart';
-import 'package:chatapp/services/dialog_service.dart';
-import 'package:chatapp/services/firestore_service.dart';
-import 'package:chatapp/services/navigation_service.dart';
-import 'package:chatapp/viewmodels/base_model.dart';
+import 'package:bluu/constants/route_names.dart';
+import 'package:bluu/utils/locator.dart';
+import 'package:bluu/models/post.dart';
+import 'package:bluu/services/cloud_storage_service.dart';
+import 'package:bluu/services/dialog_service.dart';
+import 'package:bluu/services/firestore_service.dart';
+import 'package:bluu/services/navigation_service.dart';
+import 'package:bluu/viewmodels/base_model.dart';
 
 class HomeViewModel extends BaseModel {
   final NavigationService _navigationService = locator<NavigationService>();

@@ -1,6 +1,6 @@
-import 'package:chatapp/components/audio_component.dart';
-import 'package:chatapp/components/image_component.dart';
-import 'package:chatapp/components/video_component.dart';
+import 'package:bluu/components/audio_component.dart';
+import 'package:bluu/components/image_component.dart';
+import 'package:bluu/components/video_component.dart';
 import 'package:flutter/material.dart';
 
 class Picker extends StatefulWidget {

@@ -1,9 +1,9 @@
-import 'package:chatapp/pages/user_profile.dart';
+import 'package:bluu/pages/user_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:chatapp/provider/user_provider.dart';
-import 'package:chatapp/utils/universal_variables.dart';
-import 'package:chatapp/utils/utilities.dart';
+import 'package:bluu/provider/user_provider.dart';
+import 'package:bluu/utils/universal_variables.dart';
+import 'package:bluu/utils/utilities.dart';
 
 class UserCircle extends StatelessWidget {
   final GestureTapCallback onTap;

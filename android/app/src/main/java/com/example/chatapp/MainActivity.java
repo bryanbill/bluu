@@ -1,4 +1,4 @@
-package com.example.chatapp;
+package com.space.bluu;
 
 import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.plugin.common.MethodChannel;
@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
 
-import com.example.chatapp.services.MyFirebaseMessagingService;
+import com.space.bluu.services.MyFirebaseMessagingService;
 
 import java.util.Objects;
 

@@ -1,14 +1,14 @@
-import 'package:chatapp/pages/callscreens/pickup/pickup_layout.dart';
-import 'package:chatapp/pages/pageviews/contact_lists/widgets/contact_list_view.dart';
-import 'package:chatapp/pages/pageviews/contact_lists/widgets/new_chat_button.dart';
-import 'package:chatapp/resources/contact_methods.dart';
+import 'package:bluu/pages/callscreens/pickup/pickup_layout.dart';
+import 'package:bluu/pages/pageviews/contact_lists/widgets/contact_list_view.dart';
+import 'package:bluu/pages/pageviews/contact_lists/widgets/new_chat_button.dart';
+import 'package:bluu/resources/contact_methods.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:chatapp/models/contact.dart';
-import 'package:chatapp/provider/user_provider.dart';
-import 'package:chatapp/widgets/quiet_box.dart';
-import 'package:chatapp/utils/universal_variables.dart';
+import 'package:bluu/models/contact.dart';
+import 'package:bluu/provider/user_provider.dart';
+import 'package:bluu/widgets/quiet_box.dart';
+import 'package:bluu/utils/universal_variables.dart';
 
 class ContactListScreen extends StatelessWidget {
   @override

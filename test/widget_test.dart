@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:chatapp/main.dart';
+import 'package:bluu/main.dart';
 
 void main() {
   testWidgets('Find Widgets', (WidgetTester tester) async {

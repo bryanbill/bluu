@@ -1,7 +1,7 @@
-import 'package:chatapp/components/themeChooser_modal.dart';
-import 'package:chatapp/logic/sharedPref_logic.dart';
-import 'package:chatapp/pages/languages.dart';
-import 'package:chatapp/pages/weview.dart';
+import 'package:bluu/components/themeChooser_modal.dart';
+import 'package:bluu/logic/sharedPref_logic.dart';
+import 'package:bluu/pages/languages.dart';
+import 'package:bluu/pages/weview.dart';
 import 'package:flutter/material.dart';
 import 'package:settings_ui/settings_ui.dart';
 
@@ -139,7 +139,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   switchActiveColor: Theme.of(context).accentColor,
                   onToggle: (bool value) {},
                   switchValue: false),
-            
               SettingsTile.switchTile(
                 title: 'Enable Notifications',
                 enabled: notificationsEnabled,

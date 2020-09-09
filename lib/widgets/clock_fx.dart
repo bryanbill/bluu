@@ -1,10 +1,9 @@
 import 'dart:math';
 
-import 'package:chatapp/components/palette.dart';
-import 'package:chatapp/components/particle.dart';
-import 'package:chatapp/utils/rnd.dart';
+import 'package:bluu/components/palette.dart';
+import 'package:bluu/components/particle.dart';
+import 'package:bluu/utils/rnd.dart';
 import 'package:flutter/widgets.dart';
-
 
 final Color transparent = Color.fromARGB(0, 0, 0, 0);
 

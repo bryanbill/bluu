@@ -5,10 +5,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
-import 'package:chatapp/configs/agora_configs.dart';
-import 'package:chatapp/models/call.dart';
-import 'package:chatapp/provider/user_provider.dart';
-import 'package:chatapp/resources/call_methods.dart';
+import 'package:bluu/configs/agora_configs.dart';
+import 'package:bluu/models/call.dart';
+import 'package:bluu/provider/user_provider.dart';
+import 'package:bluu/resources/call_methods.dart';
 
 class VoiceCallScreen extends StatefulWidget {
   final Call call;

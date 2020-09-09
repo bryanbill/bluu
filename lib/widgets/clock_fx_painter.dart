@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:chatapp/components/particle.dart';
+import 'package:bluu/components/particle.dart';
 import 'package:flutter/material.dart';
 
 import 'clock_fx.dart';

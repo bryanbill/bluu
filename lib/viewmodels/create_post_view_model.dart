@@ -1,14 +1,14 @@
 import 'dart:io';
 
-import 'package:chatapp/utils/locator.dart';
-import 'package:chatapp/models/post.dart';
-import 'package:chatapp/services/analytics_service.dart';
-import 'package:chatapp/services/cloud_storage_service.dart';
-import 'package:chatapp/services/dialog_service.dart';
-import 'package:chatapp/services/firestore_service.dart';
-import 'package:chatapp/services/navigation_service.dart';
-import 'package:chatapp/utils/image_selector.dart';
-import 'package:chatapp/viewmodels/base_model.dart';
+import 'package:bluu/utils/locator.dart';
+import 'package:bluu/models/post.dart';
+import 'package:bluu/services/analytics_service.dart';
+import 'package:bluu/services/cloud_storage_service.dart';
+import 'package:bluu/services/dialog_service.dart';
+import 'package:bluu/services/firestore_service.dart';
+import 'package:bluu/services/navigation_service.dart';
+import 'package:bluu/utils/image_selector.dart';
+import 'package:bluu/viewmodels/base_model.dart';
 import 'package:flutter/foundation.dart';
 
 class CreatePostViewModel extends BaseModel {

@@ -1,11 +1,11 @@
 import 'dart:ui';
 
-import 'package:chatapp/utils/rnd.dart';
-import 'package:chatapp/widgets/clock_bg_particle_painter.dart';
-import 'package:chatapp/widgets/clock_face_painter.dart';
-import 'package:chatapp/widgets/clock_fx.dart';
-import 'package:chatapp/widgets/clock_fx_painter.dart';
-import 'package:chatapp/widgets/clock_seconds_painter.dart';
+import 'package:bluu/utils/rnd.dart';
+import 'package:bluu/widgets/clock_bg_particle_painter.dart';
+import 'package:bluu/widgets/clock_face_painter.dart';
+import 'package:bluu/widgets/clock_fx.dart';
+import 'package:bluu/widgets/clock_fx_painter.dart';
+import 'package:bluu/widgets/clock_seconds_painter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';

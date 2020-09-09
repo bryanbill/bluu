@@ -1,4 +1,4 @@
-package com.example.chatapp;
+package com.space.bluu;
 
 public class FlutterApplication extends io.flutter.app.FlutterApplication {
 

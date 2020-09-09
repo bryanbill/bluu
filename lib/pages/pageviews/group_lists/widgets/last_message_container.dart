@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:chatapp/models/message.dart';
+import 'package:bluu/models/message.dart';
 
 class LastMessageContainer extends StatelessWidget {
   final stream;
@@ -26,7 +26,6 @@ class LastMessageContainer extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-          
                   fontSize: 14,
                 ),
               ),

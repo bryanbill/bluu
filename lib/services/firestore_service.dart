@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:chatapp/enum/user_state.dart';
-import 'package:chatapp/utils/utilities.dart';
+import 'package:bluu/enum/user_state.dart';
+import 'package:bluu/utils/utilities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:chatapp/models/post.dart';
-import 'package:chatapp/models/user.dart';
+import 'package:bluu/models/post.dart';
+import 'package:bluu/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -51,7 +51,8 @@ class FirestoreService {
       return e.toString();
     }
   }
-Future<List<User>> fetchAllUsers(User currentUser) async {
+
+  Future<List<User>> fetchAllUsers(User currentUser) async {
     List<User> userList = List<User>();
 
     QuerySnapshot querySnapshot =
@@ -63,6 +64,7 @@ Future<List<User>> fetchAllUsers(User currentUser) async {
     }
     return userList;
   }
+
   Future<User> getUserDetailsById(id) async {
     try {
       DocumentSnapshot documentSnapshot =
@@ -73,7 +75,8 @@ Future<List<User>> fetchAllUsers(User currentUser) async {
       return null;
     }
   }
-void setUserState({@required userId, @required UserState userState}) {
+
+  void setUserState({@required userId, @required UserState userState}) {
     int stateNum = Utils.stateToNum(userState);
 
     _usersCollectionReference.document(userId).updateData({
@@ -85,7 +88,7 @@ void setUserState({@required userId, @required UserState userState}) {
     return _usersCollectionReference.document(uid).snapshots();
   }
 
-  Future addPost(Post post) async { 
+  Future addPost(Post post) async {
     try {
       await _postsCollectionReference.add(post.toMap());
     } catch (e) {

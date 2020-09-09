@@ -1,12 +1,12 @@
-import 'package:chatapp/pages/chatscreens/chat_screen.dart';
-import 'package:chatapp/pages/chatscreens/widgets/cached_image.dart';
-import 'package:chatapp/services/firestore_service.dart';
-import 'package:chatapp/utils/locator.dart';
-import 'package:chatapp/utils/universal_variables.dart';
+import 'package:bluu/pages/chatscreens/chat_screen.dart';
+import 'package:bluu/pages/chatscreens/widgets/cached_image.dart';
+import 'package:bluu/services/firestore_service.dart';
+import 'package:bluu/utils/locator.dart';
+import 'package:bluu/utils/universal_variables.dart';
 import 'package:flutter/material.dart';
-import 'package:chatapp/models/contact.dart';
-import 'package:chatapp/models/user.dart';
-import 'package:chatapp/widgets/custom_tile.dart';
+import 'package:bluu/models/contact.dart';
+import 'package:bluu/models/user.dart';
+import 'package:bluu/widgets/custom_tile.dart';
 
 import 'online_dot_indicator.dart';
 

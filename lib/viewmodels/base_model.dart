@@ -1,7 +1,7 @@
-import 'package:chatapp/utils/locator.dart';
-import 'package:chatapp/models/user.dart';
-import 'package:chatapp/services/authentication_service.dart';
-import 'package:chatapp/services/remote_config_service.dart';
+import 'package:bluu/utils/locator.dart';
+import 'package:bluu/models/user.dart';
+import 'package:bluu/services/authentication_service.dart';
+import 'package:bluu/services/remote_config_service.dart';
 import 'package:flutter/widgets.dart';
 
 class BaseModel extends ChangeNotifier {

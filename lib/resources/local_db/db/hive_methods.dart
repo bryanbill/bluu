@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:chatapp/models/log.dart';
-import 'package:chatapp/resources/local_db/interface/log_interface.dart';
+import 'package:bluu/models/log.dart';
+import 'package:bluu/resources/local_db/interface/log_interface.dart';
 
 class HiveMethods implements LogInterface {
   String _hiveBox;

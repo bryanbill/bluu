@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:chatapp/models/message.dart';
+import 'package:bluu/models/message.dart';
 import 'package:intl/intl.dart';
 
 class LastMessageContainer extends StatelessWidget {

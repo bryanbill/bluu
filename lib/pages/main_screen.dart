@@ -1,16 +1,17 @@
 import 'dart:async';
 
-import 'package:chatapp/components/dialog.dart';
-import 'package:chatapp/pages/dashboard_page.dart';
-import 'package:chatapp/pages/home_page.dart';
-import 'package:chatapp/pages/userprofile.dart';
-import 'package:connectivity/connectivity.dart';import 'package:chatapp/enum/user_state.dart';
-import 'package:chatapp/pages/pageviews/group_lists/group_list_screen.dart';
-import 'package:chatapp/provider/user_provider.dart';
-import 'package:chatapp/services/authentication_service.dart';
-import 'package:chatapp/services/firestore_service.dart';
-import 'package:chatapp/utils/locator.dart';
-import 'package:chatapp/utils/utilities.dart';
+import 'package:bluu/components/dialog.dart';
+import 'package:bluu/pages/dashboard_page.dart';
+import 'package:bluu/pages/home_page.dart';
+import 'package:bluu/pages/userprofile.dart';
+import 'package:connectivity/connectivity.dart';
+import 'package:bluu/enum/user_state.dart';
+import 'package:bluu/pages/pageviews/group_lists/group_list_screen.dart';
+import 'package:bluu/provider/user_provider.dart';
+import 'package:bluu/services/authentication_service.dart';
+import 'package:bluu/services/firestore_service.dart';
+import 'package:bluu/utils/locator.dart';
+import 'package:bluu/utils/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
@@ -24,12 +25,13 @@ class MainScreen extends StatefulWidget {
   _MainScreenState createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver, SingleTickerProviderStateMixin {
+class _MainScreenState extends State<MainScreen>
+    with WidgetsBindingObserver, SingleTickerProviderStateMixin {
   PageController _pageController;
   int _page = 2;
-  
+
   UserProvider userProvider;
-   String currentUserId;
+  String currentUserId;
   String initials;
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
@@ -44,7 +46,6 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver, Si
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     
       body: PageView(
         physics: NeverScrollableScrollPhysics(),
         controller: _pageController,
@@ -154,7 +155,8 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver, Si
     connectivitySubs.cancel();
     WidgetsBinding.instance.removeObserver(this);
   }
- @override
+
+  @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     String currentUserId =
         (userProvider != null && userProvider.getUser != null)
@@ -190,6 +192,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver, Si
         break;
     }
   }
+
   void onPageChanged(int page) {
     setState(() {
       this._page = page;

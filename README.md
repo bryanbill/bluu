@@ -1,11 +1,11 @@
-<h1> ChatApp</h1>
+<h1> bluu</h1>
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9775560f9d9245e4be101679d2b04fc6)](https://app.codacy.com/manual/takiuddin93/ChatApp?utm_source=github.com&utm_medium=referral&utm_content=takiuddin93/ChatApp&utm_campaign=Badge_Grade_Dashboard)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/takiuddin93/ChatApp/commits/master)
-[![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://takiuddin.com)
-[![made-for-VSCode](https://img.shields.io/badge/Made%20for-VSCode-1f425f.svg)](https://code.visualstudio.com/)
-[![Build Status](https://travis-ci.org/takiuddin93/ChatApp.svg?branch=master)](https://travis-ci.org/github/takiuddin93/ChatApp)
-[![MIT Licenced](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/takiuddin93/ChatApp/blob/master/LICENSE)
+
+
+[![GitHub issues](https://img.shields.io/github/issues/CocoGinger/bluu?style=for-the-badge)](https://github.com/CocoGinger/bluu/issues)
+
+[![GitHub license](https://img.shields.io/github/license/CocoGinger/bluu?style=for-the-badge)](https://github.com/CocoGinger/bluu/blob/master/LICENSE)
+
 
 ## Description
 
@@ -31,9 +31,9 @@ Inside `firebase_configs.dart` add:
   
   `const SERVER_KEY = '<YOUR_FIREBASE_SERVER_KEY>';` from your [Firebase Console](http://console.firebase.google.com).
 
-## ChatApp UI
+## bluu UI
 
-![App UI](assets/images/ChatApp.png)
+
 
 ## TODO
 
@@ -41,23 +41,13 @@ Inside `firebase_configs.dart` add:
 *   Enable Group Chats.
 *   Enable Group Calls.
 
-## For Beginners
-
-A few resources to get you started if this is your first Flutter project:
-
-*   [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-*   [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
 
 ## LICENSE
 
 <p>
 MIT License
 
-Copyright (c) 2020 Taki Uddin
+Copyright (c) 2020 Bryan Bill
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

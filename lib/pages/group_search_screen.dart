@@ -1,13 +1,13 @@
-import 'package:chatapp/provider/user_provider.dart';
-import 'package:chatapp/resources/group_methods.dart';
-import 'package:chatapp/services/authentication_service.dart';
-import 'package:chatapp/services/firestore_service.dart';
-import 'package:chatapp/utils/locator.dart';
-import 'package:chatapp/widgets/mainappbar_style.dart';
+import 'package:bluu/provider/user_provider.dart';
+import 'package:bluu/resources/group_methods.dart';
+import 'package:bluu/services/authentication_service.dart';
+import 'package:bluu/services/firestore_service.dart';
+import 'package:bluu/utils/locator.dart';
+import 'package:bluu/widgets/mainappbar_style.dart';
 import 'package:flutter/material.dart';
-import 'package:chatapp/models/user.dart';
-import 'package:chatapp/utils/universal_variables.dart';
-import 'package:chatapp/widgets/custom_tile.dart';
+import 'package:bluu/models/user.dart';
+import 'package:bluu/utils/universal_variables.dart';
+import 'package:bluu/widgets/custom_tile.dart';
 import 'package:provider/provider.dart';
 
 import 'callscreens/pickup/pickup_layout.dart';
@@ -72,7 +72,6 @@ class _GroupSearchScreenState extends State<GroupSearchScreen> {
     );
   }
 
-
   buildSuggestions(UserProvider userProvider, String query) {
     final List<User> suggestionList = query.isEmpty
         ? []
@@ -111,7 +110,6 @@ class _GroupSearchScreenState extends State<GroupSearchScreen> {
             child: Text(
               searchedUser.name,
               style: TextStyle(
-                
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -120,7 +118,6 @@ class _GroupSearchScreenState extends State<GroupSearchScreen> {
             padding: EdgeInsets.only(left: 8, top: 0, right: 0, bottom: 0),
             child: Text(
               searchedUser.username,
-              
             ),
           ),
           leading: CircleAvatar(
@@ -129,17 +126,15 @@ class _GroupSearchScreenState extends State<GroupSearchScreen> {
           ),
           trailing: Container(
               decoration: BoxDecoration(
-                  
                   borderRadius: BorderRadius.all(Radius.circular(4))),
-            
               child: FlatButton(
-                color: Theme.of(context).accentColor,
+                  color: Theme.of(context).accentColor,
                   onPressed: () => _groupMethods.addGroupToDb(
                       userProvider.getUser, searchedUser),
                   child: Text(
                     "Add to Group",
                     style: TextStyle(
-                      color:Colors.white,
+                      color: Colors.white,
                     ),
                   ))),
         );
@@ -153,7 +148,6 @@ class _GroupSearchScreenState extends State<GroupSearchScreen> {
     return PickupLayout(
       scaffold: Scaffold(
         appBar: searchBar(context),
-        
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: buildSuggestions(userProvider, query),

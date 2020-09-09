@@ -1,11 +1,12 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:chatapp/components/particle.dart';
-import 'package:chatapp/utils/rnd.dart';
+import 'package:bluu/components/particle.dart';
+import 'package:bluu/utils/rnd.dart';
 import 'package:flutter/widgets.dart';
 
 import 'clock_fx.dart';
+
 final easingDelayDuration = Duration(seconds: 15);
 
 class BgFx extends ClockFx {

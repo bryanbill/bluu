@@ -1,9 +1,9 @@
-import 'package:chatapp/constants/route_names.dart';
-import 'package:chatapp/utils/locator.dart';
-import 'package:chatapp/services/analytics_service.dart';
-import 'package:chatapp/services/authentication_service.dart';
-import 'package:chatapp/services/dialog_service.dart';
-import 'package:chatapp/services/navigation_service.dart';
+import 'package:bluu/constants/route_names.dart';
+import 'package:bluu/utils/locator.dart';
+import 'package:bluu/services/analytics_service.dart';
+import 'package:bluu/services/authentication_service.dart';
+import 'package:bluu/services/dialog_service.dart';
+import 'package:bluu/services/navigation_service.dart';
 import 'package:flutter/foundation.dart';
 
 import 'base_model.dart';
@@ -45,7 +45,7 @@ class LoginViewModel extends BaseModel {
       );
     }
   }
-  
+
   Future signUp({
     @required String email,
     @required String password,
@@ -54,10 +54,7 @@ class LoginViewModel extends BaseModel {
     setBusy(true);
 
     var result = await _authenticationService.signUpWithEmail(
-        email: email,
-        password: password,
-        fullName: fullName
-       );
+        email: email, password: password, fullName: fullName);
 
     setBusy(false);
 

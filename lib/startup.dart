@@ -1,4 +1,4 @@
-import 'package:chatapp/viewmodels/startup_view_model.dart';
+import 'package:bluu/viewmodels/startup_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 

@@ -1,11 +1,11 @@
-import 'package:chatapp/pages/contact_search_screen.dart';
-import 'package:chatapp/provider/user_provider.dart';
-import 'package:chatapp/widgets/custom_notification_dialog_widget.dart';
-import 'package:chatapp/widgets/user_circle.dart';
-import 'package:chatapp/utils/universal_variables.dart';
+import 'package:bluu/pages/contact_search_screen.dart';
+import 'package:bluu/provider/user_provider.dart';
+import 'package:bluu/widgets/custom_notification_dialog_widget.dart';
+import 'package:bluu/widgets/user_circle.dart';
+import 'package:bluu/utils/universal_variables.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:chatapp/widgets/mainappbar_style.dart';
+import 'package:bluu/widgets/mainappbar_style.dart';
 import 'package:provider/provider.dart';
 
 class MainAppBar extends StatelessWidget {
@@ -49,7 +49,6 @@ class MainAppBar extends StatelessWidget {
                     child: _buildLabel(context),
                   ),
                 ),
-             
                 Expanded(
                   flex: 1,
                   child: Align(
@@ -92,7 +91,6 @@ class MainAppBar extends StatelessWidget {
       default:
         {
           Navigator.pop(context);
-         
         }
         break;
     }
@@ -105,7 +103,6 @@ class MainAppBar extends StatelessWidget {
         ),
         onPressed: () {
           Navigator.pop(context);
-         
         },
       ),
     );
@@ -124,7 +121,6 @@ class MainAppBar extends StatelessWidget {
           fontFamily: 'Poppins',
           fontWeight: FontWeight.w600,
           fontSize: 18.0,
-    
         ),
         children: [
           TextSpan(

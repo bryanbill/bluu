@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:chatapp/constants/route_names.dart';
-import 'package:chatapp/utils/locator.dart';
-import 'package:chatapp/services/navigation_service.dart';
+import 'package:bluu/constants/route_names.dart';
+import 'package:bluu/utils/locator.dart';
+import 'package:bluu/services/navigation_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 class PushNotificationService {

@@ -1,14 +1,14 @@
-import 'package:chatapp/pages/callscreens/pickup/pickup_layout.dart';
-import 'package:chatapp/pages/pageviews/chat_lists/widgets/new_chat_button.dart';
-import 'package:chatapp/pages/pageviews/group_lists/widgets/group_list_view.dart';
+import 'package:bluu/pages/callscreens/pickup/pickup_layout.dart';
+import 'package:bluu/pages/pageviews/chat_lists/widgets/new_chat_button.dart';
+import 'package:bluu/pages/pageviews/group_lists/widgets/group_list_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:chatapp/models/group.dart';
-import 'package:chatapp/provider/user_provider.dart';
-import 'package:chatapp/resources/group_methods.dart';
-import 'package:chatapp/widgets/quiet_box.dart';
-import 'package:chatapp/utils/universal_variables.dart';
+import 'package:bluu/models/group.dart';
+import 'package:bluu/provider/user_provider.dart';
+import 'package:bluu/resources/group_methods.dart';
+import 'package:bluu/widgets/quiet_box.dart';
+import 'package:bluu/utils/universal_variables.dart';
 
 class GroupListScreen extends StatelessWidget {
   @override

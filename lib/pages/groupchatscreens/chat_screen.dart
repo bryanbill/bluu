@@ -1,32 +1,32 @@
 import 'dart:io';
 import 'dart:convert';
 
-import 'package:chatapp/pages/callscreens/pickup/pickup_layout.dart';
-import 'package:chatapp/pages/chatscreens/widgets/cached_image.dart';
-import 'package:chatapp/services/authentication_service.dart';
-import 'package:chatapp/services/firestore_service.dart';
-import 'package:chatapp/utils/locator.dart';
-import 'package:chatapp/widgets/chatappbar.dart';
+import 'package:bluu/pages/callscreens/pickup/pickup_layout.dart';
+import 'package:bluu/pages/chatscreens/widgets/cached_image.dart';
+import 'package:bluu/services/authentication_service.dart';
+import 'package:bluu/services/firestore_service.dart';
+import 'package:bluu/utils/locator.dart';
+import 'package:bluu/widgets/chatappbar.dart';
 import 'package:http/http.dart' as http;
-import 'package:chatapp/configs/firebase_configs.dart';
-// import 'package:chatapp/widgets/mainappbar.dart';
+import 'package:bluu/configs/firebase_configs.dart';
+// import 'package:bluu/widgets/mainappbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emoji_picker/emoji_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:chatapp/constants/strings.dart';
-import 'package:chatapp/enum/view_state.dart';
-import 'package:chatapp/models/message.dart';
-import 'package:chatapp/models/user.dart';
-import 'package:chatapp/provider/image_upload_provider.dart';
-import 'package:chatapp/resources/storage_methods.dart';
-import 'package:chatapp/resources/chat_methods.dart';
-import 'package:chatapp/utils/call_utilities.dart';
-import 'package:chatapp/utils/permissions.dart';
-import 'package:chatapp/utils/universal_variables.dart';
-import 'package:chatapp/utils/utilities.dart';
-import 'package:chatapp/widgets/custom_tile.dart';
+import 'package:bluu/constants/strings.dart';
+import 'package:bluu/enum/view_state.dart';
+import 'package:bluu/models/message.dart';
+import 'package:bluu/models/user.dart';
+import 'package:bluu/provider/image_upload_provider.dart';
+import 'package:bluu/resources/storage_methods.dart';
+import 'package:bluu/resources/chat_methods.dart';
+import 'package:bluu/utils/call_utilities.dart';
+import 'package:bluu/utils/permissions.dart';
+import 'package:bluu/utils/universal_variables.dart';
+import 'package:bluu/utils/utilities.dart';
+import 'package:bluu/widgets/custom_tile.dart';
 
 class ChatScreen extends StatefulWidget {
   final User receiver;
@@ -43,9 +43,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
   final StorageMethods _storageMethods = StorageMethods();
   final ChatMethods _chatMethods = ChatMethods();
-  final FirestoreService _firestoreService =
-      locator<FirestoreService>();
-  
+  final FirestoreService _firestoreService = locator<FirestoreService>();
+
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   ScrollController _listScrollController = ScrollController();
@@ -68,15 +67,15 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
     User user = _authenticationService.currentUser;
-      _currentUserId = user.uid;
+    _currentUserId = user.uid;
 
-      setState(() {
-        sender = User(
-          uid: user.uid,
-          name: user.name,
-          profilePhoto: user.profilePhoto,
-        );
-      });
+    setState(() {
+      sender = User(
+        uid: user.uid,
+        name: user.name,
+        profilePhoto: user.profilePhoto,
+      );
+    });
   }
 
   showKeyboard() => textFieldFocus.requestFocus();
@@ -566,7 +565,6 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                       ),
                       onPressed: () {
-                       
                         Navigator.pop(context);
                       },
                     ),

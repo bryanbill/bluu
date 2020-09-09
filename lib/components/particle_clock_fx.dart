@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:chatapp/utils/rnd.dart';
-import 'package:chatapp/widgets/clock_fx.dart';
+import 'package:bluu/utils/rnd.dart';
+import 'package:bluu/widgets/clock_fx.dart';
 import 'package:flutter/widgets.dart';
 
 import 'particle.dart';

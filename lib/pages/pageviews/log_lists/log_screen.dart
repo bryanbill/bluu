@@ -1,5 +1,5 @@
-import 'package:chatapp/pages/callscreens/pickup/pickup_layout.dart';
-import 'package:chatapp/pages/pageviews/log_lists/widgets/floating_column.dart';
+import 'package:bluu/pages/callscreens/pickup/pickup_layout.dart';
+import 'package:bluu/pages/pageviews/log_lists/widgets/floating_column.dart';
 import 'package:flutter/material.dart';
 import 'widgets/log_list_container.dart';
 

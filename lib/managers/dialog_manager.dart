@@ -1,7 +1,7 @@
 
-import 'package:chatapp/models/dialog_models.dart';
-import 'package:chatapp/services/dialog_service.dart';
-import 'package:chatapp/utils/locator.dart';
+import 'package:bluu/models/dialog_models.dart';
+import 'package:bluu/services/dialog_service.dart';
+import 'package:bluu/utils/locator.dart';
 import 'package:flutter/material.dart';
 
 class DialogManager extends StatefulWidget {

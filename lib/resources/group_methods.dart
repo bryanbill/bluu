@@ -1,9 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:chatapp/constants/strings.dart';
-import 'package:chatapp/models/group.dart';
-import 'package:chatapp/models/user.dart';
+import 'package:bluu/constants/strings.dart';
+import 'package:bluu/models/group.dart';
+import 'package:bluu/models/user.dart';
 
 class GroupMethods {
   static final Firestore _firestore = Firestore.instance;

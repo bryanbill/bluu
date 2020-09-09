@@ -1,11 +1,11 @@
-import 'package:chatapp/pages/chatscreens/widgets/cached_image.dart';
+import 'package:bluu/pages/chatscreens/widgets/cached_image.dart';
 import 'package:flutter/material.dart';
-import 'package:chatapp/constants/strings.dart';
-import 'package:chatapp/models/log.dart';
-import 'package:chatapp/resources/local_db/repository/log_repository.dart';
-import 'package:chatapp/widgets/quiet_box.dart';
-import 'package:chatapp/utils/utilities.dart';
-import 'package:chatapp/widgets/custom_tile.dart';
+import 'package:bluu/constants/strings.dart';
+import 'package:bluu/models/log.dart';
+import 'package:bluu/resources/local_db/repository/log_repository.dart';
+import 'package:bluu/widgets/quiet_box.dart';
+import 'package:bluu/utils/utilities.dart';
+import 'package:bluu/widgets/custom_tile.dart';
 
 class LogListContainer extends StatefulWidget {
   @override
@@ -58,7 +58,6 @@ class _LogListContainerState extends State<LogListContainer> {
           return Center(child: CircularProgressIndicator());
         }
 
-
         if (snapshot.hasData) {
           List<dynamic> logList = snapshot.data;
 
@@ -101,7 +100,9 @@ class _LogListContainerState extends State<LogListContainer> {
                     ),
                   ),
                   title: Text(
-                    hasDialled ? _log?.receiverName ?? ".." : _log?.callerName ?? "..s",
+                    hasDialled
+                        ? _log?.receiverName ?? ".."
+                        : _log?.callerName ?? "..s",
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 17,

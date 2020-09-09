@@ -1,9 +1,9 @@
-import 'package:chatapp/utils/locator.dart';
-import 'package:chatapp/models/user.dart';
-import 'package:chatapp/services/analytics_service.dart';
+import 'package:bluu/utils/locator.dart';
+import 'package:bluu/models/user.dart';
+import 'package:bluu/services/analytics_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:chatapp/services/firestore_service.dart';
+import 'package:bluu/services/firestore_service.dart';
 
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -33,7 +33,6 @@ class AuthenticationService {
     @required String email,
     @required String password,
     @required String fullName,
-    
   }) async {
     try {
       var authResult = await _firebaseAuth.createUserWithEmailAndPassword(
@@ -46,7 +45,6 @@ class AuthenticationService {
         uid: authResult.user.uid,
         email: email,
         name: fullName,
-        
       );
 
       await _firestoreService.createUser(_currentUser);

@@ -1,7 +1,7 @@
-import 'package:chatapp/models/log.dart';
-import 'package:chatapp/resources/local_db/db/hive_methods.dart';
+import 'package:bluu/models/log.dart';
+import 'package:bluu/resources/local_db/db/hive_methods.dart';
 import 'package:meta/meta.dart';
-import 'package:chatapp/resources/local_db/db/sqlite_methods.dart';
+import 'package:bluu/resources/local_db/db/sqlite_methods.dart';
 
 class LogRepository {
   static var dbObject;

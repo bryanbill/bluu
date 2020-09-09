@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:chatapp/models/file.dart';
+import 'package:bluu/models/file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:storage_path/storage_path.dart';

@@ -1,15 +1,14 @@
-
-import 'package:chatapp/logic/bloc.dart';
-import 'package:chatapp/logic/sharedPref_logic.dart';
-import 'package:chatapp/logic/theme_chooser.dart';
-import 'package:chatapp/managers/dialog_manager.dart';
-import 'package:chatapp/services/analytics_service.dart';
-import 'package:chatapp/services/dialog_service.dart';
-import 'package:chatapp/services/navigation_service.dart';
-import 'package:chatapp/startup.dart';
-import 'package:chatapp/utils/locator.dart';
-import 'package:chatapp/utils/router.dart';
-import 'package:chatapp/utils/theme_constants.dart';
+import 'package:bluu/logic/bloc.dart';
+import 'package:bluu/logic/sharedPref_logic.dart';
+import 'package:bluu/logic/theme_chooser.dart';
+import 'package:bluu/managers/dialog_manager.dart';
+import 'package:bluu/services/analytics_service.dart';
+import 'package:bluu/services/dialog_service.dart';
+import 'package:bluu/services/navigation_service.dart';
+import 'package:bluu/startup.dart';
+import 'package:bluu/utils/locator.dart';
+import 'package:bluu/utils/router.dart';
+import 'package:bluu/utils/theme_constants.dart';
 import 'package:flutter/material.dart';
 
 class Intro extends StatefulWidget {

@@ -1,4 +1,4 @@
-import 'package:chatapp/pages/main_screen.dart';
+import 'package:bluu/pages/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,7 +19,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           return 1;
         }).then((value) {
           Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(builder: (_) => MainScreen()), (route) => false);
+              MaterialPageRoute(builder: (_) => MainScreen()),
+              (route) => false);
         });
       });
     } catch (e) {

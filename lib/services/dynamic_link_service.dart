@@ -1,6 +1,6 @@
-import 'package:chatapp/constants/route_names.dart';
-import 'package:chatapp/utils/locator.dart';
-import 'package:chatapp/services/navigation_service.dart';
+import 'package:bluu/constants/route_names.dart';
+import 'package:bluu/utils/locator.dart';
+import 'package:bluu/services/navigation_service.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 class DynamicLinkService {
@@ -42,15 +42,12 @@ class DynamicLinkService {
 
   Future<String> createFirstPostLink(String title) async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: 'https://chatapp.page.link',
-      link: Uri.parse('https://www.chatapp.com/post?title=$title'),
+      uriPrefix: 'https://bluu.page.link',
+      link: Uri.parse('https://www.bluu.com/post?title=$title'),
       androidParameters: AndroidParameters(
-        packageName: 'com.space.chatapp',
+        packageName: 'com.space.bluu',
       ),
 
-
-
-      
       // Other things to add as an example. We don't need it now
       iosParameters: IosParameters(
         bundleId: 'com.example.ios',

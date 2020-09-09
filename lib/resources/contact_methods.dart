@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:chatapp/constants/strings.dart';
-import 'package:chatapp/models/contact.dart';
-import 'package:chatapp/models/user.dart';
+import 'package:bluu/constants/strings.dart';
+import 'package:bluu/models/contact.dart';
+import 'package:bluu/models/user.dart';
 
 class ContactMethods {
   static final Firestore _firestore = Firestore.instance;
@@ -16,7 +16,7 @@ class ContactMethods {
   DocumentReference getContactsDocument({String of, String forContact}) =>
       _userCollection
           .document(of)
-          .collection(CONTACTS_COLLECTION) 
+          .collection(CONTACTS_COLLECTION)
           .document(forContact);
 
   addToContacts({String senderId, String receiverId}) async {

@@ -1,4 +1,4 @@
-import 'package:chatapp/utils/universal_variables.dart';
+import 'package:bluu/utils/universal_variables.dart';
 import 'package:flutter/material.dart';
 
 class CustomDialog {

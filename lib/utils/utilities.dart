@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:math';
-import 'package:chatapp/enum/user_state.dart';
+import 'package:bluu/enum/user_state.dart';
 import 'package:image/image.dart' as Im;
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';

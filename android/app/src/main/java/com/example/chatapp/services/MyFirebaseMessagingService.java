@@ -1,4 +1,4 @@
-package com.example.chatapp.services;
+package com.space.bluu.services;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -11,7 +11,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
-import com.example.chatapp.R;
+import com.space.bluu.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 

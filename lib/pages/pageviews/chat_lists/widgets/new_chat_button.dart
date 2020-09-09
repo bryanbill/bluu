@@ -1,4 +1,4 @@
-import 'package:chatapp/pages/pageviews/contact_lists/contact_list_screen.dart';
+import 'package:bluu/pages/pageviews/contact_lists/contact_list_screen.dart';
 import 'package:flutter/material.dart';
 import '../../../group_search_screen.dart';
 

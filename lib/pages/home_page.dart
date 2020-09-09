@@ -1,7 +1,7 @@
-import 'package:chatapp/components/page_heading.dart';
-import 'package:chatapp/components/searchbar.dart';
-import 'package:chatapp/pages/picker.dart';
-import 'package:chatapp/widgets/posts_widget.dart';
+import 'package:bluu/components/page_heading.dart';
+import 'package:bluu/components/searchbar.dart';
+import 'package:bluu/pages/picker.dart';
+import 'package:bluu/widgets/posts_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'callscreens/pickup/pickup_layout.dart';

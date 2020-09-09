@@ -1,4 +1,4 @@
-import 'package:chatapp/models/log.dart';
+import 'package:bluu/models/log.dart';
 
 abstract class LogInterface {
   init();

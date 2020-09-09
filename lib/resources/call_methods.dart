@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:chatapp/constants/strings.dart';
-import 'package:chatapp/models/call.dart';
+import 'package:bluu/constants/strings.dart';
+import 'package:bluu/models/call.dart';
 
 class CallMethods {
-  final CollectionReference callCollection = Firestore.instance.collection(CALL_COLLECTION);
+  final CollectionReference callCollection =
+      Firestore.instance.collection(CALL_COLLECTION);
 
   Stream<DocumentSnapshot> callStream({String uid}) =>
       callCollection.document(uid).snapshots();

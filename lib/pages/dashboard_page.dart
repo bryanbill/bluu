@@ -1,4 +1,4 @@
-import 'package:chatapp/components/page_heading.dart';
+import 'package:bluu/components/page_heading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sparkline/flutter_sparkline.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -229,7 +229,7 @@ class _DashBoardState extends State<DashBoard> {
   @override
   Widget build(BuildContext context) {
     return PickupLayout(
-      scaffold: Scaffold(
+        scaffold: Scaffold(
       appBar: AppBar(
           backgroundColor: Theme.of(context).canvasColor, title: Text("Stats")),
       body: Column(

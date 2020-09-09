@@ -1,8 +1,8 @@
-import 'package:chatapp/pages/chatscreens/widgets/cached_image.dart';
+import 'package:bluu/pages/chatscreens/widgets/cached_image.dart';
 import 'package:flutter/material.dart';
-import 'package:chatapp/models/call.dart';
-import 'package:chatapp/resources/call_methods.dart';
-import 'package:chatapp/utils/permissions.dart';
+import 'package:bluu/models/call.dart';
+import 'package:bluu/resources/call_methods.dart';
+import 'package:bluu/utils/permissions.dart';
 
 import '../videocall_screen.dart';
 import '../voicecall_screen.dart';

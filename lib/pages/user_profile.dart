@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:chatapp/provider/user_provider.dart';
-import 'package:chatapp/widgets/mainappbar.dart';
-import 'package:chatapp/utils/universal_variables.dart';
-import 'package:chatapp/models/user.dart';
+import 'package:bluu/provider/user_provider.dart';
+import 'package:bluu/widgets/mainappbar.dart';
+import 'package:bluu/utils/universal_variables.dart';
+import 'package:bluu/models/user.dart';
 
 import 'chatscreens/widgets/cached_image.dart';
 
