@@ -1,5 +1,5 @@
 <h1> bluu</h1>
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/20fc5fe8c3624feda8891132c56ecbd3)](https://www.codacy.com/manual/CocoGinger/bluu?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=CocoGinger/bluu&amp;utm_campaign=Badge_Grade)
+
 [![GitHub issues](https://img.shields.io/github/issues/CocoGinger/bluu?style=flat)](https://github.com/CocoGinger/bluu/issues)
 [![GitHub license](https://img.shields.io/github/license/CocoGinger/bluu?style=flat)](https://github.com/CocoGinger/bluu/blob/master/LICENSE)
 
