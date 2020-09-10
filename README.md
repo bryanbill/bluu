@@ -1,4 +1,4 @@
-<h1> bluu</h1>
+<h1> Bluu</h1>
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8ee9da023d7d45b7a488166be52b53e3)](https://app.codacy.com/manual/CocoGinger/bluu?utm_source=github.com&utm_medium=referral&utm_content=CocoGinger/bluu&utm_campaign=Badge_Grade_Settings)
 [![GitHub issues](https://img.shields.io/github/issues/CocoGinger/bluu?style=flat)](https://github.com/CocoGinger/bluu/issues)
@@ -47,7 +47,7 @@ Inside `firebase_configs.dart` add:
 ## LICENSE
 
 <p>
-MIT License
+<b>MIT License</b>
 
 Copyright (c) 2020 Bryan Bill
 
