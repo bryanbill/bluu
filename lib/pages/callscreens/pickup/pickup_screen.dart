@@ -30,11 +30,11 @@ class PickupScreen extends StatelessWidget {
                 fontSize: 30,
               ),
             ),
-            SizedBox(height: 50),
+            SizedBox(height: 30),
             CachedImage(
               call.callerPic,
               isRound: true,
-              radius: 180,
+              radius: 150,
             ),
             SizedBox(height: 15),
             Text(
@@ -44,7 +44,7 @@ class PickupScreen extends StatelessWidget {
                 fontSize: 20,
               ),
             ),
-            SizedBox(height: 75),
+            SizedBox(height: 50),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[

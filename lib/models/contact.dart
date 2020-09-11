@@ -8,7 +8,7 @@ class Contact {
     this.uid,
     this.addedOn,
   });
-
+ 
   Map toMap(Contact contact) {
     var data = Map<String, dynamic>();
     data['contact_id'] = contact.uid;

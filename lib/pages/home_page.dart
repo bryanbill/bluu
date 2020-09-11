@@ -1,7 +1,6 @@
-import 'package:bluu/components/page_heading.dart';
-import 'package:bluu/components/searchbar.dart';
-import 'package:bluu/pages/picker.dart';
+import 'package:bluu/components/upload_images_page.dart';
 import 'package:bluu/widgets/posts_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'callscreens/pickup/pickup_layout.dart';
@@ -38,10 +37,11 @@ class _HomePageState extends State<HomePage> {
       this._page = page;
     });
   }
-
+ final _globalKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Padding(
+      key:_globalKey,
       padding: const EdgeInsets.all(8.0),
       child: PageView(
         physics: BouncingScrollPhysics(),
@@ -49,14 +49,21 @@ class _HomePageState extends State<HomePage> {
         onPageChanged: onPageChanged,
         children: [
           PickupLayout(scaffold: Posts()),
-          PickupLayout(scaffold: Picker())
+          PickupLayout(scaffold: UploadImages(globalKey: _globalKey))
         ],
       ),
     );
   }
 }
 
-class Posts extends StatelessWidget {
+class Posts extends StatefulWidget {
+  @override
+  _PostsState createState() => _PostsState();
+}
+
+class _PostsState extends State<Posts> {
+  List<NetworkImage> _listOfImages = <NetworkImage>[];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,23 +71,36 @@ class Posts extends StatelessWidget {
         backgroundColor: Theme.of(context).canvasColor,
         title: Text("Community"),
       ),
-      body: ListView(
-        padding: EdgeInsets.only(top: 0),
-        children: [
-          PostWidget(
-              image:
-                  "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/allbikes-1539286251.jpg"),
-          PostWidget(
-              image:
-                  "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/allbikes-1539286251.jpg"),
-          PostWidget(
-              image:
-                  "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/allbikes-1539286251.jpg"),
-          PostWidget(
-              image:
-                  "https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/allbikes-1539286251.jpg"),
-        ],
-      ),
+      body: StreamBuilder(
+          stream: Firestore.instance.collection('images').snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+                _listOfImages = [];
+
+                 
+              return ListView.builder(
+                padding: EdgeInsets.only(top: 0),
+                itemCount: snapshot.data.documents.length,
+                itemBuilder: (context, index) {
+                 for (int i = 0;
+                      i < snapshot.data.documents[index].data['urls'].length;
+                      i++) {
+                   
+                      _listOfImages.add(NetworkImage(
+                        snapshot.data.documents[index].data['urls'][i]));
+                    
+                  }
+                  return PostWidget(
+                    listOfImages: _listOfImages,
+                  );
+                },
+              );
+            } else {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          }),
     );
   }
 }

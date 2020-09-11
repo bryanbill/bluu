@@ -30,15 +30,13 @@ class _MainScreenState extends State<MainScreen>
   PageController _pageController;
   int _page = 2;
 
-  UserProvider userProvider;
   String currentUserId;
-  String initials;
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
   final FirestoreService _firestoreService = locator<FirestoreService>();
   _MainScreenState();
   var connectivityStatus = 'Unknown';
-
+UserProvider userProvider;
   //This is verify the Internet Access.
   Connectivity connectivity = Connectivity();
   StreamSubscription<ConnectivityResult> connectivitySubs;
@@ -123,21 +121,15 @@ class _MainScreenState extends State<MainScreen>
       await userProvider.refreshUser();
 
       _firestoreService.setUserState(
-        userId: userProvider.getUser.uid,
+        userId:_authenticationService.currentUser.uid,
         userState: UserState.Online,
       );
     });
 
+    currentUserId = _authenticationService.currentUser.uid;
+
     WidgetsBinding.instance.addObserver(this);
 
-    _firestoreService
-        .getUser(_authenticationService.currentUser.uid)
-        .then((user) {
-      setState(() {
-        currentUserId = user.uid;
-        initials = Utils.getInitials(user.name);
-      });
-    });
     _pageController = PageController(initialPage: 2);
     connectivitySubs =
         connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
@@ -159,8 +151,8 @@ class _MainScreenState extends State<MainScreen>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     String currentUserId =
-        (userProvider != null && userProvider.getUser != null)
-            ? userProvider.getUser.uid
+        (_authenticationService.currentUser != null)
+            ? _authenticationService.currentUser.uid
             : "";
 
     super.didChangeAppLifecycleState(state);

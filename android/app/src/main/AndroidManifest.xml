@@ -8,7 +8,9 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <!-- The Agora SDK requires Bluetooth permissions in case users are using Bluetooth devices.-->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <!-- For devices running Android 10.0 or later, you also need to add the following permission: -->
@@ -17,8 +19,8 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <application
         android:name=".FlutterApplication"
-        android:label="ChatApp"
-        android:icon="@drawable/ic_chat_app_logo">
+        android:label="Bluu"
+        android:icon="@drawable/launcher">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

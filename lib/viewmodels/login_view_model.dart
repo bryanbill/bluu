@@ -41,7 +41,7 @@ class LoginViewModel extends BaseModel {
     } else {
       await _dialogService.showDialog(
         title: 'Login Failure',
-        description: result,
+        description: "Some unknown error",
       );
     }
   }
@@ -71,7 +71,7 @@ class LoginViewModel extends BaseModel {
     } else {
       await _dialogService.showDialog(
         title: 'Sign Up Failure',
-        description: result,
+        description: "Some unknown error", 
       );
     }
   }

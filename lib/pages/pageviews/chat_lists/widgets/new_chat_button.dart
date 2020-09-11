@@ -1,6 +1,7 @@
 import 'package:bluu/pages/pageviews/contact_lists/contact_list_screen.dart';
 import 'package:flutter/material.dart';
 import '../../../group_search_screen.dart';
+import '../../../new_group.dart';
 
 class NewChatButton extends StatelessWidget {
   @override
@@ -29,7 +30,7 @@ class NewGroupButton extends StatelessWidget {
     return FloatingActionButton(
       onPressed: () {
         Navigator.of(context).push(MaterialPageRoute(
-            builder: (BuildContext context) => GroupSearchScreen()));
+            builder: (BuildContext context) => NewGroup()));
       },
       child: Container(
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(50)),

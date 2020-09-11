@@ -23,7 +23,7 @@ class AuthenticationService {
         password: password,
       );
       await _populateCurrentUser(authResult.user);
-      return authResult.user != null;
+      return authResult.user !=null;
     } catch (e) {
       return e.message;
     }
@@ -35,17 +35,18 @@ class AuthenticationService {
     @required String fullName,
   }) async {
     try {
-      var authResult = await _firebaseAuth.createUserWithEmailAndPassword(
+      var authResult = await _firebaseAuth
+          .createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
       // create a new user profile on firestore
       _currentUser = User(
-        uid: authResult.user.uid,
-        email: email,
-        name: fullName,
-      );
+          uid: authResult.user.uid,
+          email: email,
+          name: fullName,
+          verified: false);
 
       await _firestoreService.createUser(_currentUser);
       await _analyticsService.setUserProperties(
@@ -53,7 +54,7 @@ class AuthenticationService {
         userRole: _currentUser.state.toString(),
       );
 
-      return authResult.user != null;
+      return authResult.user !=null;
     } catch (e) {
       return e.message;
     }
@@ -63,6 +64,12 @@ class AuthenticationService {
     var user = await _firebaseAuth.currentUser();
     await _populateCurrentUser(user);
     return user != null;
+  }
+
+  Future signOut() async {
+    await _firebaseAuth.signOut().then((v){
+      print("signed out");
+    });
   }
 
   Future _populateCurrentUser(FirebaseUser user) async {

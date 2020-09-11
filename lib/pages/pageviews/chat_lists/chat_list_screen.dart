@@ -12,11 +12,9 @@ import 'package:bluu/widgets/quiet_box.dart';
 class ChatListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return PickupLayout(
-      scaffold: Scaffold(
-        body: ChatListContainer(),
-        floatingActionButton: NewChatButton(),
-      ),
+    return Scaffold(
+      body: ChatListContainer(),
+      floatingActionButton: NewChatButton(),
     );
   }
 }

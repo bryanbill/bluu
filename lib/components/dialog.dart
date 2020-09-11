@@ -20,7 +20,7 @@ Future<void> noInternetDialog(context) {
               child: Column(
                 children: <Widget>[
                   Icon(
-                    IconData(0xe800, fontFamily: 'InternetStatus'),
+                    Icons.signal_wifi_off,
                     size: 90,
                     color: Colors.grey,
                   ),

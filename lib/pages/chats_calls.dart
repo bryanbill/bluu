@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 
+import 'callscreens/pickup/pickup_layout.dart';
 import 'pageviews/chat_lists/chat_list_screen.dart';
 import 'pageviews/group_lists/group_list_screen.dart';
 
@@ -35,7 +36,8 @@ class _ChatsCallsState extends State<ChatsCalls>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PickupLayout(
+      scaffold:Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).canvasColor,
           title: TextField(
@@ -76,6 +78,6 @@ class _ChatsCallsState extends State<ChatsCalls>
             // Container(child: GroupListScreen()),
             Container(child: GroupListScreen())
           ],
-        ));
+        )));
   }
 }

@@ -1,5 +1,6 @@
 import 'package:bluu/pages/settings_page.dart';
 import 'package:bluu/particle_clock.dart';
+import 'package:bluu/services/authentication_service.dart';
 import 'package:bluu/utils/locator.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
@@ -36,9 +37,11 @@ class Main extends StatefulWidget {
 
 class _MainPageState extends State<Main> {
   FirebaseMessaging _firebaseMessaging = locator<FirebaseMessaging>();
+  final AuthenticationService _authenticationService =
+      locator<AuthenticationService>();
   bool _clock = false;
   @override
-  void initState() {
+  void initState() { 
     super.initState();
     //Initially loads Theme Color from SharedPreferences
     loadColor();
@@ -55,7 +58,7 @@ class _MainPageState extends State<Main> {
         providers: [
           ChangeNotifierProvider(create: (_) => ImageUploadProvider()),
           ChangeNotifierProvider(create: (_) => UserProvider()),
-        ],
+        ], 
         child: StreamBuilder(
             stream: bloc.recieveColorName,
             initialData: Constants.initialAccent,
@@ -65,15 +68,15 @@ class _MainPageState extends State<Main> {
                   builder: (context, canvas) {
                     return GestureDetector(
                       onLongPress: () {
-                        _clock
-                            ? setState(() {
-                                _clock = false;
-                                print("clock false");
-                              })
-                            : setState(() {
-                                _clock = true;
-                                print("clock true");
-                              });
+                        // _clock
+                        //     ? setState(() {
+                        //         _clock = false;
+                        //         print("clock false");
+                        //       })
+                        //     : setState(() {
+                        //         _clock = true;
+                        //         print("clock true");
+                        //       });
                       },
                       child: _clock
                           ? ClockCustomizer(

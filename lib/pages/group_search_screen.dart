@@ -21,7 +21,7 @@ class GroupSearchScreen extends StatefulWidget {
 class _GroupSearchScreenState extends State<GroupSearchScreen> {
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
-
+ 
   final FirestoreService _firestoreService = locator<FirestoreService>();
 
   final GroupMethods _groupMethods = GroupMethods();

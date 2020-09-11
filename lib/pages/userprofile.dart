@@ -47,7 +47,7 @@ class _UserProfileState extends State<UserProfile> {
                   children: <Widget>[
                     SizedBox(height: 60),
                     CircleAvatar(
-                      backgroundImage: NetworkImage(user.profilePhoto),
+                      backgroundImage: NetworkImage(user.profilePhoto ?? "https://images.unsplash.com/photo-1599477167833-c0215a3df921?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"),
                       radius: 50,
                     ),
                     SizedBox(height: 10),

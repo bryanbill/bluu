@@ -640,7 +640,7 @@ class _LoginPageState extends State<LoginPage>
                             color: Colors.white,
                             fontSize: 25.0,
                             fontFamily: "WorkSansBold"),
-                      ),
+                      ), 
                     ),
                     onPressed: () {
                       signupEmailController.text.isNotEmpty &&

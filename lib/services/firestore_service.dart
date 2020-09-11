@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bluu/enum/user_state.dart';
+import 'package:bluu/models/group.dart';
 import 'package:bluu/utils/utilities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bluu/models/post.dart';
@@ -13,6 +14,9 @@ class FirestoreService {
       Firestore.instance.collection('users');
   final CollectionReference _postsCollectionReference =
       Firestore.instance.collection('posts');
+
+  final CollectionReference _groupsCollectionReference =
+      Firestore.instance.collection('groups');
 
   final StreamController<List<Post>> _postsController =
       StreamController<List<Post>>.broadcast();
@@ -28,6 +32,19 @@ class FirestoreService {
   Future createUser(User user) async {
     try {
       await _usersCollectionReference.document(user.uid).setData(user.toMap());
+    } catch (e) {
+      // TODO: Find or create a way to repeat error handling without so much repeated code
+      if (e is PlatformException) {
+        return e.message;
+      }
+
+      return e.toString();
+    }
+  }
+
+  Future createGroup(Group group) async {
+    try {
+      await _groupsCollectionReference.document(group.uid).setData(group.toMap(group));
     } catch (e) {
       // TODO: Find or create a way to repeat error handling without so much repeated code
       if (e is PlatformException) {

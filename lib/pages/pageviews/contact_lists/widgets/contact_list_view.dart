@@ -20,7 +20,7 @@ class ContactListView extends StatelessWidget {
     return FutureBuilder<User>(
       future: _firestoreService.getUserDetailsById(contact.uid),
       builder: (context, snapshot) {
-        if (snapshot.hasData) {
+        if (snapshot.hasData) { 
           User user = snapshot.data;
 
           return ViewLayout(
@@ -65,7 +65,7 @@ class ViewLayout extends StatelessWidget {
       leading: Container(
         constraints: BoxConstraints(maxHeight: 60, maxWidth: 60),
         child: Stack(
-          children: <Widget>[
+          children: <Widget>[ 
             CachedImage(
               contact.profilePhoto,
               radius: 80,
