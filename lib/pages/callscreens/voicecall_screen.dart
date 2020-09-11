@@ -328,9 +328,11 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
             padding: const EdgeInsets.all(12.0),
           ),
           RawMaterialButton(
-            onPressed: () => callMethods.endCall(
+            onPressed: () {
+              return callMethods.endCall(
               call: widget.call,
-            ),
+            );
+            },
             child: Icon(
               Icons.call_end,
               color: Colors.white,
@@ -364,7 +366,10 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
       body: Center(
         child: Stack(
           children: <Widget>[
-           Column(children: [
+           Column(
+             mainAxisAlignment: MainAxisAlignment.center,
+             crossAxisAlignment: CrossAxisAlignment.center,
+             children: [
              Text(
               "Calling...",
               style: TextStyle(

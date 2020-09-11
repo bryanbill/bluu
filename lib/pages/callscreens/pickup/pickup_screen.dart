@@ -66,6 +66,7 @@ class _PickupScreenState extends State<PickupScreen> {
                   ),
                   color: Colors.redAccent,
                   onPressed: () async {
+                    FlutterRingtonePlayer.stop();
                     await callMethods.endCall(call: widget.call);
 
                   },
