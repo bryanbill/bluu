@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:bluu/pages/chatscreens/widgets/cached_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -221,7 +222,7 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
           children: <Widget>[_videoView(views[0])],
         ));
       case 2:
-        return Container(
+        return Container( 
             child: Column(
           children: <Widget>[
             _expandedVideoRow([views[0]]),
@@ -363,7 +364,28 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
       body: Center(
         child: Stack(
           children: <Widget>[
-            _viewRows(),
+           Column(children: [
+             Text(
+              "Calling...",
+              style: TextStyle(
+                fontSize: 30,
+              ),
+            ),
+            SizedBox(height: 30),
+            CachedImage(
+              widget.call.receiverPic,
+              isRound: true,
+              radius: 150,
+            ),
+            SizedBox(height: 15),
+            Text(
+              widget.call.receiverName,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+           ],),
             _panel(),
             _toolbar(),
           ],

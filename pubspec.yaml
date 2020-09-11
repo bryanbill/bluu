@@ -59,6 +59,9 @@ dependencies:
   #for cached network image
   cached_network_image: ^2.2.0+1
 
+  #for fullscreen images
+  full_screen_image: ^1.0.2
+
   #for agora rtc engine
   agora_rtc_engine: ^1.0.12
 
@@ -110,6 +113,9 @@ dependencies:
   #players
   audioplayers: ^0.16.0
   video_player: ^0.10.12+2
+
+  #ringtones
+  flutter_ringtone_player: ^2.0.0
 
   #custom views
   flutter_sparkline: ^0.1.0

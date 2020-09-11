@@ -3,18 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:bluu/models/call.dart';
 import 'package:bluu/resources/call_methods.dart';
 import 'package:bluu/utils/permissions.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 
 import '../videocall_screen.dart';
 import '../voicecall_screen.dart';
 
-class PickupScreen extends StatelessWidget {
+class PickupScreen extends StatefulWidget {
   final Call call;
-  final CallMethods callMethods = CallMethods();
 
   PickupScreen({
     @required this.call,
   });
 
+  @override
+  _PickupScreenState createState() => _PickupScreenState();
+}
+
+class _PickupScreenState extends State<PickupScreen> {
+  final CallMethods callMethods = CallMethods();
+  @override
+  void initState(){
+    super.initState();
+    FlutterRingtonePlayer.playRingtone();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,13 +43,13 @@ class PickupScreen extends StatelessWidget {
             ),
             SizedBox(height: 30),
             CachedImage(
-              call.callerPic,
+              widget.call.callerPic,
               isRound: true,
               radius: 150,
             ),
             SizedBox(height: 15),
             Text(
-              call.callerName,
+              widget.call.callerName,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
@@ -55,11 +66,12 @@ class PickupScreen extends StatelessWidget {
                   ),
                   color: Colors.redAccent,
                   onPressed: () async {
-                    await callMethods.endCall(call: call);
+                    await callMethods.endCall(call: widget.call);
+
                   },
                 ),
                 SizedBox(width: 64),
-                IconButton(
+                IconButton( 
                   icon: Icon(
                     Icons.call,
                     size: 32,
@@ -83,14 +95,16 @@ class PickupScreen extends StatelessWidget {
                   //                 ),
                   //               )
                   //         : {},
-                  onPressed: () async => call.isCall == "video"
+                  onPressed: () async {
+                    FlutterRingtonePlayer.stop();
+                    return widget.call.isCall == "video"
                       ? await Permissions
                               .cameraandmicrophonePermissionsGranted()
                           ? Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    VideoCallScreen(call: call),
+                                    VideoCallScreen(call: widget.call),
                               ),
                             )
                           : {}
@@ -99,10 +113,11 @@ class PickupScreen extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    VoiceCallScreen(call: call),
+                                    VoiceCallScreen(call: widget.call),
                               ),
                             )
-                          : {},
+                          : {};
+                  },
                 ),
               ],
             ),

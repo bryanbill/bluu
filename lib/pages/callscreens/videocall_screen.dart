@@ -7,7 +7,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:bluu/configs/agora_configs.dart';
 import 'package:bluu/models/call.dart';
-import 'package:bluu/provider/user_provider.dart';
+import 'package:bluu/provider/user_provider.dart'; 
 import 'package:bluu/resources/call_methods.dart';
 
 class VideoCallScreen extends StatefulWidget {
