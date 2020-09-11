@@ -164,6 +164,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
               SettingsTile(
                   onTap: () {
                     showLicensePage(
+                      applicationName: "Bluu",
+                      applicationVersion: 'v1.0.5-genesis',
                       context: context,
                     );
                   },

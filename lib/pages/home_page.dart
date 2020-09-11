@@ -75,13 +75,12 @@ class _PostsState extends State<Posts> {
           stream: Firestore.instance.collection('images').snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-                _listOfImages = [];
-
-                 
+               
               return ListView.builder(
                 padding: EdgeInsets.only(top: 0),
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index) {
+                   _listOfImages = [];
                  for (int i = 0;
                       i < snapshot.data.documents[index].data['urls'].length;
                       i++) {

@@ -74,11 +74,9 @@ class _UploadImagesState extends State<UploadImages> {
                   children: <Widget>[
                     InkWell(
                       onTap: loadAssets,
-                      child: ThreeDContainer(
+                      child: Container(
                         width: 130,
                         height: 50,
-                        backgroundColor: MultiPickerApp.navigateButton,
-                        backgroundDarkerColor: MultiPickerApp.background,
                         child: Center(
                             child: Text(
                           "Pick images",
@@ -99,9 +97,7 @@ class _UploadImagesState extends State<UploadImages> {
                                       style: TextStyle(color: Colors.white)),
                                   actions: <Widget>[
                                     InkWell(
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                      },
+                                     
                                       child: ThreeDContainer(
                                         width: 80,
                                         height: 30,
@@ -126,14 +122,12 @@ class _UploadImagesState extends State<UploadImages> {
                           uploadImages();
                         }
                       },
-                      child: ThreeDContainer(
+                      child: Container(
                         width: 130,
                         height: 50,
-                        backgroundColor: MultiPickerApp.navigateButton,
-                        backgroundDarkerColor: MultiPickerApp.background,
                         child: Center(
                             child: Text(
-                          "Upload Images",
+                          "Post",
                           style: TextStyle(color: Colors.white),
                         )),
                       ),

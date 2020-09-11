@@ -1,4 +1,3 @@
-import 'package:bluu/pages/settings_page.dart';
 import 'package:bluu/particle_clock.dart';
 import 'package:bluu/services/authentication_service.dart';
 import 'package:bluu/utils/locator.dart';
@@ -37,8 +36,6 @@ class Main extends StatefulWidget {
 
 class _MainPageState extends State<Main> {
   FirebaseMessaging _firebaseMessaging = locator<FirebaseMessaging>();
-  final AuthenticationService _authenticationService =
-      locator<AuthenticationService>();
   bool _clock = false;
   @override
   void initState() { 
