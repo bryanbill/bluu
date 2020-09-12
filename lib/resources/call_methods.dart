@@ -5,7 +5,9 @@ import 'package:bluu/models/call.dart';
 class CallMethods {
   final CollectionReference callCollection =
       Firestore.instance.collection(CALL_COLLECTION);
-
+  //Call _call;
+  Call callData;
+  get _call => callData;
   Stream<DocumentSnapshot> callStream({String uid}) =>
       callCollection.document(uid).snapshots();
 

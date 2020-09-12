@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:bluu/pages/chatscreens/widgets/cached_image.dart';
+import 'package:bluu/services/authentication_service.dart';
+import 'package:bluu/utils/locator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -10,10 +12,10 @@ import 'package:bluu/configs/agora_configs.dart';
 import 'package:bluu/models/call.dart';
 import 'package:bluu/provider/user_provider.dart';
 import 'package:bluu/resources/call_methods.dart';
+import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 class VoiceCallScreen extends StatefulWidget {
   final Call call;
-
   VoiceCallScreen({@required this.call});
 
   @override
@@ -29,6 +31,8 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
   static final _users = <int>[];
   final _infoStrings = <String>[];
   bool mutedMic = false;
+
+  _VoiceCallScreenState();
 
   @override
   void initState() {
@@ -57,7 +61,7 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
   }
 
   addPostFrameCallback() {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
       userProvider = Provider.of<UserProvider>(context, listen: false);
 
       callStreamSubscription = callMethods
@@ -222,7 +226,7 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
           children: <Widget>[_videoView(views[0])],
         ));
       case 2:
-        return Container( 
+        return Container(
             child: Column(
           children: <Widget>[
             _expandedVideoRow([views[0]]),
@@ -330,8 +334,8 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
           RawMaterialButton(
             onPressed: () {
               return callMethods.endCall(
-              call: widget.call,
-            );
+                call: widget.call,
+              );
             },
             child: Icon(
               Icons.call_end,
@@ -359,43 +363,109 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
     super.dispose();
   }
 
+  final StopWatchTimer _stopWatchTimer = StopWatchTimer();
+  final AuthenticationService _authenticationService =
+      locator<AuthenticationService>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Center(
-        child: Stack(
-          children: <Widget>[
-           Column(
-             mainAxisAlignment: MainAxisAlignment.center,
-             crossAxisAlignment: CrossAxisAlignment.center,
-             children: [
-             Text(
-              "Calling...",
-              style: TextStyle(
-                fontSize: 30,
-              ),
-            ),
-            SizedBox(height: 30),
-            CachedImage(
-              widget.call.receiverPic,
-              isRound: true,
-              radius: 150,
-            ),
-            SizedBox(height: 15),
-            Text(
-              widget.call.receiverName,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-           ],),
-            _panel(),
-            _toolbar(),
-          ],
-        ),
-      ),
+      body: StreamBuilder(
+          stream: callMethods.callStream(
+              uid: _authenticationService.currentUser.uid),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(child: CircularProgressIndicator());
+            }
+            bool callInfo =
+                snapshot != null ? snapshot.data['has_accepted'] : true;
+            _stopWatchTimer.rawTime.listen((value) => print(
+                'rawTime $value ${StopWatchTimer.getDisplayTime(value)}'));
+            return callInfo
+                ? StreamBuilder<int>(
+                    stream: _stopWatchTimer.secondTime,
+                    initialData:_stopWatchTimer.secondTime.value,
+                    builder: (context, snap) {
+                      final value = snap.data;
+                      final displayTime = StopWatchTimer.getDisplayTime(value);
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              widget.call.receiverName,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                            SizedBox(height: 30),
+                            CachedImage(
+                              widget.call.receiverPic,
+                              isRound: true,
+                              radius: 150,
+                            ),
+                            SizedBox(height: 15),
+                            Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Text(
+                                    displayTime,
+                                    style: TextStyle(
+                                        fontSize: 40,
+                                        fontFamily: 'Helvetica',
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Text(
+                                    value.toString(),
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'Helvetica',
+                                        fontWeight: FontWeight.w400),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            //    _panel(),
+                            _toolbar(),
+                          ],
+                        ),
+                      );
+                    })
+                : Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Calling...",
+                          style: TextStyle(
+                            fontSize: 30,
+                          ),
+                        ),
+                        SizedBox(height: 30),
+                        CachedImage(
+                          widget.call.receiverPic,
+                          isRound: true,
+                          radius: 150,
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                          widget.call.receiverName,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
+                        //    _panel(),
+                        _toolbar(),
+                      ],
+                    ),
+                  );
+          }),
     );
   }
 }

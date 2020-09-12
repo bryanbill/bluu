@@ -22,8 +22,8 @@ class Utils {
   // this is new
 
   static Future<File> pickImage({@required ImageSource source}) async {
-    PickedFile selectedImage = await ImagePicker().getImage(source: source);
-    return await compressImage(File(selectedImage.toString()));
+    File selectedImage = await ImagePicker.pickImage(source: source);
+    return await compressImage(selectedImage);
   }
 
   static Future<File> compressImage(File imageToCompress) async {

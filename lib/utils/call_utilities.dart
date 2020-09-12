@@ -11,6 +11,7 @@ class CallUtils {
 
   static dialVideo({User from, User to, context, String callis}) async {
     Call call = Call(
+      accepted: false,
       callerId: from.uid,
       callerName: from.name,
       callerPic: from.profilePhoto,
@@ -35,6 +36,7 @@ class CallUtils {
 
   static dialVoice({User from, User to, context, String callis}) async {
     Call call = Call(
+      accepted: false,
       callerId: from.uid,
       callerName: from.name,
       callerPic: from.profilePhoto,
@@ -52,7 +54,7 @@ class CallUtils {
       Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => VoiceCallScreen(call: call),
+            builder: (context) => VoiceCallScreen(call: call)
           ));
     }
   }

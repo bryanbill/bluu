@@ -7,6 +7,7 @@ import 'package:bluu/services/authentication_service.dart';
 import 'package:bluu/services/firestore_service.dart';
 import 'package:bluu/utils/locator.dart';
 import 'package:bluu/widgets/chatappbar.dart';
+import 'package:full_screen_image/full_screen_image.dart';
 import 'package:http/http.dart' as http;
 import 'package:bluu/configs/firebase_configs.dart';
 // import 'package:bluu/widgets/mainappbar.dart';
@@ -279,6 +280,13 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
+  Widget daySpan(context, message) {
+    return Container(
+        child: Center(
+      child: Text("Yesterday"),
+    ));
+  }
+
   Widget chatMessageItem(DocumentSnapshot snapshot) {
     Message _message = Message.fromMap(snapshot.data);
     return Container(
@@ -334,13 +342,16 @@ class _ChatScreenState extends State<ChatScreen> {
             ],
           )
         : message.photoUrl != null
-            ? CachedImage(
-                message.photoUrl,
-                height: 250,
-                width: 250,
-                radius: 10,
-              )
-            : Text("Url was null");
+            ? FullScreenWidget(
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: CachedImage(
+                      message.photoUrl,
+                      height: 250,
+                      width: 250,
+                      radius: 10,
+                    )))
+            : Icon(Icons.broken_image);
   }
 
   Widget receiverLayout(Message message) {

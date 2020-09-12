@@ -22,10 +22,11 @@ class PickupScreen extends StatefulWidget {
 class _PickupScreenState extends State<PickupScreen> {
   final CallMethods callMethods = CallMethods();
   @override
-  void initState(){
+  void initState() {
     super.initState();
     FlutterRingtonePlayer.playRingtone();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,11 +69,10 @@ class _PickupScreenState extends State<PickupScreen> {
                   onPressed: () async {
                     FlutterRingtonePlayer.stop();
                     await callMethods.endCall(call: widget.call);
-
                   },
                 ),
                 SizedBox(width: 64),
-                IconButton( 
+                IconButton(
                   icon: Icon(
                     Icons.call,
                     size: 32,
@@ -98,26 +98,33 @@ class _PickupScreenState extends State<PickupScreen> {
                   //         : {},
                   onPressed: () async {
                     FlutterRingtonePlayer.stop();
+                    await callMethods.callCollection
+                        .document(widget.call.callerId)
+                        .setData({"has_accepted": true}, merge: true);
+                    await callMethods.callCollection
+                        .document((widget.call.receiverId))
+                        .setData({"has_accepted": true}, merge: true);
+
                     return widget.call.isCall == "video"
-                      ? await Permissions
-                              .cameraandmicrophonePermissionsGranted()
-                          ? Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    VideoCallScreen(call: widget.call),
-                              ),
-                            )
-                          : {}
-                      : await Permissions.microphonePermissionsGranted()
-                          ? Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    VoiceCallScreen(call: widget.call),
-                              ),
-                            )
-                          : {};
+                        ? await Permissions
+                                .cameraandmicrophonePermissionsGranted()
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      VideoCallScreen(call: widget.call),
+                                ),
+                              )
+                            : {}
+                        : await Permissions.microphonePermissionsGranted()
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      VoiceCallScreen(call: widget.call),
+                                ),
+                              )
+                            : {};
                   },
                 ),
               ],
