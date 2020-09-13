@@ -42,9 +42,10 @@ class FirestoreService {
     }
   }
 
-  Future createGroup(Group group) async {
+  Future createGroup(data) async {
+    Group group = Group();
     try {
-      await _groupsCollectionReference.document(group.uid).setData(group.toMap(group));
+      await _groupsCollectionReference.add(group.toMap(data));
     } catch (e) {
       // TODO: Find or create a way to repeat error handling without so much repeated code
       if (e is PlatformException) {

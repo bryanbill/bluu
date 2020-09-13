@@ -1,4 +1,6 @@
 import 'package:bluu/components/upload_images_page.dart';
+import 'package:bluu/services/authentication_service.dart';
+import 'package:bluu/utils/locator.dart';
 import 'package:bluu/widgets/posts_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   PageController _pageController;
 
+  final AuthenticationService _authenticationService =
+      locator<AuthenticationService>();
   // ignore: unused_field
   int _page = 0;
 
@@ -37,11 +41,12 @@ class _HomePageState extends State<HomePage> {
       this._page = page;
     });
   }
- final _globalKey = GlobalKey<ScaffoldState>();
+
+  final _globalKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Padding(
-      key:_globalKey,
+      key: _globalKey,
       padding: const EdgeInsets.all(8.0),
       child: PageView(
         physics: BouncingScrollPhysics(),
@@ -64,6 +69,8 @@ class Posts extends StatefulWidget {
 class _PostsState extends State<Posts> {
   List<NetworkImage> _listOfImages = <NetworkImage>[];
 
+  final AuthenticationService _authenticationService =
+      locator<AuthenticationService>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,25 +79,67 @@ class _PostsState extends State<Posts> {
         title: Text("Community"),
       ),
       body: StreamBuilder(
-          stream: Firestore.instance.collection('images').snapshots(),
+          stream: Firestore.instance
+              .collection('posts')
+              .where('to',
+                  arrayContains: _authenticationService.currentUser.uid)
+              .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-               
               return ListView.builder(
                 padding: EdgeInsets.only(top: 0),
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index) {
-                   _listOfImages = [];
-                 for (int i = 0;
+                  _listOfImages = [];
+                  String desc;
+                  for (int i = 0;
                       i < snapshot.data.documents[index].data['urls'].length;
                       i++) {
-                   
-                      _listOfImages.add(NetworkImage(
+                    _listOfImages.add(NetworkImage(
                         snapshot.data.documents[index].data['urls'][i]));
-                    
                   }
+
+                  desc = snapshot.data.documents[index].data['desc'];
+                  List likes = snapshot.data.documents[index].data['likes'];
+                  List shares = snapshot.data.documents[index].data['shares'];
+                  List repost = snapshot.data.documents[index].data['repost'];
+                  String by = snapshot.data.documents[index].data['by'];
+                  String profilePhoto =
+                      snapshot.data.documents[index].data['profilePhoto'];
+                  Timestamp timeStamp =
+                      snapshot.data.documents[index].data['timestamp'];
+
+                  DateTime dt = timeStamp.toDate();
+                  DateTime now = DateTime.now();
+                  int diff1 = now.difference(dt).inMinutes;
+                  String time;
+                  if (diff1 < 6) {
+                    time = "Moments Ago";
+                  } else {
+                    if (diff1 > 5 && diff1 <= 59) {
+                      time = diff1.toString() + 'm Ago';
+                    } else {
+                      int diff2 = now.difference(dt).inHours;
+                      if (diff2 < 24) {
+                        time = diff2.toString()+'h ago';
+                      } else {
+                        int diff3 = now.difference(dt).inDays;
+                        if (diff3 < 8) {
+                          time = diff3.toString()+'d ago';
+                        }
+                      }
+                    }
+                  }
+                  print(diff1.toString());
                   return PostWidget(
                     listOfImages: _listOfImages,
+                    desc: desc,
+                    likes: likes,
+                    shares: shares,
+                    by: by,
+                    time: time,
+                    repost: repost,
+                    profilePhoto: profilePhoto,
                   );
                 },
               );

@@ -2,6 +2,7 @@ import 'package:bluu/utils/locator.dart';
 import 'package:bluu/models/user.dart';
 import 'package:bluu/services/analytics_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:bluu/services/firestore_service.dart';
 
@@ -9,7 +10,8 @@ class AuthenticationService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirestoreService _firestoreService = locator<FirestoreService>();
   final AnalyticsService _analyticsService = locator<AnalyticsService>();
-
+  
+  FirebaseMessaging _firebaseMessaging = locator<FirebaseMessaging>();
   User _currentUser;
   User get currentUser => _currentUser;
 
@@ -40,12 +42,21 @@ class AuthenticationService {
         email: email,
         password: password,
       );
-
+      String token; 
+ token = 
+    await _firebaseMessaging.getToken().then((deviceToken) {
+      
+        String token = deviceToken.toString();
+        return token;
+      
+    });
+  
       // create a new user profile on firestore
       _currentUser = User(
           uid: authResult.user.uid,
           email: email,
           name: fullName,
+          firebaseToken: token,
           verified: false);
 
       await _firestoreService.createUser(_currentUser);

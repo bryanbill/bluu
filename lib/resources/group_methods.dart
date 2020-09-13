@@ -74,18 +74,9 @@ class GroupMethods {
     }
   }
 
-  Stream<QuerySnapshot> fetchGroups({String userId}) => _userCollection
-      .document(userId)
-      .collection(GROUPS_COLLECTION)
-      .snapshots();
+  Stream<QuerySnapshot> fetchGroups({String userId}) =>
+      _groupCollection.where('users', arrayContains: userId).snapshots();
 
-  Stream<QuerySnapshot> fetchLastMessageBetween({
-    @required String senderId,
-    @required String receiverId,
-  }) =>
-      _messageCollection
-          .document(senderId)
-          .collection(receiverId)
-          .orderBy("timestamp")
-          .snapshots();
+  Stream<QuerySnapshot> fetchLastMessageBetween({@required String groupId}) =>
+      _messageCollection.orderBy("timestamp").snapshots();
 }

@@ -1,14 +1,19 @@
 import 'package:bluu/models/contact.dart';
 import 'package:bluu/models/group.dart';
+import 'package:bluu/models/group_members.dart';
+import 'package:bluu/models/text_controller.dart';
 import 'package:bluu/models/user.dart';
 import 'package:bluu/resources/contact_methods.dart';
 import 'package:bluu/services/authentication_service.dart';
 import 'package:bluu/services/firestore_service.dart';
 import 'package:bluu/utils/locator.dart';
 import 'package:bluu/widgets/quiet_box.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
+import 'callscreens/pickup/pickup_layout.dart';
 import 'chatscreens/widgets/cached_image.dart';
 
 class NewGroup extends StatefulWidget {
@@ -21,15 +26,15 @@ final AuthenticationService _authenticationService =
 final ContactMethods _contactMethods = ContactMethods();
 final FirestoreService _firestoreService = locator<FirestoreService>();
 
+///groupMembersAdd.members.add(_authenticationService.currentUser.uid);
+
 class _NewGroupState extends State<NewGroup> {
   TextEditingController _text = TextEditingController();
-
-  List _uids = [_authenticationService.currentUser.username];
-  int _value = 0;
-
-  createGroup(Group group){
-    
-  }
+  TextEditingController _editingController = TextEditingController();
+  final GroupMembersAdd groupMembersAdd = Get.put(GroupMembersAdd());
+  final TextCountController textCountController =
+      Get.put(TextCountController());
+  createGroup(Group group) {}
   _displayDialog(BuildContext context) async {
     return showDialog(
         context: context,
@@ -51,6 +56,7 @@ class _NewGroupState extends State<NewGroup> {
                     // dialog centre
                     new Container(
                       child: new TextFormField(
+                        controller: _editingController,
                         inputFormatters: [
                           new LengthLimitingTextInputFormatter(256),
                         ],
@@ -95,7 +101,26 @@ class _NewGroupState extends State<NewGroup> {
                       decoration: new BoxDecoration(),
                       child: FlatButton(
                         highlightColor: Theme.of(context).accentColor,
-                        onPressed: () {},
+                        onPressed: () async {
+                          Group group = Group(
+                              uid: _authenticationService.currentUser.uid,
+                              name: _text.text,
+                              users: groupMembersAdd.members+[_authenticationService.currentUser.uid],
+                              avatar:
+                                  "https://images.unsplash.com/photo-1599968457111-a917cc30bc06?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+                              public: true,
+                              limit: false,
+                              link: _text.text + '.io',
+                              desc: _editingController.text,
+                              createdOn: Timestamp.now());
+                          await _firestoreService
+                              .createGroup(group)
+                              .then((value) {
+                            Navigator.of(context, rootNavigator: true)
+                                .pop('dialog');
+                            Get.back();
+                          });
+                        },
                         child: new Text(
                           'Create Group',
                           style: TextStyle(
@@ -124,31 +149,35 @@ class _NewGroupState extends State<NewGroup> {
           if (snapshot.hasData) {
             return Container(
               width: 300,
-              child: ListTile(
-                  leading: CachedImage(
-                    user.profilePhoto,
-                    radius: 50,
-                    isRound: true,
-                  ),
-                  title: Text(user.name),
-                  subtitle: Text(user.username ?? '..'),
-                  trailing: _uids.contains(user.name)
-                      ? IconButton(
-                          icon: Icon(Icons.done,
-                              color: Theme.of(context).accentColor),
-                          onPressed: () {
-                            setState(() {
-                              _uids.remove(user.name);
-                            });
-                          },
-                        )
-                      : IconButton(
-                          icon: Icon(Icons.add),
-                          onPressed: () {
-                            setState(() {
-                              _uids.add(user.name);
-                            });
-                          })),
+              child: GetBuilder<GroupMembersAdd>(
+                builder: (value) => ListTile(
+                    leading: CachedImage(
+                      user.profilePhoto,
+                      radius: 50,
+                      isRound: true,
+                    ),
+                    title: Text(user.name),
+                    subtitle: Text(user.username ?? '..'),
+                    trailing: value.members != null
+                        ? value.members.contains(user.uid)
+                            ? IconButton(
+                                icon: Icon(Icons.done,
+                                    color: Theme.of(context).accentColor),
+                                onPressed: () {
+                                  value.remove(user.uid);
+                                },
+                              )
+                            : IconButton(
+                                icon: Icon(Icons.add),
+                                onPressed: () {
+                                  value.add(user.uid);
+                                })
+                        : IconButton(
+                            icon: Icon(Icons.add),
+                            onPressed: () {
+                              value.add(user.uid);
+                            })),
+              ),
             );
           }
           return SizedBox();
@@ -161,79 +190,120 @@ class _NewGroupState extends State<NewGroup> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).canvasColor,
-        title: TextField(
-          inputFormatters: [
-            new LengthLimitingTextInputFormatter(20),
+    return PickupLayout(
+      scaffold: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).canvasColor,
+          title: GetBuilder<TextCountController>(
+              builder: (textCount) => TextField(
+                    inputFormatters: [
+                      new LengthLimitingTextInputFormatter(20),
+                    ],
+                    controller: _text,
+                    onChanged: (value) {
+                      textCount.increment(value);
+                    },
+                    decoration: InputDecoration(
+                      suffix: Text(
+                          (20 - int.parse(textCount.count.toString()))
+                              .toString(),
+                          style: TextStyle(
+                              color:
+                                  (20 - int.parse(textCount.count.toString()) <
+                                          6)
+                                      ? Colors.red
+                                      : null)),
+                    ),
+                  )),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.create),
+              onPressed: () {
+                if (textCountController.count != RxInt(0) &&
+                    groupMembersAdd.members.length != 0)
+                  _displayDialog(context);
+              },
+            )
           ],
-          controller: _text,
-          onChanged: (value) {
-            setState(() {
-              _value = value.length;
-            });
-          },
-          decoration: InputDecoration(
-              suffix: Text((20 - _value).toString(),
-                  style:
-                      TextStyle(color: (20 - _value < 6) ? Colors.red : null))),
         ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.create),
-            onPressed: () {
-              if (_value != 0 && _uids.length != 0) _displayDialog(context);
-            },
-          )
-        ],
-      ),
-      body: Column(
-        children: [
-          Container(child: Text(_uids.length.toString())),
-          Container(
-            height: 200,
-            child: ListView.builder(
-                itemCount: _uids.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Container(
-                        width: 100,
-                        child: Text(
-                          _uids[index] ?? 'SomeONe',
-                          overflow: TextOverflow.ellipsis,
-                        )),
-                  );
-                }),
-          ),
-          SizedBox(height: 5, child: Divider(height: 3)),
-          StreamBuilder(
-              stream: _contactMethods.fetchContacts(
-                userId: _authenticationService.currentUser.uid,
-              ),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  var docList = snapshot.data.documents;
+        body: GetBuilder<GroupMembersAdd>(
+            init: GroupMembersAdd(),
+            builder: (value) => Column(
+                  children: [
+                    Container(
+                        child: Text(value.members != null
+                            ? value.members.length.toString()
+                            : "0")),
+                    Container(
+                      height: 200,
+                      child: value.members != null
+                          ? ListView.builder(
+                              itemCount: value.members.length,
+                              itemBuilder: (context, index) {
+                                return StreamBuilder<DocumentSnapshot>(
+                                    stream: _firestoreService.getUserStream(
+                                        uid: value.members[index]),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.hasData) {
+                                        var docList = snapshot.data;
 
-                  if (docList.isEmpty) {
-                    return ContactQuietBox();
-                  }
-                  return Expanded(
-                    child: GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2, childAspectRatio: 1),
-                        itemCount: docList.length,
-                        itemBuilder: (context, index) {
-                          Contact contact =
-                              Contact.fromMap(docList[index].data);
-                          print(contact.uid);
-                          return contactList(context, contact);
+                                        if (docList.isNull) {
+                                          return SizedBox();
+                                        }
+                                        User memberInfo =
+                                            User.fromMap(docList.data);
+                                        return ListTile(
+                                          leading: CachedImage(
+                                            memberInfo.profilePhoto ?? "",
+                                            radius: 25,
+                                            isRound: true,
+                                          ),
+                                          title: Container(
+                                              width: 100,
+                                              child: Text(
+                                                memberInfo.name ?? 'SomeONe',
+                                                overflow: TextOverflow.ellipsis,
+                                              )),
+                                        );
+                                      }
+
+                                      return Center(
+                                          child: CircularProgressIndicator());
+                                    });
+                              })
+                          : Container(),
+                    ),
+                    SizedBox(height: 5, child: Divider(height: 3)),
+                    StreamBuilder(
+                        stream: _contactMethods.fetchContacts(
+                          userId: _authenticationService.currentUser.uid,
+                        ),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            var docList = snapshot.data.documents;
+
+                            if (docList.isEmpty) {
+                              return ContactQuietBox();
+                            }
+                            return Expanded(
+                              child: GridView.builder(
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 2,
+                                          childAspectRatio: 1),
+                                  itemCount: docList.length,
+                                  itemBuilder: (context, index) {
+                                    Contact contact =
+                                        Contact.fromMap(docList[index].data);
+                                    print(contact.uid);
+                                    return contactList(context, contact);
+                                  }),
+                            );
+                          }
+                          return Center(child: CircularProgressIndicator());
                         }),
-                  );
-                }
-                return Center(child: CircularProgressIndicator());
-              }),
-        ],
+                  ],
+                )),
       ),
     );
   }

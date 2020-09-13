@@ -15,7 +15,6 @@ class GroupListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return PickupLayout(
       scaffold: Scaffold(
-        backgroundColor: UniversalVariables.transparentColor,
         body: GroupListContainer(),
         floatingActionButton: NewGroupButton(),
       ),
@@ -38,7 +37,7 @@ class GroupListContainer extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               var docList = snapshot.data.documents;
-
+             
               if (docList.isEmpty) {
                 return GroupQuietBox();
               }
@@ -46,7 +45,7 @@ class GroupListContainer extends StatelessWidget {
                 padding: EdgeInsets.all(10),
                 itemCount: docList.length,
                 itemBuilder: (context, index) {
-                  Group group = Group.fromMap(docList[index].data);
+                  Group group = Group.fromMap(docList[index].data, docList[index].documentID);
 
                   return GroupListView(group);
                 },

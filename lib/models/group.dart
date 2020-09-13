@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Group {
+  String docId;
   String uid;
+  String name;
   List users;
   String desc;
   String avatar;
@@ -9,10 +11,14 @@ class Group {
   bool limit;
   String link;
   Timestamp createdOn;
+  String firebaseToken;
 
   Group({
     this.uid,
+    this.docId,
+    this.firebaseToken,
     this.users,
+    this.name,
     this.avatar,
     this.public,
     this.limit,
@@ -21,21 +27,26 @@ class Group {
     this.createdOn,
   });
 
-  Map toMap(Group contact) {
+  Map toMap(Group group) {
     var data = Map<String, dynamic>();
-    data['contact_id'] = contact.uid;
-    data['users'] = contact.users;
-    data['avatar'] = contact.avatar;
-    data['public'] = contact.public;
-    data['limit'] = contact.limit;
-    data['link'] = contact.link;
-    data['desc'] = contact.desc;
-    data['created_on'] = contact.createdOn;
+    data['token'] = group.firebaseToken;
+    data['contact_id'] = group.uid;
+    data['name'] = group.name;
+    data['users'] = group.users;
+    data['avatar'] = group.avatar;
+    data['public'] = group.public;
+    data['limit'] = group.limit;
+    data['link'] = group.link;
+    data['desc'] = group.desc;
+    data['created_on'] = group.createdOn;
     return data;
   }
 
-  Group.fromMap(Map<String, dynamic> mapData) {
+  Group.fromMap(Map<String, dynamic> mapData, docId) {
     this.uid = mapData['contact_id'];
+    this.firebaseToken = mapData['token'];
+    this.docId = docId;
+    this.name = mapData['name'];
     this.users = mapData['users'];
     this.avatar = mapData['avatar'];
     this.public = mapData['public'];

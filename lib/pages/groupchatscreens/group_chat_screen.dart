@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:convert';
 
+import 'package:bluu/models/group.dart';
 import 'package:bluu/pages/callscreens/pickup/pickup_layout.dart';
 import 'package:bluu/pages/chatscreens/widgets/cached_image.dart';
 import 'package:bluu/services/authentication_service.dart';
@@ -28,16 +29,16 @@ import 'package:bluu/utils/universal_variables.dart';
 import 'package:bluu/utils/utilities.dart';
 import 'package:bluu/widgets/custom_tile.dart';
 
-class ChatScreen extends StatefulWidget {
-  final User receiver;
+class GroupChatScreen extends StatefulWidget {
+  final Group receiver;
 
-  ChatScreen({this.receiver});
+  GroupChatScreen({this.receiver});
 
   @override
-  _ChatScreenState createState() => _ChatScreenState(this.receiver);
+  _GroupChatScreenState createState() => _GroupChatScreenState(this.receiver);
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _GroupChatScreenState extends State<GroupChatScreen> {
   TextEditingController textFieldController = TextEditingController();
   FocusNode textFieldFocus = FocusNode();
 
@@ -59,9 +60,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
   ImageUploadProvider _imageUploadProvider;
 
-  User receiver;
+  Group receiver;
 
-  _ChatScreenState(this.receiver);
+  _GroupChatScreenState(this.receiver);
 
   @override
   void initState() {
@@ -101,7 +102,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
     return PickupLayout(
       scaffold: Scaffold(
-        backgroundColor: UniversalVariables.whiteColor,
         appBar: customAppBar(context),
         body: Column(
           children: <Widget>[
@@ -378,9 +378,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
       textFieldController.text = "";
 
-      _chatMethods.addMessageToDb(_message, sender, widget.receiver);
-      sendNotification(_message.message.toString(), sender.name.toString(),
-          widget.receiver.firebaseToken.toString());
+      // _groupchatMethods.addMessageToDb(_message, sender, widget.receiver);
+      // sendNotification(_message.message.toString(), sender.name.toString(),
+      //     widget.receiver.firebaseToken.toString());
     }
 
     return Container(
@@ -422,9 +422,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   },
                   decoration: InputDecoration(
                     hintText: "Type a message",
-                    hintStyle: TextStyle(
-                      color: UniversalVariables.greyColor,
-                    ),
+                   
                     border: OutlineInputBorder(
                         borderRadius: const BorderRadius.all(
                           const Radius.circular(50.0),
@@ -433,7 +431,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     filled: true,
-                    fillColor: UniversalVariables.separatorColor,
+                    fillColor: Colors.grey[300],
                   ),
                 ),
                 IconButton(
@@ -452,7 +450,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   },
                   icon: Icon(
                     Icons.face,
-                    color: UniversalVariables.blueColor,
+                    color: Colors.black,
                   ),
                 ),
               ],
@@ -582,7 +580,7 @@ class _ChatScreenState extends State<ChatScreen> {
               await Permissions.cameraandmicrophonePermissionsGranted()
                   ? CallUtils.dialVideo(
                       from: sender,
-                      to: widget.receiver,
+                      //   to: widget.receiver,
                       context: context,
                       callis: "video")
                   : {},
@@ -595,7 +593,7 @@ class _ChatScreenState extends State<ChatScreen> {
               await Permissions.microphonePermissionsGranted()
                   ? CallUtils.dialVoice(
                       from: sender,
-                      to: widget.receiver,
+                      // to: widget.receiver,
                       context: context,
                       callis: "audio")
                   : {},

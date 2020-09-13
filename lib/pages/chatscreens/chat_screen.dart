@@ -390,7 +390,7 @@ class _ChatScreenState extends State<ChatScreen> {
         "collapse_key": "type_a",
         "priority": "high",
         "notification": {
-          "title": "$sender",
+          "title": "$sender", 
           "body": "$message",
         },
         "data": {
@@ -529,6 +529,8 @@ class _ChatScreenState extends State<ChatScreen> {
     return Container(
       padding: EdgeInsets.all(10),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           GestureDetector(
             onTap: () => addMediaModal(context),
@@ -563,29 +565,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         : setWritingTo(false);
                   },
                   decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        splashColor: Colors.transparent,
-                        highlightColor: Colors.transparent,
-                        onPressed: () {
-                          if (!showEmojiPicker) {
-                            // keyboard is visible
-                            hideKeyboard();
-                            showEmojiContainer();
-                          } else {
-                            //keyboard is hidden
-                            showKeyboard();
-                            hideEmojiContainer();
-                          }
-                        },
-                        icon: Icon(
-                          Icons.face,
-                          color: Colors.black,
-                        ),
-                      ),
                       hintText: "Type a message",
-                      hintStyle: TextStyle(
-                        color: UniversalVariables.greyColor,
-                      ),
                       border: OutlineInputBorder(
                           borderRadius: const BorderRadius.all(
                             const Radius.circular(50.0),
@@ -595,6 +575,25 @@ class _ChatScreenState extends State<ChatScreen> {
                           EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                       filled: true,
                       fillColor: Colors.grey[200]),
+                ),
+                IconButton(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onPressed: () {
+                    if (!showEmojiPicker) {
+                      // keyboard is visible
+                      hideKeyboard();
+                      showEmojiContainer();
+                    } else {
+                      //keyboard is hidden
+                      showKeyboard();
+                      hideEmojiContainer();
+                    }
+                  },
+                  icon: Icon(
+                    Icons.face,
+                    color: Colors.black,
+                  ),
                 ),
               ],
             ),

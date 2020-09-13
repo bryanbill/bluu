@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_clock_helper/customizer.dart';
 import 'package:flutter_clock_helper/model.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:bluu/provider/image_upload_provider.dart';
 import 'package:bluu/provider/user_provider.dart';
@@ -47,6 +48,9 @@ class _MainPageState extends State<Main> {
       _firebaseMessaging.requestNotificationPermissions(
           const IosNotificationSettings(sound: true, badge: true, alert: true));
     });
+    _firebaseMessaging.configure();
+
+
   }
 
   @override
@@ -78,7 +82,7 @@ class _MainPageState extends State<Main> {
                       child: _clock
                           ? ClockCustomizer(
                               (ClockModel model) => ParticleClock(model))
-                          : MaterialApp(
+                          : GetMaterialApp(
                               title: Constants.appName,
                               debugShowCheckedModeBanner: false,
                               theme: Constants.lightTheme(

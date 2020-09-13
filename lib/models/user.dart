@@ -31,6 +31,7 @@ class User {
     data["status"] = status;
     data["state"] = state;
     data["profile_photo"] = profilePhoto;
+    data['firebaseToken'] = firebaseToken;
     return data;
   }
 

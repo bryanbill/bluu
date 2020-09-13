@@ -56,6 +56,9 @@ dependencies:
   #for provider
   provider: ^4.1.2
 
+  #getx
+  get: ^3.10.2
+
   #for cached network image
   cached_network_image: ^2.2.0+1
 

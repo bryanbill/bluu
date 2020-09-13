@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bluu/constants/strings.dart';
 import 'package:bluu/models/contact.dart';
 import 'package:bluu/models/user.dart';
-
+ 
 class ContactMethods {
   static final Firestore _firestore = Firestore.instance;
 

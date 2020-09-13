@@ -1,7 +1,12 @@
 import 'package:bluu/components/multipicker.dart';
+import 'package:bluu/models/contact.dart';
+import 'package:bluu/services/authentication_service.dart';
+import 'package:bluu/utils/locator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 class UploadImages extends StatefulWidget {
@@ -17,6 +22,8 @@ class _UploadImagesState extends State<UploadImages> {
   String _error = 'No Error Dectected';
   bool isUploading = false;
 
+  final AuthenticationService _authenticationService =
+      locator<AuthenticationService>();
   @override
   void initState() {
     super.initState();
@@ -97,7 +104,6 @@ class _UploadImagesState extends State<UploadImages> {
                                       style: TextStyle(color: Colors.white)),
                                   actions: <Widget>[
                                     InkWell(
-                                     
                                       child: ThreeDContainer(
                                         width: 80,
                                         height: 30,
@@ -116,10 +122,7 @@ class _UploadImagesState extends State<UploadImages> {
                                 );
                               });
                         } else {
-                          SnackBar snackbar = SnackBar(
-                              content: Text('Please wait, we are uploading'));
-                          widget.globalKey.currentState.showSnackBar(snackbar);
-                          uploadImages();
+                          _displayDialog(context);
                         }
                       },
                       child: Container(
@@ -148,18 +151,129 @@ class _UploadImagesState extends State<UploadImages> {
     );
   }
 
-  void uploadImages() {
+  _displayDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          int chars = 0;
+          String desc = "";
+          return StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+              content: new Container(
+                width: 400.0,
+                height: 234.0,
+                decoration: new BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  borderRadius: new BorderRadius.all(new Radius.circular(32.0)),
+                ),
+                child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    // dialog centre
+                    new Container(
+                      child: new TextFormField(
+                        inputFormatters: [
+                          new LengthLimitingTextInputFormatter(256),
+                        ],
+                        onChanged: (value) {
+                          setState(() {
+                            chars = value.length;
+                            desc = value;
+                          });
+                        },
+                        textInputAction: TextInputAction.newline,
+                        decoration: new InputDecoration(
+                          suffix: Container(
+                            decoration: BoxDecoration(shape: BoxShape.circle),
+                            child: Text("$chars",
+                                style: TextStyle(
+                                    color:
+                                        256 - chars < 10 ? Colors.red : null)),
+                          ),
+                          labelText: "Description",
+                          fillColor: Colors.white,
+                          border: new OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(25.0),
+                            borderSide: new BorderSide(),
+                          ),
+                        ),
+                        validator: (val) {
+                          if (val.length == 0) {
+                            return "Can't be blank!";
+                          } else {
+                            return null;
+                          }
+                        },
+                        keyboardType: TextInputType.text,
+                        style: new TextStyle(
+                          fontFamily: "Poppins",
+                        ),
+                      ),
+                    ),
+
+                    // dialog bottom
+                    new Container(
+                      padding: new EdgeInsets.all(16.0),
+                      decoration: new BoxDecoration(),
+                      child: FlatButton(
+                        highlightColor: Theme.of(context).accentColor,
+                        onPressed: () {
+                          Get.back();
+                          Get.snackbar(
+                              "Uploading", "Please wait, we are uploading");
+                          uploadImages(desc);
+                        },
+                        child: new Text(
+                          'Post',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.0,
+                            fontFamily: 'helvetica_neue_light',
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          });
+        });
+  }
+
+  Future getFriends() async {
+    QuerySnapshot qShot = await Firestore.instance
+        .collection('users')
+        .document(_authenticationService.currentUser.uid)
+        .collection('contacts')
+        .getDocuments();
+    return qShot.documents
+        .map(
+          (doc) => doc.data['contact_id'],
+        )
+        .toList();
+  }
+
+  void uploadImages(String desc) async {
+    List friends = await getFriends();
     for (var imageFile in images) {
       postImage(imageFile).then((downloadUrl) {
         imageUrls.add(downloadUrl.toString());
         if (imageUrls.length == images.length) {
-          Firestore.instance
-              .collection('images')
-              .document()
-              .setData({'urls': imageUrls}).then((_) {
-            SnackBar snackbar =
-                SnackBar(content: Text('Uploaded Successfully'));
-            widget.globalKey.currentState.showSnackBar(snackbar);
+          Firestore.instance.collection('posts').document().setData({
+            'urls': imageUrls,
+            'to': friends + [_authenticationService.currentUser.uid],
+            'desc': desc,
+            'timestamp': Timestamp.now(),
+            'likes': [],
+            'shares': [],
+            'repost': [],
+            'profilePhoto': _authenticationService.currentUser.profilePhoto,
+            'by': _authenticationService.currentUser.name
+          }).then((_) {
+            Get.snackbar("Success", "Post made!");
             setState(() {
               images = [];
               imageUrls = [];
