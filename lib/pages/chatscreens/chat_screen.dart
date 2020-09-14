@@ -397,6 +397,7 @@ class _ChatScreenState extends State<ChatScreen> {
           "title": "$sender",
           "body": "$message",
           "sound": "default",
+          "tag":"$sender",
           "click_action": "FLUTTER_NOTIFICATION_CLICK",
         }
         // }

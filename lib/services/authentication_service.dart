@@ -57,6 +57,10 @@ class AuthenticationService {
           email: email,
           name: fullName,
           firebaseToken: token,
+          username: '@'+fullName.split(" ")[0]??fullName,
+          status: "Yeyy! Bluu rocks🥳",
+          public: true,
+          profilePhoto: "https://images.unsplash.com/photo-1599990323348-b8aebea736cf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
           verified: false);
 
       await _firestoreService.createUser(_currentUser);

@@ -1,5 +1,6 @@
 class User {
   String uid;
+  bool public;
   String name;
   String email;
   String username;
@@ -11,6 +12,7 @@ class User {
 
   User({
     this.uid,
+    this.public,
     this.name,
     this.verified,
     this.email,
@@ -24,6 +26,7 @@ class User {
   Map toMap() {
     var data = Map<String, dynamic>();
     data['uid'] = uid;
+    data['public'] = public;
     data['name'] = name;
     data['email'] = email;
     data['verified'] = verified;
@@ -39,6 +42,7 @@ class User {
   User.fromMap(Map<String, dynamic> mapData) {
     this.uid = mapData['uid'];
     this.name = mapData['name'];
+    this.public = mapData['public'];
     this.verified = mapData['verified'];
     this.email = mapData['email'];
     this.username = mapData['username'];

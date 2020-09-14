@@ -7,6 +7,7 @@ import 'package:bluu/utils/locator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:provider/provider.dart';
 import 'package:bluu/configs/agora_configs.dart';
 import 'package:bluu/models/call.dart';
@@ -70,7 +71,9 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
         // defining the logic
         switch (ds.data) {
           case null:
+
             // snapshot is null which means that call is hanged and documents are deleted
+            FlutterRingtonePlayer.stop();
             Navigator.pop(context);
             break;
 
@@ -384,56 +387,103 @@ class _VoiceCallScreenState extends State<VoiceCallScreen> {
             return callInfo
                 ? StreamBuilder<int>(
                     stream: _stopWatchTimer.secondTime,
-                    initialData:_stopWatchTimer.secondTime.value,
+                    initialData: _stopWatchTimer.secondTime.value,
                     builder: (context, snap) {
                       final value = snap.data;
                       final displayTime = StopWatchTimer.getDisplayTime(value);
                       return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              widget.call.receiverName,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
+                        child: widget.call.receiverId ==
+                                _authenticationService.currentUser.uid
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    widget.call.receiverName,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  SizedBox(height: 30),
+                                  CachedImage(
+                                    widget.call.receiverPic,
+                                    isRound: true,
+                                    radius: 150,
+                                  ),
+                                  SizedBox(height: 15),
+                                  Column(
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(8),
+                                        child: Text(
+                                          displayTime,
+                                          style: TextStyle(
+                                              fontSize: 40,
+                                              fontFamily: 'Helvetica',
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8),
+                                        child: Text(
+                                          value.toString(),
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontFamily: 'Helvetica',
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  //    _panel(),
+                                  _toolbar(),
+                                ],
+                              )
+                            : Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    widget.call.callerName,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  SizedBox(height: 30),
+                                  CachedImage(
+                                    widget.call.callerPic,
+                                    isRound: true,
+                                    radius: 150,
+                                  ),
+                                  SizedBox(height: 15),
+                                  Column(
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(8),
+                                        child: Text(
+                                          displayTime,
+                                          style: TextStyle(
+                                              fontSize: 40,
+                                              fontFamily: 'Helvetica',
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8),
+                                        child: Text(
+                                          value.toString(),
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontFamily: 'Helvetica',
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  //    _panel(),
+                                  _toolbar(),
+                                ],
                               ),
-                            ),
-                            SizedBox(height: 30),
-                            CachedImage(
-                              widget.call.receiverPic,
-                              isRound: true,
-                              radius: 150,
-                            ),
-                            SizedBox(height: 15),
-                            Column(
-                              children: <Widget>[
-                                Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Text(
-                                    displayTime,
-                                    style: TextStyle(
-                                        fontSize: 40,
-                                        fontFamily: 'Helvetica',
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Text(
-                                    value.toString(),
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontFamily: 'Helvetica',
-                                        fontWeight: FontWeight.w400),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            //    _panel(),
-                            _toolbar(),
-                          ],
-                        ),
                       );
                     })
                 : Center(
