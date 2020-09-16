@@ -7,16 +7,20 @@ import 'package:bluu/utils/locator.dart';
 import 'package:flutter/material.dart';
 import 'callscreens/pickup/pickup_layout.dart';
 
-class UserProfile extends StatefulWidget {
+class FriendProfile extends StatefulWidget {
+  final String uid;
+
+  const FriendProfile({Key key, this.uid}) : super(key: key);
   @override
-  _UserProfileState createState() => _UserProfileState();
+  _FriendProfileState createState() => _FriendProfileState(uid: uid);
 }
 
-class _UserProfileState extends State<UserProfile> {
-  final AuthenticationService _authenticationService =
-      locator<AuthenticationService>();
+class _FriendProfileState extends State<FriendProfile> {
+  final String uid;
   final FirestoreService _firestoreService = locator<FirestoreService>();
   static Random random = Random();
+
+  _FriendProfileState({this.uid});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +31,7 @@ class _UserProfileState extends State<UserProfile> {
       ),
       body: StreamBuilder(
           stream: _firestoreService.getUserStream(
-              uid: _authenticationService.currentUser.uid),
+              uid: uid),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return Container(
@@ -65,26 +69,15 @@ class _UserProfileState extends State<UserProfile> {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
+                        
                         FlatButton(
                           child: Icon(
-                            Icons.settings,
+                            Icons.delete_forever,
                             color: Colors.white,
                           ),
-                          color: Colors.grey,
+                          color: Colors.red,
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (_) => SettingsScreen()));
-                          },
-                        ),
-                        SizedBox(width: 10),
-                        FlatButton(
-                          child: Icon(
-                            Icons.account_box,
-                            color: Colors.white,
-                          ),
-                          color: Theme.of(context).accentColor,
-                          onPressed: () {
-                            _authenticationService.signOut();
+                         
                           },
                         ),
                       ],

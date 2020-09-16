@@ -45,7 +45,8 @@ dependencies:
 
   #for image
   image: ^2.1.13
-
+  photo_view: ^0.10.2
+  
   #carousel
   carousel_pro: ^1.0.0
 

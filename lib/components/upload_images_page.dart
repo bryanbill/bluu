@@ -1,5 +1,4 @@
 import 'package:bluu/components/multipicker.dart';
-import 'package:bluu/models/contact.dart';
 import 'package:bluu/services/authentication_service.dart';
 import 'package:bluu/utils/locator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,8 +9,8 @@ import 'package:get/get.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 
 class UploadImages extends StatefulWidget {
-  final GlobalKey<ScaffoldState> globalKey;
-  const UploadImages({Key key, this.globalKey}) : super(key: key);
+  final PageController page;
+  const UploadImages({Key key, @required this.page}) : super(key: key);
   @override
   _UploadImagesState createState() => new _UploadImagesState();
 }
@@ -21,12 +20,14 @@ class _UploadImagesState extends State<UploadImages> {
   List<String> imageUrls = <String>[];
   String _error = 'No Error Dectected';
   bool isUploading = false;
-
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
+
+  _UploadImagesState();
   @override
   void initState() {
     super.initState();
+    loadAssets.call();
   }
 
   @override
@@ -67,7 +68,6 @@ class _UploadImagesState extends State<UploadImages> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: widget.globalKey,
       body: Stack(
         children: <Widget>[
           Container(
@@ -87,7 +87,6 @@ class _UploadImagesState extends State<UploadImages> {
                         child: Center(
                             child: Text(
                           "Pick images",
-                          style: TextStyle(color: Colors.white),
                         )),
                       ),
                     ),
@@ -114,7 +113,6 @@ class _UploadImagesState extends State<UploadImages> {
                                         child: Center(
                                             child: Text(
                                           "Ok",
-                                          style: TextStyle(color: Colors.white),
                                         )),
                                       ),
                                     )
@@ -131,7 +129,6 @@ class _UploadImagesState extends State<UploadImages> {
                         child: Center(
                             child: Text(
                           "Post",
-                          style: TextStyle(color: Colors.white),
                         )),
                       ),
                     ),
@@ -219,9 +216,12 @@ class _UploadImagesState extends State<UploadImages> {
                       child: FlatButton(
                         highlightColor: Theme.of(context).accentColor,
                         onPressed: () {
-                          Get.back();
+                          Navigator.of(context, rootNavigator: true)
+                              .pop('desc');
+
                           Get.snackbar(
-                              "Uploading", "Please wait, we are uploading");
+                              "Uploading", "Please wait, we are uploading",
+                              colorText: Colors.white);
                           uploadImages(desc);
                         },
                         child: new Text(
@@ -263,6 +263,7 @@ class _UploadImagesState extends State<UploadImages> {
         imageUrls.add(downloadUrl.toString());
         if (imageUrls.length == images.length) {
           Firestore.instance.collection('posts').document().setData({
+            'uid': _authenticationService.currentUser.uid,
             'urls': imageUrls,
             'to': friends + [_authenticationService.currentUser.uid],
             'desc': desc,
@@ -273,11 +274,17 @@ class _UploadImagesState extends State<UploadImages> {
             'profilePhoto': _authenticationService.currentUser.profilePhoto,
             'by': _authenticationService.currentUser.name
           }).then((_) {
-            Get.snackbar("Success", "Post made!");
             setState(() {
               images = [];
               imageUrls = [];
             });
+            try {
+              widget.page.animateTo(0,
+                  duration: Duration(seconds: 1), curve: Curves.easeOut);
+            } catch (e) {
+              print("error from page: $e");
+            }
+            Get.snackbar("Success", "Post made!", colorText: Colors.white);
           });
         }
       }).catchError((err) {
@@ -296,10 +303,11 @@ class _UploadImagesState extends State<UploadImages> {
         selectedAssets: images,
         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
         materialOptions: MaterialOptions(
-          actionBarColor: "#abcdef",
+          actionBarColor: '#000000',
           actionBarTitle: "Upload Image",
           allViewTitle: "All Photos",
           useDetailsView: false,
+          statusBarColor: '#000000',
           selectCircleStrokeColor: "#000000",
         ),
       );

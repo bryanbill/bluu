@@ -6,17 +6,13 @@ import 'package:bluu/pages/home_page.dart';
 import 'package:bluu/pages/userprofile.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:bluu/enum/user_state.dart';
-import 'package:bluu/pages/pageviews/group_lists/group_list_screen.dart';
 import 'package:bluu/provider/user_provider.dart';
 import 'package:bluu/services/authentication_service.dart';
 import 'package:bluu/services/firestore_service.dart';
 import 'package:bluu/utils/locator.dart';
-import 'package:bluu/utils/utilities.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
-import 'callscreens/pickup/pickup_layout.dart';
-
 import 'chats_calls.dart';
 import 'pageviews/contact_lists/contact_list_screen.dart';
 

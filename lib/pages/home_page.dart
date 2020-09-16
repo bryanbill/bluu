@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
     _pageController.dispose();
   }
 
-  void onPageChanged(int page) {
+  onPageChanged(int page) {
     setState(() {
       this._page = page;
     });
@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
         onPageChanged: onPageChanged,
         children: [
           PickupLayout(scaffold: Posts()),
-          PickupLayout(scaffold: UploadImages(globalKey: _globalKey))
+          PickupLayout(scaffold: UploadImages(page: _pageController))
         ],
       ),
     );
@@ -83,6 +83,7 @@ class _PostsState extends State<Posts> {
               .collection('posts')
               .where('to',
                   arrayContains: _authenticationService.currentUser.uid)
+              .orderBy('timestamp', descending: true)
               .snapshots(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
@@ -104,6 +105,7 @@ class _PostsState extends State<Posts> {
                   List shares = snapshot.data.documents[index].data['shares'];
                   List repost = snapshot.data.documents[index].data['repost'];
                   String by = snapshot.data.documents[index].data['by'];
+                  String uid = snapshot.data.documents[index].data['uid'];
                   String profilePhoto =
                       snapshot.data.documents[index].data['profilePhoto'];
                   Timestamp timeStamp =
@@ -112,6 +114,8 @@ class _PostsState extends State<Posts> {
                   DateTime dt = timeStamp.toDate();
                   DateTime now = DateTime.now();
                   int diff1 = now.difference(dt).inMinutes;
+                  int diff2 = now.difference(dt).inHours;
+                  int diff3 = now.difference(dt).inDays;
                   String time;
                   if (diff1 < 6) {
                     time = "Moments Ago";
@@ -119,13 +123,17 @@ class _PostsState extends State<Posts> {
                     if (diff1 > 5 && diff1 <= 59) {
                       time = diff1.toString() + 'm Ago';
                     } else {
-                      int diff2 = now.difference(dt).inHours;
                       if (diff2 < 24) {
-                        time = diff2.toString()+'h ago';
+                        time = diff2.toString() + 'h ago';
                       } else {
-                        int diff3 = now.difference(dt).inDays;
                         if (diff3 < 8) {
-                          time = diff3.toString()+'d ago';
+                          time = diff3.toString() + 'd ago';
+                        } else if (diff3 > 7 && diff3 < 5) {
+                          time = diff3.toString() + 'w ago';
+                        } else if (diff3 > 5) {
+                          int months = diff3.floor();
+
+                          time = months.toString() + 'months ago';
                         }
                       }
                     }
@@ -134,6 +142,7 @@ class _PostsState extends State<Posts> {
                   return PostWidget(
                     listOfImages: _listOfImages,
                     desc: desc,
+                    uid: uid,
                     likes: likes,
                     shares: shares,
                     by: by,

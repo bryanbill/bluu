@@ -193,25 +193,30 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               onPressed: () async =>
                   await Permissions.cameraandmicrophonePermissionsGranted()
-                      ? CallUtils.dialVideo(
-                          from: sender,
-                          to: widget.receiver,
-                          context: context,
-                          callis: "video")
+                      ? sendNotification("You have a video call from ${sender.name}",
+                              sender.name, widget.receiver.firebaseToken)
+                          .then((value) => CallUtils.dialVideo(
+                              from: sender,
+                              to: widget.receiver,
+                              context: context,
+                              callis: "video"))
                       : {},
             ),
             IconButton(
               icon: Icon(
                 Icons.phone,
               ),
-              onPressed: () async =>
-                  await Permissions.microphonePermissionsGranted()
-                      ? CallUtils.dialVoice(
-                          from: sender,
-                          to: widget.receiver,
-                          context: context,
-                          callis: "audio")
-                      : {},
+              onPressed: () async {
+                return await Permissions.microphonePermissionsGranted()
+                    ? sendNotification("You have a call from ${sender.name}",
+                            sender.name, widget.receiver.firebaseToken)
+                        .then((value) => CallUtils.dialVoice(
+                            from: sender,
+                            to: widget.receiver,
+                            context: context,
+                            callis: "audio"))
+                    : {};
+              },
             )
           ],
         ),
@@ -390,14 +395,14 @@ class _ChatScreenState extends State<ChatScreen> {
         "collapse_key": "type_a",
         "priority": "high",
         "notification": {
-          "title": "$sender", 
+          "title": "$sender",
           "body": "$message",
         },
         "data": {
           "title": "$sender",
           "body": "$message",
           "sound": "default",
-          "tag":"$sender",
+          "tag": "$sender",
           "click_action": "FLUTTER_NOTIFICATION_CLICK",
         }
         // }

@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:bluu/pages/chatscreens/widgets/cached_image.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:bluu/models/call.dart';
 import 'package:bluu/resources/call_methods.dart';
@@ -21,10 +24,28 @@ class PickupScreen extends StatefulWidget {
 
 class _PickupScreenState extends State<PickupScreen> {
   final CallMethods callMethods = CallMethods();
+  Connectivity connectivity = Connectivity();
+  StreamSubscription<ConnectivityResult> connectivitySubs;
+  var connectivityStatus = 'Unknown';
   @override
   void initState() {
     super.initState();
     FlutterRingtonePlayer.playRingtone();
+    connectivitySubs = connectivity.onConnectivityChanged
+        .listen((ConnectivityResult result) async {
+      connectivityStatus = result.toString();
+      if (result == ConnectivityResult.none) {
+        FlutterRingtonePlayer.stop();
+        await callMethods.endCall(call: widget.call);
+      }
+    });
+  }
+
+  @override
+  dispose() {
+    connectivitySubs.cancel();
+    FlutterRingtonePlayer.stop();
+    super.dispose();
   }
 
   @override

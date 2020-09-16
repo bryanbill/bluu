@@ -1,5 +1,8 @@
+import 'package:bluu/components/post_image_view.dart';
+import 'package:bluu/pages/friend_profile.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 const duration = Duration(milliseconds: 3000);
 
@@ -7,6 +10,7 @@ class PostWidget extends StatelessWidget {
   final List<NetworkImage> listOfImages;
   final String desc;
   final String by;
+  final String uid;
   final time;
   final String profilePhoto;
   final List shares;
@@ -17,6 +21,7 @@ class PostWidget extends StatelessWidget {
       this.listOfImages,
       this.desc,
       this.by,
+      this.uid,
       this.time,
       this.profilePhoto,
       this.shares,
@@ -30,40 +35,43 @@ class PostWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        ListTile(
-          leading: Container(
-            alignment: Alignment.centerLeft,
-            width: 50,
-            height: 50,
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(
-                profilePhoto ?? '',
-              ),
-              radius: 25,
-            ),
-          ),
-          contentPadding: EdgeInsets.all(0),
-          title: Row(
-            textBaseline: TextBaseline.alphabetic,
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            children: [
-              Text(
-                by ?? "Smith Joe",
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
+        GestureDetector(
+          onTap: () => Get.to(FriendProfile(uid: uid)),
+          child: ListTile(
+            leading: Container(
+              alignment: Alignment.centerLeft,
+              width: 50,
+              height: 50,
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(
+                  profilePhoto ?? '',
                 ),
+                radius: 25,
               ),
-            ],
-          ),
-          subtitle: Text(time ?? "2 am"),
-          trailing: IconButton(
-            icon: Icon(Icons.more_vert),
-            onPressed: () {},
+            ),
+            contentPadding: EdgeInsets.all(0),
+            title: Row(
+              textBaseline: TextBaseline.alphabetic,
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              children: [
+                Text(
+                  by ?? "Smith Joe",
+                  textAlign: TextAlign.left,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            subtitle: Text(time ?? "2 am"),
+            trailing: IconButton(
+              icon: Icon(Icons.more_vert),
+              onPressed: () {},
+            ),
           ),
         ),
         ListTile(
@@ -73,9 +81,19 @@ class PostWidget extends StatelessWidget {
         Container(
           height: 300,
           child: Carousel(
+              onImageTap: (int index) {
+                return Get.to(ViewImages(
+                  list: listOfImages,
+                  reposts: repost,
+                  shares: shares,
+                  likes: likes,
+                  desc: desc,
+                ));
+              },
               boxFit: BoxFit.cover,
               images: listOfImages,
               autoplay: false,
+              showIndicator: listOfImages.length > 1 ? true : false,
               indicatorBgPadding: 5.0,
               dotPosition: DotPosition.bottomCenter,
               animationCurve: Curves.easeIn,
@@ -91,7 +109,7 @@ class PostWidget extends StatelessWidget {
               children: [
                 Icon(
                   Icons.favorite_border,
-                  color: Colors.pink,
+                  color: Colors.grey[300],
                   size: 24.0,
                   semanticLabel: 'Text to announce in accessibility modes',
                 ),
@@ -102,8 +120,8 @@ class PostWidget extends StatelessWidget {
               children: [
                 Icon(
                   Icons.room,
-                  color: Colors.green,
-                  size: 30.0,
+                  color: Colors.grey[300],
+                  size: 24.0,
                 ),
                 Text(shares.length.toString())
               ],
@@ -112,8 +130,8 @@ class PostWidget extends StatelessWidget {
               children: [
                 Icon(
                   Icons.explore,
-                  color: Colors.blue,
-                  size: 36.0,
+                  color: Colors.grey[300],
+                  size: 24.0,
                 ),
                 Text(repost.length.toString())
               ],
