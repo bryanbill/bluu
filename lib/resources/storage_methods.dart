@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bluu/resources/group_methods.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/widgets.dart';
 import 'package:bluu/models/user.dart';
@@ -50,5 +51,25 @@ class StorageMethods {
     imageUploadProvider.setToIdle();
 
     chatMethods.setImageMsg(url, receiverId, senderId);
+  }
+
+  void groupUploadImage({
+    @required File image,
+    @required String receiverId,
+    @required String senderId,
+    @required ImageUploadProvider imageUploadProvider,
+  }) async {
+    final GroupMethods groupMethods = GroupMethods();
+
+    // Set some loading value to db and show it to user
+    imageUploadProvider.setToLoading();
+
+    // Get url from the image bucket
+    String url = await uploadImageToStorage(image);
+
+    // Hide loading
+    imageUploadProvider.setToIdle();
+
+    groupMethods.setImageMsg(url, receiverId, senderId);
   }
 }

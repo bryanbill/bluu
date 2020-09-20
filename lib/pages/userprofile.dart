@@ -84,7 +84,7 @@ class _UserProfileState extends State<UserProfile> {
                           ),
                           color: Theme.of(context).accentColor,
                           onPressed: () {
-                            _authenticationService.signOut();
+                            return showAccountSettings(context);
                           },
                         ),
                       ],
@@ -128,6 +128,29 @@ class _UserProfileState extends State<UserProfile> {
             );
           }),
     ));
+  }
+
+  showAccountSettings(context) {
+    showModalBottomSheet(
+        context: context,
+        elevation: 0,
+        backgroundColor: Theme.of(context).canvasColor,
+        builder: (context) {
+          return Column(children: [
+            CircleAvatar(),
+            SizedBox(height: 10),
+            Text("User name"),
+            SizedBox(height: 10),
+            Text("email"),
+            SizedBox(height: 10),
+            Text("User name"),
+            SizedBox(height: 10),
+            Text("email"),
+            SizedBox(height: 10),
+            Text("User name"),
+            Text("email"),
+          ]);
+        });
   }
 
   Widget _buildCategory(String title) {

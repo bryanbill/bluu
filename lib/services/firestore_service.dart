@@ -126,7 +126,7 @@ class FirestoreService {
       if (postDocumentSnapshot.documents.isNotEmpty) {
         return postDocumentSnapshot.documents
             .map((snapshot) => Post.fromMap(snapshot.data, snapshot.documentID))
-            .where((mappedItem) => mappedItem.title != null)
+            .where((mappedItem) => mappedItem.userId != null)
             .toList();
       }
     } catch (e) {
@@ -167,7 +167,7 @@ class FirestoreService {
       if (postsSnapshot.documents.isNotEmpty) {
         var posts = postsSnapshot.documents
             .map((snapshot) => Post.fromMap(snapshot.data, snapshot.documentID))
-            .where((mappedItem) => mappedItem.title != null)
+            .where((mappedItem) => mappedItem.userId != null)
             .toList();
 
         // #8: Check if the page exists or not

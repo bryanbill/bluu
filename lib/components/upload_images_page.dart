@@ -274,7 +274,7 @@ class _UploadImagesState extends State<UploadImages> {
             'profilePhoto': _authenticationService.currentUser.profilePhoto,
             'by': _authenticationService.currentUser.name
           }).then((_) {
-            setState(() {
+            setState(() {  
               images = [];
               imageUrls = [];
             });

@@ -30,8 +30,7 @@ class _FriendProfileState extends State<FriendProfile> {
         backgroundColor: Theme.of(context).canvasColor,
       ),
       body: StreamBuilder(
-          stream: _firestoreService.getUserStream(
-              uid: uid),
+          stream: _firestoreService.getUserStream(uid: uid),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return Container(
@@ -53,12 +52,24 @@ class _FriendProfileState extends State<FriendProfile> {
                       radius: 50,
                     ),
                     SizedBox(height: 10),
-                    Text(
-                      user.name,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 22,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          user.name,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                          ),
+                        ),
+                        user.verified
+                            ? Icon(Icons.verified_user,
+                                color: Theme.of(context).accentColor,
+                                size: 20,
+                                )
+                            : SizedBox()
+                      ],
                     ),
                     SizedBox(height: 3),
                     Text(
@@ -69,16 +80,31 @@ class _FriendProfileState extends State<FriendProfile> {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        
+                        FlatButton(
+                          child: Icon(
+                            Icons.message,
+                            color: Colors.white,
+                          ),
+                          color: Colors.greenAccent,
+                          onPressed: () {},
+                        ),
+                        SizedBox(width: 4),
+                        FlatButton(
+                          child: Icon(
+                            Icons.phone,
+                            color: Colors.white,
+                          ),
+                          color: Colors.blueAccent,
+                          onPressed: () {},
+                        ),
+                        SizedBox(width: 4),
                         FlatButton(
                           child: Icon(
                             Icons.delete_forever,
                             color: Colors.white,
                           ),
                           color: Colors.red,
-                          onPressed: () {
-                         
-                          },
+                          onPressed: () {},
                         ),
                       ],
                     ),

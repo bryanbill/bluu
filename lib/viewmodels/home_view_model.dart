@@ -44,7 +44,7 @@ class HomeViewModel extends BaseModel {
       setBusy(true);
       await _firestoreService.deletePost(postToDelete.documentId);
       // Delete the image after the post is deleted
-      await _cloudStorageService.deleteImage(postToDelete.imageFileName);
+      //await _cloudStorageService.deleteImage(postToDelete.imageFileName);
       setBusy(false);
     }
   }

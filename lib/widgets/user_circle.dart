@@ -1,4 +1,4 @@
-import 'package:bluu/pages/user_profile.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:bluu/provider/user_provider.dart';
@@ -17,8 +17,8 @@ class UserCircle extends StatelessWidget {
 
     return GestureDetector(
         onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (BuildContext context) => UserProfile()));
+          // Navigator.of(context).push(MaterialPageRoute(
+          //     builder: (BuildContext context) => UserProfile()));
         },
         child: Container(
           height: 40,

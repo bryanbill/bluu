@@ -4,13 +4,13 @@ import 'dart:convert';
 import 'package:bluu/models/group.dart';
 import 'package:bluu/pages/callscreens/pickup/pickup_layout.dart';
 import 'package:bluu/pages/chatscreens/widgets/cached_image.dart';
+import 'package:bluu/resources/group_methods.dart';
 import 'package:bluu/services/authentication_service.dart';
 import 'package:bluu/services/firestore_service.dart';
 import 'package:bluu/utils/locator.dart';
 import 'package:bluu/widgets/chatappbar.dart';
 import 'package:http/http.dart' as http;
 import 'package:bluu/configs/firebase_configs.dart';
-// import 'package:bluu/widgets/mainappbar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:emoji_picker/emoji_picker.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +44,8 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
 
   final StorageMethods _storageMethods = StorageMethods();
   final ChatMethods _chatMethods = ChatMethods();
+  
+  final GroupMethods _groupMethods = GroupMethods();
   final FirestoreService _firestoreService = locator<FirestoreService>();
 
   final AuthenticationService _authenticationService =
@@ -125,8 +127,8 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
 
   emojiContainer() {
     return EmojiPicker(
-      bgColor: UniversalVariables.separatorColor,
-      indicatorColor: UniversalVariables.blueColor,
+      bgColor: Theme.of(context).canvasColor,
+      indicatorColor: Theme.of(context).accentColor,
       rows: 3,
       columns: 7,
       onEmojiSelected: (emoji, category) {
@@ -144,9 +146,9 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
   Widget messageList() {
     return StreamBuilder(
       stream: Firestore.instance
-          .collection(MESSAGES_COLLECTION)
-          .document(_currentUserId)
-          .collection(widget.receiver.uid)
+          .collection('group_messages')
+          .document(receiver.docId)
+          .collection('messages')
           .orderBy(TIMESTAMP_FIELD, descending: true)
           .snapshots(),
       builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -291,7 +293,6 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
       showModalBottomSheet(
           context: context,
           elevation: 0,
-          backgroundColor: UniversalVariables.blueColor,
           builder: (context) {
             return Column(
               children: <Widget>[
@@ -311,7 +312,7 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
                           child: Text(
                             "Content and tools",
                             style: TextStyle(
-                                color: Colors.white,
+                              
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -378,9 +379,9 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
 
       textFieldController.text = "";
 
-      // _groupchatMethods.addMessageToDb(_message, sender, widget.receiver);
-      // sendNotification(_message.message.toString(), sender.name.toString(),
-      //     widget.receiver.firebaseToken.toString());
+      _groupMethods.addMessageToDb(_message, sender, widget.receiver);
+      sendNotification(_message.message.toString(), sender.name.toString(),
+          widget.receiver.firebaseToken.toString());
     }
 
     return Container(
@@ -392,12 +393,10 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
             child: Container(
               padding: EdgeInsets.all(5),
               decoration: BoxDecoration(
-                color: UniversalVariables.blueColor,
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.add,
-                color: UniversalVariables.whiteColor,
               ),
             ),
           ),
@@ -412,9 +411,7 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
                   controller: textFieldController,
                   focusNode: textFieldFocus,
                   onTap: () => hideEmojiContainer(),
-                  style: TextStyle(
-                    color: UniversalVariables.blueColor,
-                  ),
+                  style: TextStyle(color: Colors.black),
                   onChanged: (val) {
                     (val.length > 0 && val.trim() != "")
                         ? setWritingTo(true)
@@ -422,7 +419,7 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
                   },
                   decoration: InputDecoration(
                     hintText: "Type a message",
-                   
+                   hintStyle: TextStyle(color: Colors.black),
                     border: OutlineInputBorder(
                         borderRadius: const BorderRadius.all(
                           const Radius.circular(50.0),
@@ -462,7 +459,7 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Icon(
                     Icons.record_voice_over,
-                    color: UniversalVariables.blueColor,
+                   
                   ),
                 ),
           isWriting
@@ -470,7 +467,7 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
               : GestureDetector(
                   child: Icon(
                     Icons.camera_alt,
-                    color: UniversalVariables.blueColor,
+                   
                   ),
                   onTap: () => pickImage(source: ImageSource.camera),
                 ),
@@ -483,7 +480,6 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
                   child: IconButton(
                     icon: Icon(
                       Icons.send,
-                      color: UniversalVariables.whiteColor,
                       size: 24,
                     ),
                     onPressed: () => sendMessage(),
@@ -496,9 +492,9 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
 
   void pickImage({@required ImageSource source}) async {
     File selectedImage = await Utils.pickImage(source: source);
-    _storageMethods.uploadImage(
+    _storageMethods.groupUploadImage(
         image: selectedImage,
-        receiverId: widget.receiver.uid,
+        receiverId: widget.receiver.docId,
         senderId: _currentUserId,
         imageUploadProvider: _imageUploadProvider);
   }
@@ -627,19 +623,16 @@ class ModalTile extends StatelessWidget {
           margin: EdgeInsets.only(right: 10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
-            color: UniversalVariables.receiverColor,
           ),
           padding: EdgeInsets.all(10),
           child: Icon(
             icon,
-            color: UniversalVariables.greyColor,
             size: 38,
           ),
         ),
         subtitle: Text(
           subtitle,
           style: TextStyle(
-            color: UniversalVariables.greyColor,
             fontSize: 14,
           ),
         ),
@@ -647,7 +640,6 @@ class ModalTile extends StatelessWidget {
           title,
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: Colors.white,
             fontSize: 18,
           ),
         ),

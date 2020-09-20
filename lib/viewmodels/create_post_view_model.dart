@@ -51,20 +51,20 @@ class CreatePostViewModel extends BaseModel {
 
     if (!_editting) {
       result = await _firestoreService.addPost(Post(
-        title: title,
+        desc: title,
         userId: currentUser.uid,
-        imageUrl: storageResult.imageUrl,
-        imageFileName: storageResult.imageFileName,
+        imageUrl: [],
+       
       ));
 
       await _analyticsService.logPostCreated(hasImage: _selectedImage != null);
     } else {
       result = await _firestoreService.updatePost(Post(
-        title: title,
+        desc: title,
         userId: _edittingPost.userId,
         documentId: _edittingPost.documentId,
         imageUrl: _edittingPost.imageUrl,
-        imageFileName: _edittingPost.imageFileName,
+       
       ));
     }
 

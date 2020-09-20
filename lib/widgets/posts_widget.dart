@@ -1,5 +1,7 @@
 import 'package:bluu/components/post_image_view.dart';
 import 'package:bluu/pages/friend_profile.dart';
+import 'package:bluu/services/authentication_service.dart';
+import 'package:bluu/utils/locator.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,6 +9,8 @@ import 'package:get/get.dart';
 const duration = Duration(milliseconds: 3000);
 
 class PostWidget extends StatelessWidget {
+  final AuthenticationService _authenticationService =
+      locator<AuthenticationService>();
   final List<NetworkImage> listOfImages;
   final String desc;
   final String by;
@@ -16,7 +20,7 @@ class PostWidget extends StatelessWidget {
   final List shares;
   final List likes;
   final List repost;
-  const PostWidget(
+  PostWidget(
       {Key key,
       this.listOfImages,
       this.desc,
@@ -39,7 +43,9 @@ class PostWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         GestureDetector(
-          onTap: () => Get.to(FriendProfile(uid: uid)),
+          onTap: () => uid != _authenticationService.currentUser.uid
+              ? Get.to(FriendProfile(uid: uid))
+              : null,
           child: ListTile(
             leading: Container(
               alignment: Alignment.centerLeft,
