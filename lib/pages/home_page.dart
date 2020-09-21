@@ -116,6 +116,7 @@ class _PostsState extends State<Posts> {
                   int diff1 = now.difference(dt).inMinutes;
                   int diff2 = now.difference(dt).inHours;
                   int diff3 = now.difference(dt).inDays;
+                  int diff4 = (diff3 / 4).round();
                   String time;
                   if (diff1 < 6) {
                     time = "Moments Ago";
@@ -128,10 +129,10 @@ class _PostsState extends State<Posts> {
                       } else {
                         if (diff3 < 8) {
                           time = diff3.toString() + 'd ago';
-                        } else if (diff3 > 7 && diff3 < 5) {
+                        } else if (diff3 > 7 && diff4 < 5) {
                           time = diff3.toString() + 'w ago';
-                        } else if (diff3 > 5) {
-                          int months = diff3.floor();
+                        } else if (diff4 > 5) {
+                          int months = diff4.floor();
 
                           time = months.toString() + 'months ago';
                         }
