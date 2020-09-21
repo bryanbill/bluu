@@ -46,7 +46,7 @@ UserProvider userProvider;
         onPageChanged: onPageChanged,
         children: <Widget>[
           ChatsCalls(),
-          ContactListScreen(),
+          ContactListScreen(messageScreen: false),
           // // Container(
           //   child: LogScreen(),
           // ),

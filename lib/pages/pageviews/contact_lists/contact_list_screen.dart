@@ -8,15 +8,19 @@ import 'package:provider/provider.dart';
 import 'package:bluu/models/contact.dart';
 import 'package:bluu/provider/user_provider.dart';
 import 'package:bluu/widgets/quiet_box.dart';
-import 'package:bluu/utils/universal_variables.dart';
 
 class ContactListScreen extends StatelessWidget {
+  final bool messageScreen;
+
+  const ContactListScreen({Key key, @required this.messageScreen})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return PickupLayout(
       scaffold: Scaffold(
-        backgroundColor: UniversalVariables.transparentColor,
-        body: ContactListContainer(),
+        body: ContactListContainer(
+          messageScreen: messageScreen,
+        ),
         floatingActionButton: NewChatButton(),
       ),
     );
@@ -25,7 +29,9 @@ class ContactListScreen extends StatelessWidget {
 
 class ContactListContainer extends StatelessWidget {
   final ContactMethods _contactMethods = ContactMethods();
+  final bool messageScreen;
 
+  ContactListContainer({Key key, this.messageScreen}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final UserProvider userProvider = Provider.of<UserProvider>(context);
@@ -65,7 +71,8 @@ class ContactListContainer extends StatelessWidget {
                   itemBuilder: (context, index) {
                     Contact contact = Contact.fromMap(docList[index].data);
 
-                    return ContactListView(contact);
+                    return ContactListView(
+                        contact: contact, messageScreen: messageScreen);
                   },
                 );
               }

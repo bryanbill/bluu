@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 import 'callscreens/pickup/pickup_layout.dart';
 
 class FriendProfile extends StatefulWidget {
-  final String uid;
-
-  const FriendProfile({Key key, this.uid}) : super(key: key);
+  
+  final User contact;
+  const FriendProfile({Key key, this.contact}) : super(key: key);
   @override
-  _FriendProfileState createState() => _FriendProfileState(uid: uid);
+  _FriendProfileState createState() => _FriendProfileState(uid: contact.uid);
 }
 
 class _FriendProfileState extends State<FriendProfile> {
@@ -64,10 +64,11 @@ class _FriendProfileState extends State<FriendProfile> {
                           ),
                         ),
                         user.verified
-                            ? Icon(Icons.verified_user,
+                            ? Icon(
+                                Icons.verified_user,
                                 color: Theme.of(context).accentColor,
                                 size: 20,
-                                )
+                              )
                             : SizedBox()
                       ],
                     ),

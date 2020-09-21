@@ -8,14 +8,16 @@ import 'package:bluu/models/contact.dart';
 import 'package:bluu/models/user.dart';
 import 'package:bluu/widgets/custom_tile.dart';
 import 'package:get/get.dart';
+import 'package:swipe_to/swipe_to.dart';
 
 import '../../../friend_profile.dart';
 import 'online_dot_indicator.dart';
 
 class ContactListView extends StatelessWidget {
   final Contact contact;
+  final bool messageScreen;
   final FirestoreService _firestoreService = locator<FirestoreService>();
-  ContactListView(this.contact);
+  ContactListView({this.contact, this.messageScreen});
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class ContactListView extends StatelessWidget {
 
           return ViewLayout(
             contact: user,
+            messageScreen: messageScreen,
           );
         }
         return SizedBox();
@@ -37,28 +40,36 @@ class ContactListView extends StatelessWidget {
 
 class ViewLayout extends StatelessWidget {
   final User contact;
-
-  ViewLayout({
-    @required this.contact,
-  });
+  final bool messageScreen;
+  ViewLayout({@required this.contact, this.messageScreen});
 
   @override
   Widget build(BuildContext context) {
-    return Dismissible(
-      key: Key(contact.uid),
-      onDismissed: (d) {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ChatScreen(
-                receiver: contact,
-              ),
-            ));
+    return SwipeTo(
+      swipeDirection: SwipeDirection.swipeToLeft,
+      callBack: () {
+        messageScreen
+            ? Get.to(FriendProfile(contact: contact))
+            : Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChatScreen(
+                    receiver: contact,
+                  ),
+                ));
       },
       child: CustomTile(
         mini: false,
-        onTap: () => Get.to(FriendProfile(uid: contact.uid)),
-        title: Padding(
+        onTap: () => messageScreen
+            ? Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChatScreen(
+                    receiver: contact,
+                  ),
+                ))
+            : Get.to(FriendProfile(contact: contact)),
+        title: Padding(ew message-
           padding: EdgeInsets.only(left: 8, top: 0, right: 0, bottom: 0),
           child: Text(
             (contact != null ? contact.name : null) != null
