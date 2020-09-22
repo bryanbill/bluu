@@ -1,14 +1,11 @@
 import 'dart:math';
 import 'package:bluu/models/user.dart';
-import 'package:bluu/pages/settings_page.dart';
-import 'package:bluu/services/authentication_service.dart';
 import 'package:bluu/services/firestore_service.dart';
 import 'package:bluu/utils/locator.dart';
 import 'package:flutter/material.dart';
 import 'callscreens/pickup/pickup_layout.dart';
 
 class FriendProfile extends StatefulWidget {
-  
   final User contact;
   const FriendProfile({Key key, this.contact}) : super(key: key);
   @override

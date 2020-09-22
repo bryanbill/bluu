@@ -69,7 +69,7 @@ class ViewLayout extends StatelessWidget {
                   ),
                 ))
             : Get.to(FriendProfile(contact: contact)),
-        title: Padding(ew message-
+        title: Padding(
           padding: EdgeInsets.only(left: 8, top: 0, right: 0, bottom: 0),
           child: Text(
             (contact != null ? contact.name : null) != null
