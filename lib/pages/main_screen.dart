@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bluu/components/dialog.dart';
 import 'package:bluu/pages/dashboard_page.dart';
 import 'package:bluu/pages/home_page.dart';
+import 'package:bluu/pages/pageviews/log_lists/log_screen.dart';
 import 'package:bluu/pages/userprofile.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:bluu/enum/user_state.dart';
@@ -47,7 +48,7 @@ UserProvider userProvider;
         children: <Widget>[
           ChatsCalls(),
           ContactListScreen(messageScreen: false),
-          // // Container(
+          // Container(
           //   child: LogScreen(),
           // ),
           HomePage(),

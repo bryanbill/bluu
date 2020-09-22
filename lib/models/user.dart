@@ -9,6 +9,7 @@ class User {
   int state;
   String profilePhoto;
   String firebaseToken;
+  
 
   User({
     this.uid,

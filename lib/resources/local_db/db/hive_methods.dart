@@ -8,7 +8,7 @@ import 'package:bluu/resources/local_db/interface/log_interface.dart';
 class HiveMethods implements LogInterface {
   String _hiveBox;
 
-  openDb(String dbName) => _hiveBox = dbName;
+  openDb(String dbName) => _hiveBox = dbName; 
 
   @override
   init() async {

@@ -139,6 +139,29 @@ class FirestoreService {
     }
   }
 
+  Future updateProfilePic(userId, pic) async {
+    try {
+      await _usersCollectionReference
+          .document(userId)
+          .setData({"profilePhoto": pic}, merge: true);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future updateUserName(userId, userName) async {
+    try {
+      await _usersCollectionReference
+          .document(userId)
+          .setData({"username": userName}, merge: true);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future updatePhone(userId, phone) {
+    //TODO: PHONE AUTH
+  }
   Stream listenToPostsRealTime() {
     // Register the handler for when the posts data changes
     _requestPosts();

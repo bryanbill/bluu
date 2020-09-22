@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:bluu/components/account_update.dart';
 import 'package:bluu/models/user.dart';
 import 'package:bluu/pages/settings_page.dart';
 import 'package:bluu/services/authentication_service.dart';
@@ -84,7 +85,7 @@ class _UserProfileState extends State<UserProfile> {
                           ),
                           color: Theme.of(context).accentColor,
                           onPressed: () {
-                            return showAccountSettings(context);
+                            return showAccountSettings(context, user);
                           },
                         ),
                       ],
@@ -130,26 +131,18 @@ class _UserProfileState extends State<UserProfile> {
     ));
   }
 
-  showAccountSettings(context) {
+  showAccountSettings(context, User user) {
     showModalBottomSheet(
         context: context,
         elevation: 0,
         backgroundColor: Theme.of(context).canvasColor,
         builder: (context) {
-          return Column(children: [
-            CircleAvatar(),
-            SizedBox(height: 10),
-            Text("User name"),
-            SizedBox(height: 10),
-            Text("email"),
-            SizedBox(height: 10),
-            Text("User name"),
-            SizedBox(height: 10),
-            Text("email"),
-            SizedBox(height: 10),
-            Text("User name"),
-            Text("email"),
-          ]);
+          return AccountUpdate(
+              userId: _authenticationService.currentUser.uid,
+              userName: user.name,
+              userEmail: user.email,
+              userStatus: user.status,
+              userProfilePic: user.profilePhoto);
         });
   }
 

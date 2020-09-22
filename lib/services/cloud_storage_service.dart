@@ -21,7 +21,7 @@ class CloudStorageService {
     var downloadUrl = await storageSnapshot.ref.getDownloadURL();
 
     if (uploadTask.isComplete) {
-      var url = downloadUrl.toString();
+      var url = downloadUrl.toString(); 
       return CloudStorageResult(
         imageUrl: url,
         imageFileName: imageFileName,
