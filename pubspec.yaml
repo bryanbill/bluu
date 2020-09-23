@@ -16,6 +16,10 @@ dependencies:
   cupertino_icons: ^0.1.3
   #fonts
   font_awesome_flutter: ^8.8.1
+
+  #show case
+  showcaseview: ^0.1.6
+  
   #for google sign in
   google_sign_in: ^4.4.6
 

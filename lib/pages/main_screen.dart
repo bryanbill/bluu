@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bluu/components/dialog.dart';
 import 'package:bluu/pages/dashboard_page.dart';
 import 'package:bluu/pages/home_page.dart';
-import 'package:bluu/pages/pageviews/log_lists/log_screen.dart';
 import 'package:bluu/pages/userprofile.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:bluu/enum/user_state.dart';
@@ -16,6 +15,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'chats_calls.dart';
 import 'pageviews/contact_lists/contact_list_screen.dart';
+import 'pageviews/log_lists/log_screen.dart';
 
 class MainScreen extends StatefulWidget {
   @override

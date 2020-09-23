@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bluu/particle_clock.dart';
 import 'package:bluu/services/authentication_service.dart';
 import 'package:bluu/utils/locator.dart';
@@ -10,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:bluu/provider/image_upload_provider.dart';
 import 'package:bluu/provider/user_provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'logic/bloc.dart';
 import 'logic/sharedPref_logic.dart';
 import 'logic/theme_chooser.dart';
@@ -39,7 +42,7 @@ class _MainPageState extends State<Main> {
   FirebaseMessaging _firebaseMessaging = locator<FirebaseMessaging>();
   bool _clock = false;
   @override
-  void initState() { 
+  void initState() {
     super.initState();
     //Initially loads Theme Color from SharedPreferences
     loadColor();
@@ -49,8 +52,6 @@ class _MainPageState extends State<Main> {
           const IosNotificationSettings(sound: true, badge: true, alert: true));
     });
     _firebaseMessaging.configure();
-
-
   }
 
   @override
@@ -59,7 +60,7 @@ class _MainPageState extends State<Main> {
         providers: [
           ChangeNotifierProvider(create: (_) => ImageUploadProvider()),
           ChangeNotifierProvider(create: (_) => UserProvider()),
-        ], 
+        ],
         child: StreamBuilder(
             stream: bloc.recieveColorName,
             initialData: Constants.initialAccent,
@@ -105,7 +106,18 @@ class _MainPageState extends State<Main> {
                                     .getAnalyticsObserver()
                               ],
                               onGenerateRoute: generateRoute,
-                              home: StartUpView()),
+                              home: ShowCaseWidget(
+                                  onStart: (index, key) {
+                                    log('onStart: $index, $key');
+                                  },
+                                  onComplete: (index, key) {
+                                    log('onComplete: $index, $key');
+                                  },
+                                  autoPlay: true,
+                                  autoPlayDelay: Duration(seconds: 3),
+                                  autoPlayLockEnable: true,
+                                  builder: Builder(
+                                      builder: (context) => StartUpView()))),
                     );
                   });
             }));

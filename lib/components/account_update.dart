@@ -4,7 +4,6 @@ import 'package:bluu/services/cloud_storage_service.dart';
 import 'package:bluu/services/firestore_service.dart';
 import 'package:bluu/utils/locator.dart';
 import 'package:flutter/material.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AccountUpdate extends StatefulWidget {
@@ -31,87 +30,154 @@ class AccountUpdate extends StatefulWidget {
 
 class _AccountUpdateState extends State<AccountUpdate> {
   File imageFile;
+  bool loading = false;
+  int editPos = 0;
   CloudStorageService _cloudStorageService = locator<CloudStorageService>();
   FirestoreService _firestoreService = locator<FirestoreService>();
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Column(children: <Widget>[
+    return ListView(
+      children: [
+        Column(children: <Widget>[
       Stack(
         children: [
           CircleAvatar(
-            radius: 40,
-            backgroundImage: NetworkImage(widget.userProfilePic),
-          ),
+              radius: 40,
+              backgroundImage: imageFile != null
+                  ? FileImage(imageFile)
+                  : NetworkImage(widget.userProfilePic),
+              child: loading ? CircularProgressIndicator() : SizedBox()),
           Positioned(
+              top: 20,
+              left: 20,
               bottom: 20,
               right: 20,
               child: IconButton(
                   onPressed: () async {
-                    // await _pickImage()
-                    //     .then((f) => _cropImage(f).then((c) => upload(c)));
+                    await _pickImage().then((f) => upload(f));
                   },
                   icon: Icon(Icons.camera_alt)))
         ],
       ),
       Padding(
-        padding: EdgeInsets.all(20.0),
-        child: Row(children: <Widget>[
-          Text("Display Name"),
-          GestureDetector(
-              onTap: () {
-                //TODO: transform to textfield using an animator
-                print("ontap to turn on textfield");
-              },
-              child: Text(widget.fullName))
-        ]),
-      ),
-      SizedBox(height: 10),
+          padding: EdgeInsets.all(20.0),
+          child: ListTile(
+            leading: Icon(Icons.person_outline),
+            title: editPos == 1
+                ? TextField(
+                    onChanged: (value) {
+                      print("FullName Values");
+                    },
+                    textCapitalization: TextCapitalization.words,
+                    autofocus: true,
+                    decoration: InputDecoration(suffixText: widget.fullName),
+                    autofillHints: ["Bill", "Omondi", "New"],
+                  )
+                : Text(widget.fullName),
+            subtitle: Text("Display Name"),
+            trailing: editPos != 1
+                ? IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      return editting(1);
+                    },
+                  )
+                : IconButton(icon: Icon(Icons.save), onPressed: () {}),
+          )),
+      SizedBox(height: 10, child: Divider()),
       Padding(
-        padding: EdgeInsets.all(20.0),
-        child: Row(children: <Widget>[
-          Text("User Name"),
-          GestureDetector(
-              onTap: () {
-                //TODO: transform to textfield using an animator
-                print("ontap to turn on textfield");
-              },
-              child: Text(widget.userName))
-        ]),
-      ),
-      SizedBox(height: 10),
+          padding: EdgeInsets.all(20.0),
+          child: ListTile(
+            leading: Icon(Icons.person),
+            title: editPos == 2
+                ? TextField(
+                    onChanged: (value) {
+                      print("User Name Values");
+                    },
+                    textCapitalization: TextCapitalization.words,
+                    autofocus: true,
+                    decoration: InputDecoration(suffixText: widget.userName),
+                    autofillHints: ["Bill", "Omondi", "New"],
+                  )
+                : Text(widget.userName),
+            subtitle:  Text("User Name"),
+            trailing: editPos != 2
+                ? IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      return editting(2);
+                    },
+                  )
+                : IconButton(icon: Icon(Icons.save), onPressed: () {}),
+          )),
+      SizedBox(height: 10, child: Divider()),
       Padding(
-        padding: EdgeInsets.all(20.0),
-        child: Row(children: <Widget>[
-          Text("Status"),
-          GestureDetector(
-              onTap: () {
-                //TODO: transform to textfield using an animator
-                print("ontap to turn on textfield");
-              },
-              child: Text(widget.userStatus))
-        ]),
-      ),
-      SizedBox(height: 10),
+          padding: EdgeInsets.all(20.0),
+          child: ListTile(
+              leading: Icon(Icons.alternate_email),
+              title: editPos == 3
+                ? TextField(
+                    onChanged: (value) {
+                      print("User Name Values");
+                    },
+                    textCapitalization: TextCapitalization.words,
+                    autofocus: true,
+                    decoration: InputDecoration(suffixText: widget.userEmail),
+                    autofillHints: ["Bill", "Omondi", "New"],
+                  )
+                : Text(widget.userEmail),
+              subtitle: Text("Email"),
+              trailing: editPos != 3
+                  ? IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () {
+                        return editting(3);
+                      },
+                    )
+                  : IconButton(icon: Icon(Icons.save), onPressed: () {}))),
+      SizedBox(height: 10, child: Divider()),
       Padding(
-        padding: EdgeInsets.all(20.0),
-        child: Row(children: <Widget>[
-          Text("Email"),
-          GestureDetector(
-              onTap: () {
-                //TODO: transform to textfield using an animator
-                print("ontap to turn on textfield");
-              },
-              child: Text(widget.userEmail))
-        ]),
-      ),
-      SizedBox(height: 10),
-    ]));
+          padding: EdgeInsets.all(20.0),
+          child: ListTile(
+            leading: Icon(Icons.info_outline),
+            title:editPos == 4
+                ? TextField(
+                    onChanged: (value) {
+                      print("User Name Values");
+                    },
+                    textCapitalization: TextCapitalization.words,
+                    autofocus: true,
+                    decoration: InputDecoration(suffixText: widget.userStatus),
+                    autofillHints: ["Bill", "Omondi", "New"],
+                  )
+                :  Text(
+              widget.userStatus,
+              overflow: TextOverflow.ellipsis,
+            ),
+            subtitle: Text("Status"),
+            trailing: editPos != 4
+                ? IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      return editting(4);
+                    },
+                  )
+                : IconButton(icon: Icon(Icons.save), onPressed: () {}),
+          )),
+      SizedBox(height: 10, child: Divider()),
+    ]),
+      ],
+    );
   }
 
   Future<File> _pickImage() async {
-    imageFile = await ImagePicker.pickImage(source: ImageSource.gallery);
-    return imageFile;
+    File file = await ImagePicker.pickImage(source: ImageSource.gallery);
+    if (file != null)
+      setState(() {
+        loading = true;
+        imageFile = file;
+      });
+    return file;
   }
 
   // Future _cropImage(pickedImageFile) async {
@@ -154,6 +220,22 @@ class _AccountUpdateState extends State<AccountUpdate> {
     var result = await _cloudStorageService.uploadImage(
         imageToUpload: file, title: title);
 
-    await _firestoreService.updateProfilePic(widget.userId, result.imageUrl);
+    await _firestoreService
+        .updateProfilePic(widget.userId, result.imageUrl)
+        .whenComplete(() => setState(() {
+              loading = false;
+            }));
+  }
+
+  void editting(int pos) {
+    setState(() {
+      editPos = pos;
+    });
+  }
+
+  @override
+  void dispose() {
+    imageFile = null;
+    super.dispose();
   }
 }

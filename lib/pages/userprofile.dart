@@ -139,7 +139,8 @@ class _UserProfileState extends State<UserProfile> {
         builder: (context) {
           return AccountUpdate(
               userId: _authenticationService.currentUser.uid,
-              userName: user.name,
+              userName: user.username,
+              fullName: user.name,
               userEmail: user.email,
               userStatus: user.status,
               userProfilePic: user.profilePhoto);

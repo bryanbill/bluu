@@ -143,17 +143,19 @@ class FirestoreService {
     try {
       await _usersCollectionReference
           .document(userId)
-          .setData({"profilePhoto": pic}, merge: true);
+          .setData({"profile_photo": pic}, merge: true);
     } catch (e) {
       print(e.toString());
     }
   }
 
   Future updateUserName(userId, userName) async {
+    
     try {
-      await _usersCollectionReference
+       await _usersCollectionReference
           .document(userId)
           .setData({"username": userName}, merge: true);
+
     } catch (e) {
       print(e.toString());
     }
@@ -244,3 +246,4 @@ class FirestoreService {
 
   void requestMoreData() => _requestPosts();
 }
+
