@@ -20,6 +20,9 @@ dependencies:
   #show case
   showcaseview: ^0.1.6
   
+  #link previews
+  simple_url_preview: ^1.0.0
+
   #for google sign in
   google_sign_in: ^4.4.6
 

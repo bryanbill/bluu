@@ -6,6 +6,7 @@ import 'package:bluu/pages/chatscreens/widgets/cached_image.dart';
 import 'package:bluu/services/authentication_service.dart';
 import 'package:bluu/services/firestore_service.dart';
 import 'package:bluu/utils/locator.dart';
+import 'package:bluu/utils/url_extractor.dart';
 import 'package:bluu/widgets/chatappbar.dart';
 import 'package:full_screen_image/full_screen_image.dart';
 import 'package:http/http.dart' as http;
@@ -29,6 +30,8 @@ import 'package:bluu/utils/permissions.dart';
 import 'package:bluu/utils/universal_variables.dart';
 import 'package:bluu/utils/utilities.dart';
 import 'package:bluu/widgets/custom_tile.dart';
+import 'package:simple_url_preview/simple_url_preview.dart';
+import 'package:swipe_to/swipe_to.dart';
 
 class ChatScreen extends StatefulWidget {
   final User receiver;
@@ -193,8 +196,10 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               onPressed: () async =>
                   await Permissions.cameraandmicrophonePermissionsGranted()
-                      ? sendNotification("You have a video call from ${sender.name}",
-                              sender.name, widget.receiver.firebaseToken)
+                      ? sendNotification(
+                              "You have a video call from ${sender.name}",
+                              sender.name,
+                              widget.receiver.firebaseToken)
                           .then((value) => CallUtils.dialVideo(
                               from: sender,
                               to: widget.receiver,
@@ -309,21 +314,28 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget senderLayout(Message message) {
     Radius messageRadius = Radius.circular(10);
-    return Container(
-      margin: EdgeInsets.only(top: 12),
-      constraints:
-          BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.65),
-      decoration: BoxDecoration(
-        color: Colors.grey,
-        borderRadius: BorderRadius.only(
-          topLeft: messageRadius,
-          topRight: messageRadius,
-          bottomLeft: messageRadius,
+    return SwipeTo(
+      swipeDirection: SwipeDirection.swipeToLeft,
+      endOffset: Offset(3.0, 1.0),
+      callBack: () {
+        print("swiped");
+      },
+      child: Container(
+        margin: EdgeInsets.only(top: 12),
+        constraints:
+            BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.65),
+        decoration: BoxDecoration(
+          color: Colors.grey,
+          borderRadius: BorderRadius.only(
+            topLeft: messageRadius,
+            topRight: messageRadius,
+            bottomLeft: messageRadius,
+          ),
         ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(10),
-        child: getMessage(message),
+        child: Padding(
+          padding: EdgeInsets.all(10),
+          child: getMessage(message),
+        ),
       ),
     );
   }
@@ -332,6 +344,7 @@ class _ChatScreenState extends State<ChatScreen> {
     var time = message.timestamp.toDate().toLocal();
     var newFormat = DateFormat("Hm");
     String timeT = newFormat.format(time);
+
     return message.type != MESSAGE_TYPE_IMAGE
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -342,6 +355,10 @@ class _ChatScreenState extends State<ChatScreen> {
                   color: Colors.white,
                   fontSize: 16.0,
                 ),
+              ),
+              SimpleUrlPreview(
+                url: message.urls.length > 0 ? message.urls[0] : '',
+                isClosable: true,
               ),
               Text(timeT, style: TextStyle(color: Colors.white70, fontSize: 10))
             ],
@@ -492,10 +509,12 @@ class _ChatScreenState extends State<ChatScreen> {
 
     sendMessage() {
       var text = textFieldController.text;
+      var urls = urlLink(text);
       Message _message = Message(
         receiverId: widget.receiver.uid,
         senderId: sender.uid,
         message: text,
+        urls: urls,
         timestamp: Timestamp.now(),
         type: 'text',
       );
