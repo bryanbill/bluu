@@ -50,6 +50,7 @@ UserProvider userProvider;
           ContactListScreen(messageScreen: false),
           // Container(
           //   child: LogScreen(),
+          
           // ),
           HomePage(),
           DashBoard(),

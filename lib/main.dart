@@ -1,18 +1,11 @@
-import 'dart:developer';
-
-import 'package:bluu/particle_clock.dart';
-import 'package:bluu/services/authentication_service.dart';
 import 'package:bluu/utils/locator.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_clock_helper/customizer.dart';
-import 'package:flutter_clock_helper/model.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:bluu/provider/image_upload_provider.dart';
 import 'package:bluu/provider/user_provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:showcaseview/showcaseview.dart';
 import 'logic/bloc.dart';
 import 'logic/sharedPref_logic.dart';
 import 'logic/theme_chooser.dart';
@@ -40,7 +33,6 @@ class Main extends StatefulWidget {
 
 class _MainPageState extends State<Main> {
   FirebaseMessaging _firebaseMessaging = locator<FirebaseMessaging>();
-  bool _clock = false;
   @override
   void initState() {
     super.initState();
@@ -68,57 +60,30 @@ class _MainPageState extends State<Main> {
               return StreamBuilder(
                   stream: bloc.canvasColorValue,
                   builder: (context, canvas) {
-                    return GestureDetector(
-                      onLongPress: () {
-                        // _clock
-                        //     ? setState(() {
-                        //         _clock = false;
-                        //         print("clock false");
-                        //       })
-                        //     : setState(() {
-                        //         _clock = true;
-                        //         print("clock true");
-                        //       });
-                      },
-                      child: _clock
-                          ? ClockCustomizer(
-                              (ClockModel model) => ParticleClock(model))
-                          : GetMaterialApp(
-                              title: Constants.appName,
-                              debugShowCheckedModeBanner: false,
-                              theme: Constants.lightTheme(
-                                  themeChooser(accent.data)),
-                              darkTheme: Constants.darkTheme(
-                                  themeChooser(accent.data)),
-                              themeMode: canvasChooser(canvas.data),
-                              builder: (context, child) => Navigator(
-                                    key: locator<DialogService>()
-                                        .dialogNavigationKey,
-                                    onGenerateRoute: (settings) =>
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                DialogManager(child: child)),
-                                  ),
-                              navigatorKey:
-                                  locator<NavigationService>().navigationKey,
-                              navigatorObservers: [
-                                locator<AnalyticsService>()
-                                    .getAnalyticsObserver()
-                              ],
-                              onGenerateRoute: generateRoute,
-                              home: ShowCaseWidget(
-                                  onStart: (index, key) {
-                                    log('onStart: $index, $key');
-                                  },
-                                  onComplete: (index, key) {
-                                    log('onComplete: $index, $key');
-                                  },
-                                  autoPlay: true,
-                                  autoPlayDelay: Duration(seconds: 3),
-                                  autoPlayLockEnable: true,
-                                  builder: Builder(
-                                      builder: (context) => StartUpView()))),
-                    );
+                    return GetMaterialApp(
+                            title: Constants.appName,
+                            debugShowCheckedModeBanner: false,
+                            theme: Constants.lightTheme(
+                                themeChooser(accent.data)),
+                            darkTheme: Constants.darkTheme(
+                                themeChooser(accent.data)),
+                            themeMode: canvasChooser(canvas.data),
+                            builder: (context, child) => Navigator(
+                                  key: locator<DialogService>()
+                                      .dialogNavigationKey,
+                                  onGenerateRoute: (settings) =>
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              DialogManager(child: child)),
+                                ),
+                            navigatorKey:
+                                locator<NavigationService>().navigationKey,
+                            navigatorObservers: [
+                              locator<AnalyticsService>()
+                                  .getAnalyticsObserver()
+                            ],
+                            onGenerateRoute: generateRoute,
+                            home: StartUpView());
                   });
             }));
   }

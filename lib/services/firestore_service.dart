@@ -161,6 +161,30 @@ class FirestoreService {
     }
   }
 
+   Future updateFullName(userId, fullName) async {
+    
+    try {
+       await _usersCollectionReference
+          .document(userId)
+          .setData({"name": fullName}, merge: true);
+
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future updateUserStatus(userId, userStatus) async {
+    
+    try {
+       await _usersCollectionReference
+          .document(userId)
+          .setData({"status": userStatus}, merge: true);
+
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   Future updatePhone(userId, phone) {
     //TODO: PHONE AUTH
   }

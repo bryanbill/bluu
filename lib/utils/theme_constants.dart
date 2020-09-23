@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Constants {
   
-  static String appName = "CourseMate";
+  static String appName = "Bluu";
   static String initialAccent ="Yellow";
   //Colors for theme
   static Color lightPrimary = Color(0xfffcfcff);

@@ -39,133 +39,140 @@ class _AccountUpdateState extends State<AccountUpdate> {
     return ListView(
       children: [
         Column(children: <Widget>[
-      Stack(
-        children: [
-          CircleAvatar(
-              radius: 40,
-              backgroundImage: imageFile != null
-                  ? FileImage(imageFile)
-                  : NetworkImage(widget.userProfilePic),
-              child: loading ? CircularProgressIndicator() : SizedBox()),
-          Positioned(
-              top: 20,
-              left: 20,
-              bottom: 20,
-              right: 20,
-              child: IconButton(
-                  onPressed: () async {
-                    await _pickImage().then((f) => upload(f));
-                  },
-                  icon: Icon(Icons.camera_alt)))
-        ],
-      ),
-      Padding(
-          padding: EdgeInsets.all(20.0),
-          child: ListTile(
-            leading: Icon(Icons.person_outline),
-            title: editPos == 1
-                ? TextField(
-                    onChanged: (value) {
-                      print("FullName Values");
-                    },
-                    textCapitalization: TextCapitalization.words,
-                    autofocus: true,
-                    decoration: InputDecoration(suffixText: widget.fullName),
-                    autofillHints: ["Bill", "Omondi", "New"],
-                  )
-                : Text(widget.fullName),
-            subtitle: Text("Display Name"),
-            trailing: editPos != 1
-                ? IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      return editting(1);
-                    },
-                  )
-                : IconButton(icon: Icon(Icons.save), onPressed: () {}),
-          )),
-      SizedBox(height: 10, child: Divider()),
-      Padding(
-          padding: EdgeInsets.all(20.0),
-          child: ListTile(
-            leading: Icon(Icons.person),
-            title: editPos == 2
-                ? TextField(
-                    onChanged: (value) {
-                      print("User Name Values");
-                    },
-                    textCapitalization: TextCapitalization.words,
-                    autofocus: true,
-                    decoration: InputDecoration(suffixText: widget.userName),
-                    autofillHints: ["Bill", "Omondi", "New"],
-                  )
-                : Text(widget.userName),
-            subtitle:  Text("User Name"),
-            trailing: editPos != 2
-                ? IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      return editting(2);
-                    },
-                  )
-                : IconButton(icon: Icon(Icons.save), onPressed: () {}),
-          )),
-      SizedBox(height: 10, child: Divider()),
-      Padding(
-          padding: EdgeInsets.all(20.0),
-          child: ListTile(
-              leading: Icon(Icons.alternate_email),
-              title: editPos == 3
-                ? TextField(
-                    onChanged: (value) {
-                      print("User Name Values");
-                    },
-                    textCapitalization: TextCapitalization.words,
-                    autofocus: true,
-                    decoration: InputDecoration(suffixText: widget.userEmail),
-                    autofillHints: ["Bill", "Omondi", "New"],
-                  )
-                : Text(widget.userEmail),
-              subtitle: Text("Email"),
-              trailing: editPos != 3
-                  ? IconButton(
-                      icon: Icon(Icons.edit),
-                      onPressed: () {
-                        return editting(3);
+          Stack(
+            children: [
+              CircleAvatar(
+                  radius: 40,
+                  backgroundImage: imageFile != null
+                      ? FileImage(imageFile)
+                      : NetworkImage(widget.userProfilePic),
+                  child: loading ? CircularProgressIndicator() : SizedBox()),
+              Positioned(
+                  top: 20,
+                  left: 20,
+                  bottom: 20,
+                  right: 20,
+                  child: IconButton(
+                      onPressed: () async {
+                        await _pickImage().then((f) => upload(f));
                       },
-                    )
-                  : IconButton(icon: Icon(Icons.save), onPressed: () {}))),
-      SizedBox(height: 10, child: Divider()),
-      Padding(
-          padding: EdgeInsets.all(20.0),
-          child: ListTile(
-            leading: Icon(Icons.info_outline),
-            title:editPos == 4
-                ? TextField(
-                    onChanged: (value) {
-                      print("User Name Values");
-                    },
-                    textCapitalization: TextCapitalization.words,
-                    autofocus: true,
-                    decoration: InputDecoration(suffixText: widget.userStatus),
-                    autofillHints: ["Bill", "Omondi", "New"],
-                  )
-                :  Text(
-              widget.userStatus,
-              overflow: TextOverflow.ellipsis,
-            ),
-            subtitle: Text("Status"),
-            trailing: editPos != 4
-                ? IconButton(
-                    icon: Icon(Icons.edit),
+                      icon: Icon(Icons.camera_alt)))
+            ],
+          ),
+          Padding(
+              padding: EdgeInsets.all(20.0),
+              child: ListTile(
+                leading: Icon(Icons.person_outline),
+                title: editPos == 1
+                    ? TextField(
+                        onChanged: (value) async {
+                          await _firestoreService.updateFullName(
+                              widget.userId, value);
+                          print("$value");
+                        },
+                        textCapitalization: TextCapitalization.words,
+                        autofocus: true,
+                        decoration:
+                            InputDecoration(suffixText: widget.fullName),
+                        autofillHints: ["Bill", "Omondi", "New"],
+                      )
+                    : Text(widget.fullName),
+                subtitle: Text("Display Name"),
+                trailing: editPos != 1
+                    ? IconButton(
+                        icon: Icon(Icons.edit),
+                        onPressed: () {
+                          return editting(1);
+                        },
+                      )
+                    : IconButton(
+                        icon: Icon(Icons.save),
+                        onPressed: () {
+                          return editting(0);
+                        }),
+              )),
+          SizedBox(height: 10, child: Divider()),
+          Padding(
+              padding: EdgeInsets.all(20.0),
+              child: ListTile(
+                leading: Icon(Icons.person),
+                title: editPos == 2
+                    ? TextField(
+                        onChanged: (value) {
+                          _firestoreService.updateUserName(
+                              widget.userId, value);
+                        },
+                        textCapitalization: TextCapitalization.words,
+                        autofocus: true,
+                        decoration:
+                            InputDecoration(suffixText: widget.userName),
+                        autofillHints: ["Bill", "Omondi", "New"],
+                      )
+                    : Text(widget.userName),
+                subtitle: Text("User Name"),
+                trailing: editPos != 2
+                    ? IconButton(
+                        icon: Icon(Icons.edit),
+                        onPressed: () {
+                          return editting(2);
+                        },
+                      )
+                    : IconButton(
+                        icon: Icon(Icons.save),
+                        onPressed: () {
+                          return editting(0);
+                        }),
+              )),
+          SizedBox(height: 10, child: Divider()),
+          Padding(
+              padding: EdgeInsets.all(20.0),
+              child: ListTile(
+                  leading: Icon(Icons.alternate_email),
+                  title: Text(widget.userEmail),
+                  subtitle: Text("Email"),
+                  trailing: IconButton(
+                    icon: Icon(Icons.share),
                     onPressed: () {
-                      return editting(4);
+                      return editting(3);
                     },
-                  )
-                : IconButton(icon: Icon(Icons.save), onPressed: () {}),
-          )),
-      SizedBox(height: 10, child: Divider()),
-    ]),
+                  ))),
+          SizedBox(height: 10, child: Divider()),
+          Padding(
+              padding: EdgeInsets.all(20.0),
+              child: ListTile(
+                leading: Icon(Icons.info_outline),
+                title: editPos == 4
+                    ? TextField(
+                        onChanged: (value) {
+                          _firestoreService.updateUserStatus(
+                              widget.userId, value);
+                        },
+                        textCapitalization: TextCapitalization.words,
+                        autofocus: true,
+                        decoration:
+                            InputDecoration(suffixText: widget.userStatus),
+                        autofillHints: ["Bill", "Omondi", "New"],
+                      )
+                    : Text(
+                        widget.userStatus,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                subtitle: Text("Status"),
+                trailing: editPos != 4
+                    ? IconButton(
+                        icon: Icon(Icons.edit),
+                        onPressed: () {
+                          return editting(4);
+                        },
+                      )
+                    : IconButton(
+                        icon: Icon(Icons.save),
+                        onPressed: () {
+                          return editting(0);
+                        }),
+              )),
+          SizedBox(height: 10, child: Divider()),
+        ]),
       ],
     );
   }

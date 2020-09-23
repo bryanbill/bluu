@@ -76,7 +76,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         // backgroundColor: Colors.orange,
         sections: [
           SettingsSection(
-            title: 'Common',
+            title: 'Appearance',
             // titleTextStyle: TextStyle(fontSize: 30),
             tiles: [
               SettingsTile(
@@ -89,9 +89,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
               ),
               SettingsTile(
-                title: 'Canvas Color',
-                subtitle: 'theme: Tap to change',
-                leading: Icon(Icons.cloud_queue),
+                title: 'Theme',
+                subtitle: 'Background Color',
+                leading: Icon(Icons.color_lens),
                 onTap: () {
                   setState(() {
                     showSettingsBottomSheetCanvas(context, canvasList);
@@ -101,21 +101,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
               SettingsTile(
                 title: 'Accent',
                 subtitle: 'colors',
-                leading: Icon(Icons.color_lens),
+                leading: Icon(Icons.colorize),
                 onTap: () {
                   setState(() {
                     showSettingsBottomSheet(context, radioList);
                   });
                 },
               ),
-            ],
-          ),
-          SettingsSection(
-            title: 'Account',
-            tiles: [
-              SettingsTile(title: 'Phone number', leading: Icon(Icons.phone)),
-              SettingsTile(title: 'Email', leading: Icon(Icons.email)),
-              SettingsTile(title: 'Sign out', leading: Icon(Icons.exit_to_app)),
             ],
           ),
           SettingsSection(
