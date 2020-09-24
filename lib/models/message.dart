@@ -8,12 +8,16 @@ class Message {
   Timestamp timestamp;
   String photoUrl;
   List urls;
+  String replyText;
+  bool isReply;
 
   Message(
       {this.senderId,
       this.receiverId,
       this.type,
       this.message,
+      this.isReply,
+      this.replyText,
       this.urls,
       this.timestamp});
 
@@ -24,6 +28,9 @@ class Message {
       this.receiverId,
       this.message,
       this.type,
+      this.urls,
+      this.isReply,
+      this.replyText,
       this.timestamp,
       this.photoUrl});
 
@@ -34,6 +41,8 @@ class Message {
     map['type'] = this.type;
     map['message'] = this.message;
     map['urls'] = this.urls;
+    map['isReply'] = this.isReply;
+    map['replyText'] = this.replyText;
     map['timestamp'] = this.timestamp;
     return map;
   }
@@ -44,6 +53,9 @@ class Message {
     map['senderId'] = this.senderId;
     map['receiverId'] = this.receiverId;
     map['type'] = this.type;
+    map['urls'] = this.urls;
+    map['isReply'] = this.isReply;
+    map['replyText'] = this.replyText;
     map['timestamp'] = this.timestamp;
     map['photoUrl'] = this.photoUrl;
     return map;
@@ -56,6 +68,8 @@ class Message {
     this.type = map['type'];
     this.message = map['message'];
     this.urls = map['urls'];
+    this.isReply = map['isReply'];
+    this.replyText = map['replyText'];
     this.timestamp = map['timestamp'];
     this.photoUrl = map['photoUrl'];
   }

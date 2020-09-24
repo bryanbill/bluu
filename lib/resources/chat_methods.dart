@@ -96,6 +96,9 @@ class ChatMethods {
         receiverId: receiverId,
         senderId: senderId,
         photoUrl: url,
+        isReply: false,
+        replyText: '',
+        urls: [],
         timestamp: Timestamp.now(),
         type: 'image');
 
