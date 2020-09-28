@@ -1,4 +1,5 @@
 import 'package:bluu/utils/locator.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,7 +44,6 @@ class _MainPageState extends State<Main> {
       _firebaseMessaging.requestNotificationPermissions(
           const IosNotificationSettings(sound: true, badge: true, alert: true));
     });
-    _firebaseMessaging.configure();
   }
 
   @override
@@ -61,29 +61,25 @@ class _MainPageState extends State<Main> {
                   stream: bloc.canvasColorValue,
                   builder: (context, canvas) {
                     return GetMaterialApp(
-                            title: Constants.appName,
-                            debugShowCheckedModeBanner: false,
-                            theme: Constants.lightTheme(
-                                themeChooser(accent.data)),
-                            darkTheme: Constants.darkTheme(
-                                themeChooser(accent.data)),
-                            themeMode: canvasChooser(canvas.data),
-                            builder: (context, child) => Navigator(
-                                  key: locator<DialogService>()
-                                      .dialogNavigationKey,
-                                  onGenerateRoute: (settings) =>
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              DialogManager(child: child)),
-                                ),
-                            navigatorKey:
-                                locator<NavigationService>().navigationKey,
-                            navigatorObservers: [
-                              locator<AnalyticsService>()
-                                  .getAnalyticsObserver()
-                            ],
-                            onGenerateRoute: generateRoute,
-                            home: StartUpView());
+                        title: Constants.appName,
+                        debugShowCheckedModeBanner: false,
+                        theme: Constants.lightTheme(themeChooser(accent.data)),
+                        darkTheme:
+                            Constants.darkTheme(themeChooser(accent.data)),
+                        themeMode: canvasChooser(canvas.data),
+                        builder: (context, child) => Navigator(
+                              key: locator<DialogService>().dialogNavigationKey,
+                              onGenerateRoute: (settings) => MaterialPageRoute(
+                                  builder: (context) =>
+                                      DialogManager(child: child)),
+                            ),
+                        navigatorKey:
+                            locator<NavigationService>().navigationKey,
+                        navigatorObservers: [
+                          locator<AnalyticsService>().getAnalyticsObserver()
+                        ],
+                        onGenerateRoute: generateRoute,
+                        home: StartUpView());
                   });
             }));
   }
