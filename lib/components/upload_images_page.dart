@@ -1,40 +1,26 @@
 import 'package:bluu/components/multipicker.dart';
 import 'package:bluu/services/authentication_service.dart';
+import 'package:bluu/services/cloud_storage_service.dart';
 import 'package:bluu/utils/locator.dart';
+import 'package:bluu/utils/url_extractor.dart';
+import 'package:bluu/viewmodels/home_view_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:stacked/stacked.dart';
 
-class UploadImages extends StatefulWidget {
+class UploadImages extends StatelessWidget {
   final PageController page;
-  const UploadImages({Key key, @required this.page}) : super(key: key);
-  @override
-  _UploadImagesState createState() => new _UploadImagesState();
-}
-
-class _UploadImagesState extends State<UploadImages> {
   List<Asset> images = List<Asset>();
   List<String> imageUrls = <String>[];
   String _error = 'No Error Dectected';
   bool isUploading = false;
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
-
-  _UploadImagesState();
-  @override
-  void initState() {
-    super.initState();
-    loadAssets.call();
-  }
-
-  @override
-  void dispose() {
-    images = null;
-    super.dispose();
-  }
+  final CloudStorageService _cloudService = locator<CloudStorageService>();
+  UploadImages({Key key, this.page}) : super(key: key);
 
   Widget buildGridView() {
     return GridView.count(
@@ -67,88 +53,92 @@ class _UploadImagesState extends State<UploadImages> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Container(
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    InkWell(
-                      onTap: loadAssets,
-                      child: Container(
-                        width: 130,
-                        height: 50,
-                        child: Center(
-                            child: Text(
-                          "Pick images",
-                        )),
-                      ),
+    return ViewModelBuilder<HomeViewModel>.reactive(
+        viewModelBuilder: () => HomeViewModel(),
+        // onModelReady: (model) => model.handleStartUpLogic(),
+        builder: (context, model, child) => Scaffold(
+              body: Stack(
+                children: <Widget>[
+                  Container(
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            InkWell(
+                              onTap: loadAssets,
+                              child: Container(
+                                width: 130,
+                                height: 50,
+                                child: Center(
+                                    child: Text(
+                                  "Pick images",
+                                )),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                if (images.length == 0) {
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) {
+                                        return AlertDialog(
+                                          backgroundColor:
+                                              Theme.of(context).backgroundColor,
+                                          content: Text("No image selected",
+                                              style: TextStyle(
+                                                  color: Colors.white)),
+                                          actions: <Widget>[
+                                            InkWell(
+                                              child: ThreeDContainer(
+                                                width: 80,
+                                                height: 30,
+                                                backgroundColor: MultiPickerApp
+                                                    .navigateButton,
+                                                backgroundDarkerColor:
+                                                    MultiPickerApp.background,
+                                                child: Center(
+                                                    child: Text(
+                                                  "Ok",
+                                                )),
+                                              ),
+                                            )
+                                          ],
+                                        );
+                                      });
+                                } else {
+                                  _displayDialog(context, model);
+                                }
+                              },
+                              child: Container(
+                                width: 130,
+                                height: 50,
+                                child: Center(
+                                    child: Text(
+                                  "Post",
+                                )),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Expanded(
+                          child: buildGridView(),
+                        )
+                      ],
                     ),
-                    InkWell(
-                      onTap: () {
-                        if (images.length == 0) {
-                          showDialog(
-                              context: context,
-                              builder: (_) {
-                                return AlertDialog(
-                                  backgroundColor:
-                                      Theme.of(context).backgroundColor,
-                                  content: Text("No image selected",
-                                      style: TextStyle(color: Colors.white)),
-                                  actions: <Widget>[
-                                    InkWell(
-                                      child: ThreeDContainer(
-                                        width: 80,
-                                        height: 30,
-                                        backgroundColor:
-                                            MultiPickerApp.navigateButton,
-                                        backgroundDarkerColor:
-                                            MultiPickerApp.background,
-                                        child: Center(
-                                            child: Text(
-                                          "Ok",
-                                        )),
-                                      ),
-                                    )
-                                  ],
-                                );
-                              });
-                        } else {
-                          _displayDialog(context);
-                        }
-                      },
-                      child: Container(
-                        width: 130,
-                        height: 50,
-                        child: Center(
-                            child: Text(
-                          "Post",
-                        )),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Expanded(
-                  child: buildGridView(),
-                )
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+                  ),
+                ],
+              ),
+            ));
   }
 
-  _displayDialog(BuildContext context) async {
+  _displayDialog(BuildContext context, HomeViewModel model) async {
     return showDialog(
         context: context,
         builder: (context) {
@@ -222,7 +212,7 @@ class _UploadImagesState extends State<UploadImages> {
                           Get.snackbar(
                               "Uploading", "Please wait, we are uploading",
                               colorText: Colors.white);
-                          uploadImages(desc);
+                          uploadImages(model, desc);
                         },
                         child: new Text(
                           'Post',
@@ -256,30 +246,19 @@ class _UploadImagesState extends State<UploadImages> {
         .toList();
   }
 
-  void uploadImages(String desc) async {
+  void uploadImages(HomeViewModel model, String desc) async {
     List friends = await getFriends();
+    List urls = urlLink(desc);
     for (var imageFile in images) {
-      postImage(imageFile).then((downloadUrl) {
+      _cloudService.postImage(imageFile).then((downloadUrl) {
         imageUrls.add(downloadUrl.toString());
         if (imageUrls.length == images.length) {
-          Firestore.instance.collection('posts').document().setData({
-            'uid': _authenticationService.currentUser.uid,
-            'urls': imageUrls,
-            'to': friends + [_authenticationService.currentUser.uid],
-            'desc': desc,
-            'timestamp': Timestamp.now(),
-            'likes': [],
-            'shares': [],
-            'repost': [],
-            'profilePhoto': _authenticationService.currentUser.profilePhoto,
-            'by': _authenticationService.currentUser.name
-          }).then((_) {
-            setState(() {  
-              images = [];
-              imageUrls = [];
-            });
+          model
+              .uploadImages(model.currentUser.uid, desc, imageUrls,
+                  Timestamp.now(), friends, [], [], [], urls, 1)
+              .then((_) {
             try {
-              widget.page.animateTo(0,
+              page.animateTo(0,
                   duration: Duration(seconds: 1), curve: Curves.easeOut);
             } catch (e) {
               print("error from page: $e");
@@ -318,24 +297,5 @@ class _UploadImagesState extends State<UploadImages> {
     } on Exception catch (e) {
       error = e.toString();
     }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-    setState(() {
-      images = resultList;
-      _error = error;
-    });
-  }
-
-  Future<dynamic> postImage(Asset imageFile) async {
-    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-    StorageReference reference = FirebaseStorage.instance.ref().child(fileName);
-    StorageUploadTask uploadTask =
-        reference.putData((await imageFile.getByteData()).buffer.asUint8List());
-    StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
-    print(storageTaskSnapshot.ref.getDownloadURL());
-    return storageTaskSnapshot.ref.getDownloadURL();
   }
 }

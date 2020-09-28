@@ -62,7 +62,7 @@ class ContactListContainer extends StatelessWidget {
               if (snapshot.hasData) {
                 var docList = snapshot.data.documents;
 
-                if (docList.isEmpty) {
+                if (docList.isEmpty) { 
                   return ContactQuietBox();
                 }
                 return ListView.builder(

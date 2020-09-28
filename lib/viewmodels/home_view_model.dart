@@ -6,6 +6,7 @@ import 'package:bluu/services/dialog_service.dart';
 import 'package:bluu/services/firestore_service.dart';
 import 'package:bluu/services/navigation_service.dart';
 import 'package:bluu/viewmodels/base_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomeViewModel extends BaseModel {
   final NavigationService _navigationService = locator<NavigationService>();
@@ -16,7 +17,6 @@ class HomeViewModel extends BaseModel {
 
   List<Post> _posts;
   List<Post> get posts => _posts;
-
   void listenToPosts() {
     setBusy(true);
 
@@ -56,6 +56,33 @@ class HomeViewModel extends BaseModel {
   void editPost(int index) {
     _navigationService.navigateTo(CreatePostViewRoute,
         arguments: _posts[index]);
+  }
+
+  Future uploadImages(
+      String userId,
+      String desc,
+      List imageUrl,
+      Timestamp time,
+      List friends,
+      List likes,
+      List shares,
+      List reposts,
+      List urls,
+      int type) async {
+    setBusy(true);
+    await _firestoreService
+        .addPost(Post(
+            userId: userId,
+            desc: desc,
+            imageUrl: imageUrl,
+            time: time,
+            friend: friends,
+            likes: likes,
+            shares: shares,
+            reposts: reposts,
+            urls: urls,
+            type: type))
+        .whenComplete(() => setBusy(false));
   }
 
   void requestMoreData() => _firestoreService.requestMoreData();

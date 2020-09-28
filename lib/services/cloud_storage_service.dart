@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
 class CloudStorageService {
   Future<CloudStorageResult> uploadImage({
@@ -21,7 +22,7 @@ class CloudStorageService {
     var downloadUrl = await storageSnapshot.ref.getDownloadURL();
 
     if (uploadTask.isComplete) {
-      var url = downloadUrl.toString(); 
+      var url = downloadUrl.toString();
       return CloudStorageResult(
         imageUrl: url,
         imageFileName: imageFileName,
@@ -29,6 +30,16 @@ class CloudStorageService {
     }
 
     return null;
+  }
+
+  Future<dynamic> postImage(Asset imageFile) async {
+    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+    StorageReference reference = FirebaseStorage.instance.ref().child(fileName);
+    StorageUploadTask uploadTask =
+        reference.putData((await imageFile.getByteData()).buffer.asUint8List());
+    StorageTaskSnapshot storageTaskSnapshot = await uploadTask.onComplete;
+    print(storageTaskSnapshot.ref.getDownloadURL());
+    return storageTaskSnapshot.ref.getDownloadURL();
   }
 
   Future deleteImage(String imageFileName) async {

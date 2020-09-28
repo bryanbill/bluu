@@ -5,6 +5,7 @@ import 'package:bluu/services/dynamic_link_service.dart';
 import 'package:bluu/services/firestore_service.dart';
 import 'package:bluu/services/push_notification_service.dart';
 import 'package:bluu/services/remote_config_service.dart';
+import 'package:bluu/services/storage_service.dart';
 import 'package:bluu/utils/image_selector.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get_it/get_it.dart';
@@ -24,7 +25,7 @@ Future setupLocator() async {
   locator.registerLazySingleton(() => AnalyticsService());
   locator.registerLazySingleton(() => DynamicLinkService());
   locator.registerLazySingleton(() => FirebaseMessaging());
-
+  locator.registerLazySingleton(() => StorageService());
   var remoteConfigService = await RemoteConfigService.getInstance();
   locator.registerSingleton(remoteConfigService);
 }

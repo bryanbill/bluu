@@ -252,7 +252,7 @@ class FirestoreService {
   Future deletePost(String documentId) async {
     await _postsCollectionReference.document(documentId).delete();
   }
-
+  
   Future updatePost(Post post) async {
     try {
       await _postsCollectionReference
