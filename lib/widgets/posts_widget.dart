@@ -1,5 +1,6 @@
 import 'package:bluu/components/post_image_view.dart';
 import 'package:bluu/models/user.dart';
+import 'package:bluu/pages/weview.dart';
 import 'package:bluu/services/firestore_service.dart';
 import 'package:bluu/utils/locator.dart';
 import 'package:carousel_pro/carousel_pro.dart';
@@ -77,7 +78,13 @@ class PostWidget extends StatelessWidget {
                 ListTile(
                   title: Text(desc ?? "CourseMate"),
                 ),
-                SimpleUrlPreview(url: urls[0]),
+                SimpleUrlPreview(
+                  onTap: ()=>Get.to(WeViewPage(url:urls[0])),
+                  url: urls[0],
+                  textColor: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white
+                      : Colors.black,
+                ),
                 Container(
                   height: 300,
                   decoration: BoxDecoration(
