@@ -15,6 +15,30 @@ class LoginViewModel extends BaseModel {
   final NavigationService _navigationService = locator<NavigationService>();
   final AnalyticsService _analyticsService = locator<AnalyticsService>();
 
+  Future verify(
+      {@required code, @required phone, @required verificationId}) async {
+    setBusy(true);
+    var result = await _authenticationService.phoneVerify(
+        verificationId: verificationId, code: code, phone: phone);
+
+    if (result is bool) {
+      if (result) {
+        await _analyticsService.logLogin();
+        _navigationService.navigateHome(HomeViewRoute);
+      } else {
+        await _dialogService.showDialog(
+          title: 'Login Failure',
+          description: 'General login failure. Please try again later',
+        );
+      }
+    } else {
+      await _dialogService.showDialog(
+        title: 'Login Failure',
+        description: "Some unknown error",
+      );
+    }
+  }
+
   Future login({
     @required String email,
     @required String password,
@@ -71,7 +95,7 @@ class LoginViewModel extends BaseModel {
     } else {
       await _dialogService.showDialog(
         title: 'Sign Up Failure',
-        description: "Some unknown error", 
+        description: "Some unknown error",
       );
     }
   }

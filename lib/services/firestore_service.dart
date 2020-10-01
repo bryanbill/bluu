@@ -186,7 +186,7 @@ class FirestoreService {
     // Register the handler for when the posts data changes
     //_requestPosts();
     _postsCollectionReference
-        .orderBy('time')
+        .orderBy('time', descending: true)
         .snapshots()
         .listen((postsSnapshot) {
       if (postsSnapshot.documents.isNotEmpty) {

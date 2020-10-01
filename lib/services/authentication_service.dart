@@ -1,3 +1,4 @@
+import 'package:bluu/pages/pin_verification_screen.dart';
 import 'package:bluu/utils/locator.dart';
 import 'package:bluu/models/user.dart';
 import 'package:bluu/services/analytics_service.dart';
@@ -32,7 +33,7 @@ class AuthenticationService {
   }
 
   Future phoneAuth({@required String phone}) async {
-    var authResult = await _firebaseAuth.verifyPhoneNumber(
+    await _firebaseAuth.verifyPhoneNumber(
         phoneNumber: phone,
         timeout: Duration(seconds: 60),
         verificationCompleted: (AuthCredential _authCred) {
@@ -40,14 +41,51 @@ class AuthenticationService {
         },
         verificationFailed: (AuthException _authExc) {},
         codeSent: (String verificationId, [int forceResendingToken]) {
-          //code for the sent code ui
+          return PinCodeVerificationScreen(
+              phoneNumber: phone, forceResendingToken: forceResendingToken, verificationId: verificationId);
         },
         codeAutoRetrievalTimeout: (String verificationId) {
           verificationId = verificationId;
           print(verificationId);
           print("Time out");
         });
+  }
 
+  Future phoneVerify({String code, verificationId, phone}) async {
+    try {
+      String smsCode = code.trim();
+      var _cred = PhoneAuthProvider.getCredential(
+          verificationId: verificationId, smsCode: smsCode);
+      AuthResult result;
+      await _firebaseAuth
+          .signInWithCredential(_cred)
+          .then((value) => result = value);
+
+      String token = await _firebaseMessaging.getToken().then((deviceToken) {
+        return deviceToken.toString();
+      });
+
+      _currentUser = User(
+          phone: phone,
+          uid: result.user.uid,
+          email: phone+'@bluu.spac.e',
+          name: 'Bluu User'+phone[05],
+          firebaseToken: token,
+          username: phone,
+          status: "Yeyy! Bluu rocks🥳",
+          public: true,
+          profilePhoto:
+              "https://images.unsplash.com/photo-1599990323348-b8aebea736cf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+          verified: false);
+      await _firestoreService.createUser(_currentUser);
+      await _analyticsService.setUserProperties(
+        userId: result.user.uid,
+        userRole: _currentUser.verified.toString(),
+      );
+      return result.user !=null;
+    } catch (e) {
+      print(e.message);
+    }
   }
 
   Future signUpWithEmail({
