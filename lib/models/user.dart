@@ -6,15 +6,16 @@ class User {
   String username;
   String status;
   bool verified;
+  int phone;
   int state;
   String profilePhoto;
   String firebaseToken;
-  
 
   User({
     this.uid,
     this.public,
     this.name,
+    this.phone,
     this.verified,
     this.email,
     this.username,
@@ -34,6 +35,7 @@ class User {
     data['username'] = username;
     data["status"] = status;
     data["state"] = state;
+    data["phone"] = phone;
     data["profile_photo"] = profilePhoto;
     data['firebaseToken'] = firebaseToken;
     return data;
@@ -49,6 +51,7 @@ class User {
     this.username = mapData['username'];
     this.status = mapData['status'];
     this.state = mapData['state'];
+    this.phone = mapData['phone'];
     this.profilePhoto = mapData['profile_photo'];
     this.firebaseToken = mapData['firebaseToken'];
   }

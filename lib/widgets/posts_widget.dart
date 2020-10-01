@@ -3,6 +3,7 @@ import 'package:bluu/models/user.dart';
 import 'package:bluu/pages/weview.dart';
 import 'package:bluu/services/firestore_service.dart';
 import 'package:bluu/utils/locator.dart';
+import 'package:bluu/viewmodels/home_view_model.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,6 +12,7 @@ import 'package:simple_url_preview/simple_url_preview.dart';
 const duration = Duration(milliseconds: 3000);
 
 class PostWidget extends StatelessWidget {
+  final HomeViewModel model;
   final List<NetworkImage> listOfImages;
   final FirestoreService _firestoreService = locator<FirestoreService>();
   final String desc;
@@ -21,9 +23,12 @@ class PostWidget extends StatelessWidget {
   final List shares;
   final List likes;
   final List repost;
+  final postId;
   PostWidget(
       {Key key,
       this.listOfImages,
+      this.postId,
+      this.model,
       this.desc,
       this.uid,
       this.urls,
@@ -79,8 +84,8 @@ class PostWidget extends StatelessWidget {
                   title: Text(desc ?? "CourseMate"),
                 ),
                 SimpleUrlPreview(
-                  onTap: ()=>Get.to(WeViewPage(url:urls[0])),
-                  url: urls[0],
+                  onTap: () => Get.to(WeViewPage(url: urls[0])),
+                  url: urls.length > 0 ? urls[0] : '',
                   textColor: Theme.of(context).brightness == Brightness.dark
                       ? Colors.white
                       : Colors.black,
@@ -101,7 +106,7 @@ class PostWidget extends StatelessWidget {
                       },
                       boxFit: BoxFit.cover,
                       images: listOfImages,
-                      autoplay: true,
+                      autoplay: false,
                       showIndicator: listOfImages.length > 1 ? true : false,
                       indicatorBgPadding: 5.0,
                       dotPosition: DotPosition.bottomCenter,
@@ -116,30 +121,40 @@ class PostWidget extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        Icon(
-                          Icons.favorite_border,
-                          color: Colors.grey[300],
-                          size: 24.0,
+                        IconButton(
+                          icon: Icon(Icons.favorite_border),
+                          color: likes.contains(model.currentUser.uid)
+                              ? Colors.red
+                              : Colors.grey[300],
+                          iconSize: 24.0,
+                          onPressed: () {
+                            likes.contains(model.currentUser.uid)
+                                ? model.unlikePost(
+                                    postId, model.currentUser.uid)
+                                : model.likePost(postId, model.currentUser.uid);
+                          },
                         ),
                         Text(likes.length.toString())
                       ],
                     ),
                     Column(
                       children: [
-                        Icon(
-                          Icons.room,
+                        IconButton(
+                          icon: Icon(Icons.room),
                           color: Colors.grey[300],
-                          size: 24.0,
+                          iconSize: 24.0,
+                          onPressed: () {},
                         ),
                         Text(shares.length.toString())
                       ],
                     ),
                     Column(
                       children: [
-                        Icon(
-                          Icons.explore,
+                        IconButton(
+                          icon: Icon(Icons.explore),
                           color: Colors.grey[300],
-                          size: 24.0,
+                          iconSize: 24.0,
+                          onPressed: () {},
                         ),
                         Text(repost.length.toString())
                       ],

@@ -10,7 +10,7 @@ class AuthenticationService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirestoreService _firestoreService = locator<FirestoreService>();
   final AnalyticsService _analyticsService = locator<AnalyticsService>();
-  
+
   FirebaseMessaging _firebaseMessaging = locator<FirebaseMessaging>();
   User _currentUser;
   User get currentUser => _currentUser;
@@ -25,10 +25,29 @@ class AuthenticationService {
         password: password,
       );
       await _populateCurrentUser(authResult.user);
-      return authResult.user !=null;
+      return authResult.user != null;
     } catch (e) {
       return e.message;
     }
+  }
+
+  Future phoneAuth({@required String phone}) async {
+    var authResult = await _firebaseAuth.verifyPhoneNumber(
+        phoneNumber: phone,
+        timeout: Duration(seconds: 60),
+        verificationCompleted: (AuthCredential _authCred) {
+          //code for navigating to next step
+        },
+        verificationFailed: (AuthException _authExc) {},
+        codeSent: (String verificationId, [int forceResendingToken]) {
+          //code for the sent code ui
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          verificationId = verificationId;
+          print(verificationId);
+          print("Time out");
+        });
+
   }
 
   Future signUpWithEmail({
@@ -37,30 +56,26 @@ class AuthenticationService {
     @required String fullName,
   }) async {
     try {
-      var authResult = await _firebaseAuth
-          .createUserWithEmailAndPassword(
+      var authResult = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      String token; 
- token = 
-    await _firebaseMessaging.getToken().then((deviceToken) {
-      
-        String token = deviceToken.toString();
-        return token;
-      
-    });
-  
+
+      String token = await _firebaseMessaging.getToken().then((deviceToken) {
+        return deviceToken.toString();
+      });
+
       // create a new user profile on firestore
       _currentUser = User(
           uid: authResult.user.uid,
           email: email,
           name: fullName,
           firebaseToken: token,
-          username: '@'+fullName.split(" ")[0]??fullName,
+          username: '@' + fullName.split(" ")[0] ?? fullName,
           status: "Yeyy! Bluu rocks🥳",
           public: true,
-          profilePhoto: "https://images.unsplash.com/photo-1599990323348-b8aebea736cf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+          profilePhoto:
+              "https://images.unsplash.com/photo-1599990323348-b8aebea736cf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
           verified: false);
 
       await _firestoreService.createUser(_currentUser);
@@ -69,7 +84,7 @@ class AuthenticationService {
         userRole: _currentUser.state.toString(),
       );
 
-      return authResult.user !=null;
+      return authResult.user != null;
     } catch (e) {
       return e.message;
     }
@@ -82,7 +97,7 @@ class AuthenticationService {
   }
 
   Future signOut() async {
-    await _firebaseAuth.signOut().then((v){
+    await _firebaseAuth.signOut().then((v) {
       print("signed out");
     });
   }

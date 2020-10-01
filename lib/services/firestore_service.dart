@@ -24,7 +24,7 @@ class FirestoreService {
   // #6: Create a list that will keep the paged results
   List<List<Post>> _allPagedResults = List<List<Post>>();
 
-  static const int PostsLimit = 20;
+  static const int PostsLimit = 2;
 
   DocumentSnapshot _lastDocument;
   bool _hasMorePosts = true;
@@ -150,36 +150,30 @@ class FirestoreService {
   }
 
   Future updateUserName(userId, userName) async {
-    
     try {
-       await _usersCollectionReference
+      await _usersCollectionReference
           .document(userId)
           .setData({"username": userName}, merge: true);
-
     } catch (e) {
       print(e.toString());
     }
   }
 
-   Future updateFullName(userId, fullName) async {
-    
+  Future updateFullName(userId, fullName) async {
     try {
-       await _usersCollectionReference
+      await _usersCollectionReference
           .document(userId)
           .setData({"name": fullName}, merge: true);
-
     } catch (e) {
       print(e.toString());
     }
   }
 
   Future updateUserStatus(userId, userStatus) async {
-    
     try {
-       await _usersCollectionReference
+      await _usersCollectionReference
           .document(userId)
           .setData({"status": userStatus}, merge: true);
-
     } catch (e) {
       print(e.toString());
     }
@@ -190,15 +184,48 @@ class FirestoreService {
   }
   Stream listenToPostsRealTime() {
     // Register the handler for when the posts data changes
-    _requestPosts();
+    //_requestPosts();
+    _postsCollectionReference
+        .orderBy('time')
+        .snapshots()
+        .listen((postsSnapshot) {
+      if (postsSnapshot.documents.isNotEmpty) {
+        var posts = postsSnapshot.documents
+            .map((snapshot) => Post.fromMap(snapshot.data, snapshot.documentID))
+            .where((mappedItem) => mappedItem.userId != null)
+            .toList();
+
+        _postsController.add(posts);
+      }
+    });
     return _postsController.stream;
+  }
+
+  Future likePost(postId, userId) async {
+    try {
+      await _postsCollectionReference.document(postId).setData({
+        'likes': FieldValue.arrayUnion([userId])
+      }, merge: true);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future unlikePost(postId, userId) async {
+    try {
+      await _postsCollectionReference.document(postId).setData({
+        'likes': FieldValue.arrayRemove([userId])
+      }, merge: true);
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   // #1: Move the request posts into it's own function
   void _requestPosts() {
     // #2: split the query from the actual subscription
     var pagePostsQuery = _postsCollectionReference
-        .orderBy('title')
+        .orderBy('time')
         // #3: Limit the amount of results
         .limit(PostsLimit);
 
@@ -252,7 +279,7 @@ class FirestoreService {
   Future deletePost(String documentId) async {
     await _postsCollectionReference.document(documentId).delete();
   }
-  
+
   Future updatePost(Post post) async {
     try {
       await _postsCollectionReference
@@ -270,4 +297,3 @@ class FirestoreService {
 
   void requestMoreData() => _requestPosts();
 }
-

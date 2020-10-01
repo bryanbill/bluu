@@ -234,7 +234,7 @@ class _DashBoardState extends State<DashBoard> {
           backgroundColor: Theme.of(context).canvasColor, title: Text("Stats")),
       body: Column(
         children: [
-          Expanded(
+          Expanded( 
             child: StaggeredGridView.count(
               crossAxisCount: 2,
               crossAxisSpacing: 12.0,

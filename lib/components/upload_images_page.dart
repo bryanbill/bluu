@@ -11,16 +11,33 @@ import 'package:get/get.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
 import 'package:stacked/stacked.dart';
 
-class UploadImages extends StatelessWidget {
+class UploadImages extends StatefulWidget {
   final PageController page;
+
+  UploadImages({Key key, this.page}) : super(key: key);
+
+  @override
+  _UploadImagesState createState() => _UploadImagesState();
+}
+
+class _UploadImagesState extends State<UploadImages> {
   List<Asset> images = List<Asset>();
+
   List<String> imageUrls = <String>[];
+
   String _error = 'No Error Dectected';
+
   bool isUploading = false;
+
   final AuthenticationService _authenticationService =
       locator<AuthenticationService>();
+
   final CloudStorageService _cloudService = locator<CloudStorageService>();
-  UploadImages({Key key, this.page}) : super(key: key);
+  @override
+  void initState() {
+    super.initState();
+    loadAssets.call();
+  }
 
   Widget buildGridView() {
     return GridView.count(
@@ -254,11 +271,20 @@ class UploadImages extends StatelessWidget {
         imageUrls.add(downloadUrl.toString());
         if (imageUrls.length == images.length) {
           model
-              .uploadImages(model.currentUser.uid, desc, imageUrls,
-                  Timestamp.now(), friends, [], [], [], urls, 1)
+              .uploadImages(
+                  model.currentUser.uid,
+                  desc,
+                  imageUrls,
+                  Timestamp.now(),
+                  friends + [model.currentUser.uid],
+                  [],
+                  [],
+                  [],
+                  urls,
+                  1)
               .then((_) {
             try {
-              page.animateTo(0,
+              widget.page.animateTo(0,
                   duration: Duration(seconds: 1), curve: Curves.easeOut);
             } catch (e) {
               print("error from page: $e");
@@ -297,5 +323,10 @@ class UploadImages extends StatelessWidget {
     } on Exception catch (e) {
       error = e.toString();
     }
+    if (!mounted) return;
+    setState(() {
+      images = resultList;
+      _error = error;
+    });
   }
 }

@@ -31,6 +31,17 @@ class HomeViewModel extends BaseModel {
     });
   }
 
+  Future likePost(postId, userId) async {
+    setBusy(true);
+    await _firestoreService.likePost(postId, userId);
+    setBusy(false);
+  }
+  Future unlikePost(postId, userId) async {
+    setBusy(true);
+    await _firestoreService.unlikePost(postId, userId);
+    setBusy(false);
+  }
+
   Future deletePost(int index) async {
     var dialogResponse = await _dialogService.showConfirmationDialog(
       title: 'Are you sure?',
@@ -87,3 +98,4 @@ class HomeViewModel extends BaseModel {
 
   void requestMoreData() => _firestoreService.requestMoreData();
 }
+
