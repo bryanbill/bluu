@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "48053354393",
+    "firebase_url": "https://bluu-pro.firebaseio.com",
+    "project_id": "bluu-pro",
+    "storage_bucket": "bluu-pro.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48053354393:android:66f069f8205117fad81d08",
+        "android_client_info": {
+          "package_name": "com.space.bluu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "48053354393-eg0m45t1mo6ik0fl43eiro96oektvqqg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.space.bluu",
+            "certificate_hash": "dab7177f373eb66744d0c3d2216dcc9777b90c66"
+          }
+        },
+        {
+          "client_id": "48053354393-0j212n33ta9fgeprfubaucjasedqp9s4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCn19qbk5Hx5rqJbS1qXj31vKXgjuKD36M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "48053354393-0j212n33ta9fgeprfubaucjasedqp9s4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
