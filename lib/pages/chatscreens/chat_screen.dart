@@ -315,10 +315,11 @@ class _ChatScreenState extends State<ChatScreen> {
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 15),
         child: Container(
+          alignment: _message.senderId == _currentUserId ? Alignment.centerRight : Alignment.centerLeft,
             child: _message.type != MESSAGE_TYPE_IMAGE
                 ? ChatBubble(
                     isGroup: false,
-                    isMe: _message.senderId == _currentUserId ? true : false,
+                    isMe: _message.senderId == _currentUserId,
                     message: _message.message,
                     replyText: _message.replyText,
                     time: timeT,

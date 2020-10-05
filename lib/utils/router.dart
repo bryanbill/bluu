@@ -1,6 +1,7 @@
 import 'package:bluu/constants/route_names.dart';
 import 'package:bluu/pages/login_page.dart';
 import 'package:bluu/pages/main_screen.dart';
+import 'package:bluu/pages/phone_number.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -8,12 +9,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case LoginViewRoute:
       return _getPageRoute(
         routeName: settings.name,
-        viewToShow: LoginPage(),
+        viewToShow:  PhoneNumberInput(),
       );
     case SignUpViewRoute:
       return _getPageRoute(
         routeName: settings.name,
-        viewToShow: LoginPage(),
+        viewToShow:   PhoneNumberInput(), 
       );
     case HomeViewRoute:
       return _getPageRoute(

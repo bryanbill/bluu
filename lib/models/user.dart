@@ -6,7 +6,7 @@ class User {
   String username;
   String status;
   bool verified;
-  int phone;
+  String phone;
   int state;
   String profilePhoto;
   String firebaseToken;

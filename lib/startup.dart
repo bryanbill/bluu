@@ -1,10 +1,11 @@
 import 'package:bluu/viewmodels/startup_view_model.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class StartUpView extends StatelessWidget {
   const StartUpView({Key key}) : super(key: key);
- 
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<StartUpViewModel>.reactive(
@@ -16,17 +17,7 @@ class StartUpView extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              SizedBox(
-                width: 300,
-                height: 100,
-                child: Image.asset('assets/images/icon_large.png'),
-              ),
-              CircularProgressIndicator(
-                strokeWidth: 3,
-                valueColor: AlwaysStoppedAnimation(
-                  Theme.of(context).primaryColor,
-                ),
-              )
+              FlareActor('assets/flare/loading.flr', animation: 'Alarm')
             ],
           ),
         ),

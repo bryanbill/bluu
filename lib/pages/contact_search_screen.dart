@@ -27,7 +27,7 @@ class _ContactSearchScreenState extends State<ContactSearchScreen> {
   List<User> userList;
   String query = "";
   TextEditingController searchController = TextEditingController();
-
+  List added = [];
   @override
   void initState() {
     super.initState();
@@ -125,12 +125,12 @@ class _ContactSearchScreenState extends State<ContactSearchScreen> {
           trailing: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(4))),
-              // color: UniversalVariables.blueColor,
-              //TODO: ADDCONNTACTTODB
               child: FlatButton(
                   color: Theme.of(context).accentColor,
-                  onPressed: () => _contactMethods.addContactToDb(
-                      userProvider.getUser, searchedUser),
+                  onPressed: () {
+                    return _contactMethods.addContactToDb(
+                        userProvider.getUser, searchedUser);
+                  },
                   child: Text(
                     "Add Contact",
                     style: TextStyle(

@@ -2,16 +2,20 @@ import 'package:bluu/pages/pin_verification_screen.dart';
 import 'package:bluu/utils/locator.dart';
 import 'package:bluu/models/user.dart';
 import 'package:bluu/services/analytics_service.dart';
+import 'package:bluu/viewmodels/login_view_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:bluu/services/firestore_service.dart';
+import 'package:flutter/material.dart';
 
 class AuthenticationService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirestoreService _firestoreService = locator<FirestoreService>();
   final AnalyticsService _analyticsService = locator<AnalyticsService>();
-
+  int forceRT;
+  String vId;
+  AuthCredential _authCred;
   FirebaseMessaging _firebaseMessaging = locator<FirebaseMessaging>();
   User _currentUser;
   User get currentUser => _currentUser;
@@ -32,17 +36,22 @@ class AuthenticationService {
     }
   }
 
-  Future phoneAuth({@required String phone}) async {
+  Future phoneAuth({@required String phone, context}) async {
     await _firebaseAuth.verifyPhoneNumber(
         phoneNumber: phone,
-        timeout: Duration(seconds: 60),
-        verificationCompleted: (AuthCredential _authCred) {
-          //code for navigating to next step
+        timeout: Duration(seconds: 120),
+        verificationCompleted: (AuthCredential authCred) {
+          _authCred = authCred;
         },
         verificationFailed: (AuthException _authExc) {},
         codeSent: (String verificationId, [int forceResendingToken]) {
-          return PinCodeVerificationScreen(
-              phoneNumber: phone, forceResendingToken: forceResendingToken, verificationId: verificationId);
+          return Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => PinCodeVerificationScreen(
+                      verificationId: verificationId,
+                      phoneNumber: phone,
+                      forceResendingToken: forceResendingToken)));
         },
         codeAutoRetrievalTimeout: (String verificationId) {
           verificationId = verificationId;
@@ -63,13 +72,13 @@ class AuthenticationService {
 
       String token = await _firebaseMessaging.getToken().then((deviceToken) {
         return deviceToken.toString();
-      });
+      }); 
 
       _currentUser = User(
           phone: phone,
           uid: result.user.uid,
-          email: phone+'@bluu.spac.e',
-          name: 'Bluu User'+phone[05],
+          email: phone + '@bluu.spac.e',
+          name: 'Bluu User ' + phone,
           firebaseToken: token,
           username: phone,
           status: "Yeyy! Bluu rocks🥳",
@@ -82,7 +91,41 @@ class AuthenticationService {
         userId: result.user.uid,
         userRole: _currentUser.verified.toString(),
       );
-      return result.user !=null;
+      return result.user != null;
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  Future autoVerify(cred, phone) async {
+    try {
+      AuthResult result;
+      await _firebaseAuth
+          .signInWithCredential(cred)
+          .then((value) => result = value);
+
+      String token = await _firebaseMessaging.getToken().then((deviceToken) {
+        return deviceToken.toString();
+      });
+
+      _currentUser = User(
+          phone: phone,
+          uid: result.user.uid,
+          email: phone + '@bluu.spac.e',
+          name: 'Bluu User' + phone[05],
+          firebaseToken: token,
+          username: phone,
+          status: "Yeyy! Bluu rocks🥳",
+          public: true,
+          profilePhoto:
+              "https://images.unsplash.com/photo-1599990323348-b8aebea736cf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+          verified: false);
+      await _firestoreService.createUser(_currentUser);
+      await _analyticsService.setUserProperties(
+        userId: result.user.uid,
+        userRole: _currentUser.verified.toString(),
+      );
+      return result.user != null;
     } catch (e) {
       print(e.message);
     }

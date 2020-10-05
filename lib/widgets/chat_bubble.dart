@@ -100,7 +100,9 @@ class _ChatBubbleState extends State<ChatBubble> {
                         )
                       : SizedBox(),
               widget.isGroup
-                  ? widget.isMe ? SizedBox() : SizedBox(height: 5)
+                  ? widget.isMe
+                      ? SizedBox()
+                      : SizedBox(height: 5)
                   : SizedBox(),
               widget.isReply
                   ? Container(
@@ -132,17 +134,24 @@ class _ChatBubbleState extends State<ChatBubble> {
                               alignment: Alignment.centerLeft,
                             ),
                             SizedBox(height: 2),
-                            Container(
-                              child: Text(
-                                widget.replyText,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 10,
-                                ),
-                                maxLines: 2,
-                              ),
-                              alignment: Alignment.centerLeft,
-                            ),
+                            //TODO: Image reply to render an image
+                            widget.type == 'text'
+                                ? Container(
+                                    child: Text(
+                                      widget.replyText,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 10,
+                                      ),
+                                      maxLines: 2,
+                                    ),
+                                    alignment: Alignment.centerLeft,
+                                  )
+                                : ClipRRect(
+                                borderRadius: BorderRadius.circular(16),
+                                child: CachedImage(widget.message,
+                                    height: 250, width: 200, fit: BoxFit.cover),
+                              )
                           ],
                         ),
                       ),
@@ -173,9 +182,7 @@ class _ChatBubbleState extends State<ChatBubble> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(16),
                                 child: CachedImage(widget.message,
-                                    height: 250,
-                                    width: 200,
-                                    fit: BoxFit.cover),
+                                    height: 250, width: 200, fit: BoxFit.cover),
                               )))),
               SimpleUrlPreview(
                 url: widget.urls.isNotEmpty ? widget.urls : '',
