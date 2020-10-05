@@ -14,12 +14,11 @@ class StartUpView extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
         backgroundColor: Colors.white,
         body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              FlareActor('assets/flare/loading.flr', animation: 'Alarm')
-            ],
-          ),
+          child: Container(
+            height: 300,
+            width: 300,
+            child: FlareActor('assets/flare/loading.flr', animation: 'Alarm')
+          )
         ),
       ),
     );
