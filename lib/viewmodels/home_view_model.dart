@@ -48,7 +48,11 @@ class HomeViewModel extends BaseModel {
      await _firestoreService.sharePost(postId, userId);
     setBusy(false);
   }
-
+  Future view(postId, userId) async {
+    setBusy(true);
+     await _firestoreService.addView(postId, userId);
+    setBusy(false);
+  }
   Future deletePost(int index) async {
     var dialogResponse = await _dialogService.showConfirmationDialog(
       title: 'Are you sure?',

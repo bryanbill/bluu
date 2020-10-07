@@ -13,6 +13,7 @@ class Post {
   final List shares;
   final List reposts;
   final List urls;
+  final List views;
 
   Post({
     @required this.userId,
@@ -25,6 +26,7 @@ class Post {
     this.likes,
     this.shares,
     this.reposts,
+    this.views,
     this.urls,
   });
 
@@ -39,6 +41,7 @@ class Post {
       'likes': likes,
       'shares': shares,
       'reposts': reposts,
+      'views': views,
       'urls': urls
     };
   }
@@ -57,6 +60,7 @@ class Post {
         likes: map['likes'],
         shares: map['shares'],
         reposts: map['reposts'],
+        views: map['views'],
         urls: map['urls']);
   }
 }

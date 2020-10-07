@@ -98,7 +98,8 @@ class PostWidget extends StatelessWidget {
                           shares: shares,
                           likes: likes,
                           desc: desc,
-                        ));
+                        )).then((value) =>
+                            model.view(postId, model.currentUser.uid));
                       },
                       boxFit: BoxFit.cover,
                       images: listOfImages,
@@ -142,9 +143,20 @@ class PostWidget extends StatelessWidget {
                               : Colors.grey[300],
                           iconSize: 24.0,
                           onPressed: () {
-                            return model.uploadImages(
-                                model.currentUser.uid,desc, listOfImages,
-                                time, [], likes, shares, repost, urls, 0);
+                            return model
+                                .uploadImages(
+                                    model.currentUser.uid,
+                                    desc,
+                                    listOfImages,
+                                    time,
+                                    [],
+                                    likes,
+                                    shares,
+                                    repost,
+                                    urls,
+                                    0)
+                                .then((value) =>
+                                    model.share(postId, model.currentUser.uid));
                           },
                         ),
                         Text(shares.length.toString())
@@ -158,7 +170,9 @@ class PostWidget extends StatelessWidget {
                               ? Colors.green[400]
                               : Colors.grey[300],
                           iconSize: 24.0,
-                          onPressed: () {},
+                          onPressed: () {
+                            return Get.defaultDialog(title: 'Viewed by:');
+                          },
                         ),
                         Text(repost.length.toString())
                       ],

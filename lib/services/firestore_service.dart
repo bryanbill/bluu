@@ -221,6 +221,16 @@ class FirestoreService {
     }
   }
 
+  Future addView(postId, userId) async{
+    try {
+      await _postsCollectionReference.document(postId).setData({
+        'views': FieldValue.arrayUnion([userId])
+      }, merge: true);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   Future unlikePost(postId, userId) async {
     try {
       await _postsCollectionReference.document(postId).setData({
