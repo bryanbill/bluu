@@ -8,6 +8,7 @@ import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_url_preview/simple_url_preview.dart';
+import 'package:bluu/pages/chatscreens/widgets/cached_image.dart';
 
 const duration = Duration(milliseconds: 3000);
 
@@ -20,7 +21,7 @@ class PostWidget extends StatelessWidget {
   final String uid;
   final time;
   final List urls;
-  final List shares;
+  final List shares; 
   final List likes;
   final List repost;
   final postId;
@@ -49,23 +50,18 @@ class PostWidget extends StatelessWidget {
               children: <Widget>[
                 ListTile(
                   leading: Container(
-                    alignment: Alignment.centerLeft,
-                    width: 50,
-                    height: 50,
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        user.profilePhoto ?? '',
-                      ),
-                      radius: 25,
-                    ),
-                  ),
+                      alignment: Alignment.centerLeft,
+                      width: 50,
+                      height: 50,
+                      child: CachedImage(user.profilePhoto,
+                          isRound: true, radius: 25)),
                   contentPadding: EdgeInsets.all(0),
                   title: Row(
                     textBaseline: TextBaseline.alphabetic,
                     crossAxisAlignment: CrossAxisAlignment.baseline,
                     children: [
                       Text(
-                        user.name ?? "Smith Joe",
+                        user.name ?? '',
                         textAlign: TextAlign.left,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -81,7 +77,7 @@ class PostWidget extends StatelessWidget {
                   ),
                 ),
                 ListTile(
-                  title: Text(desc ?? "CourseMate"),
+                  title: Text(desc ?? ""),
                 ),
                 SimpleUrlPreview(
                   onTap: () => Get.to(WeViewPage(url: urls[0])),
@@ -109,7 +105,7 @@ class PostWidget extends StatelessWidget {
                       autoplay: false,
                       showIndicator: listOfImages.length > 1 ? true : false,
                       indicatorBgPadding: 5.0,
-                      dotPosition: DotPosition.bottomCenter,
+                      dotPosition: DotPosition.topRight,
                       animationCurve: Curves.easeIn,
                       animationDuration: Duration(milliseconds: 2000)),
                 ),
@@ -165,7 +161,7 @@ class PostWidget extends StatelessWidget {
               ],
             );
           } else {
-            return Center(child: Text("Not a valid post"));
+            return SizedBox();
           }
         });
   }

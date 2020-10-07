@@ -74,6 +74,21 @@ class _UploadImagesState extends State<UploadImages> {
         viewModelBuilder: () => HomeViewModel(),
         // onModelReady: (model) => model.handleStartUpLogic(),
         builder: (context, model, child) => Scaffold(
+              floatingActionButton: FloatingActionButton(
+                onPressed: () {
+                  setState(() {
+                    images = null;
+                    try {
+                      widget.page.animateTo(0,
+                          duration: Duration(seconds: 1),
+                          curve: Curves.easeOut);
+                    } catch (e) {
+                      print("error from page: ${e.toString()}");
+                    }
+                  });
+                },
+                child: Icon(Icons.cancel_outlined, color: Colors.redAccent)
+              ),
               body: Stack(
                 children: <Widget>[
                   Container(
@@ -267,10 +282,10 @@ class _UploadImagesState extends State<UploadImages> {
     List friends = await getFriends();
     List urls = urlLink(desc);
     for (var imageFile in images) {
-      _cloudService.postImage(imageFile).then((downloadUrl) {
+      _cloudService.postImage(imageFile).then((downloadUrl) async {
         imageUrls.add(downloadUrl.toString());
         if (imageUrls.length == images.length) {
-          model
+          await model
               .uploadImages(
                   model.currentUser.uid,
                   desc,
