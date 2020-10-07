@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_url_preview/simple_url_preview.dart';
 import 'package:bluu/pages/chatscreens/widgets/cached_image.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 const duration = Duration(milliseconds: 3000);
 
 class PostWidget extends StatelessWidget {
@@ -148,7 +148,7 @@ class PostWidget extends StatelessWidget {
                                     model.currentUser.uid,
                                     desc,
                                     listOfImages,
-                                    time,
+                                    Timestamp.now(),
                                     [],
                                     likes,
                                     shares,
