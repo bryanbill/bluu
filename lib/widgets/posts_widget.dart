@@ -21,7 +21,7 @@ class PostWidget extends StatelessWidget {
   final String uid;
   final time;
   final List urls;
-  final List shares; 
+  final List shares;
   final List likes;
   final List repost;
   final postId;
@@ -136,10 +136,16 @@ class PostWidget extends StatelessWidget {
                     Column(
                       children: [
                         IconButton(
-                          icon: Icon(Icons.room),
-                          color: Colors.grey[300],
+                          icon: Icon(Icons.add_to_photos_outlined),
+                          color: shares.contains(model.currentUser.uid)
+                              ? Colors.blueGrey
+                              : Colors.grey[300],
                           iconSize: 24.0,
-                          onPressed: () {},
+                          onPressed: () {
+                            return model.uploadImages(
+                                model.currentUser.uid,desc, listOfImages,
+                                time, [], likes, shares, repost, urls, 0);
+                          },
                         ),
                         Text(shares.length.toString())
                       ],
@@ -147,8 +153,10 @@ class PostWidget extends StatelessWidget {
                     Column(
                       children: [
                         IconButton(
-                          icon: Icon(Icons.explore),
-                          color: Colors.grey[300],
+                          icon: Icon(Icons.read_more_sharp),
+                          color: repost.contains(model.currentUser.uid)
+                              ? Colors.green[400]
+                              : Colors.grey[300],
                           iconSize: 24.0,
                           onPressed: () {},
                         ),

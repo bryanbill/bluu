@@ -87,9 +87,9 @@ class _PostsState extends State<Posts> with AutomaticKeepAliveClientMixin {
                       padding: EdgeInsets.only(top: 0),
                       itemCount: model.posts.length,
                       itemBuilder: (context, index) {
-                        if (model.posts.length > index)
-                          Get.snackbar("Post", "New posts available",
-                              colorText: Colors.white);
+                        // if (model.posts.length > index)
+                        //   Get.snackbar("Post", "New posts available",
+                        //       colorText: Colors.white);
 
                         _listOfImages = [];
                         for (int i = 0;

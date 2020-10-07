@@ -271,7 +271,6 @@ class _UserProfileState extends State<UserProfile> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                SizedBox(height: 60),
                 CircleAvatar(
                   backgroundImage: NetworkImage(user.profilePhoto ??
                       "https://images.unsplash.com/photo-1599477167833-c0215a3df921?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"),
@@ -290,7 +289,7 @@ class _UserProfileState extends State<UserProfile> {
                   user.status ?? "..",
                   style: TextStyle(),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 10),
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
@@ -318,7 +317,7 @@ class _UserProfileState extends State<UserProfile> {
                     ),
                   ],
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: 10),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 50),
                   child: Row(
@@ -330,29 +329,7 @@ class _UserProfileState extends State<UserProfile> {
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
-
-                // GridView.builder(
-                //   shrinkWrap: true,
-                //   physics: NeverScrollableScrollPhysics(),
-                //   primary: false,
-                //   padding: EdgeInsets.all(5),
-                //   itemCount: 15,
-                //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                //     crossAxisCount: 3,
-                //     childAspectRatio: 200 / 200,
-                //   ),
-                //   itemBuilder: (BuildContext context, int index) {
-                //     return Padding(
-                //       padding: EdgeInsets.all(5.0),
-                //       child: Image.asset(
-                //         "assets/images/${random.nextInt(6)}.jpg",
-                //         fit: BoxFit.cover,
-                //       ),
-                //     );
-                //   },
-                // ),
-
+                SizedBox(height: 10),
                 Expanded(
                   child: StaggeredGridView.count(
                     crossAxisCount: 2,

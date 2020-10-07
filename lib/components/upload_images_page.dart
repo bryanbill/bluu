@@ -74,20 +74,19 @@ class _UploadImagesState extends State<UploadImages> {
         viewModelBuilder: () => HomeViewModel(),
         // onModelReady: (model) => model.handleStartUpLogic(),
         builder: (context, model, child) => Scaffold(
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  setState(() {
-                    images = null;
+              floatingActionButton: IconButton(
+                 onPressed: () {
                     try {
-                      widget.page.animateTo(0,
-                          duration: Duration(seconds: 1),
-                          curve: Curves.easeOut);
+                      widget.page
+                          .animateTo(0,
+                              duration: Duration(seconds: 1),
+                              curve: Curves.easeOut)
+                          .then((value) => images = null);
                     } catch (e) {
                       print("error from page: ${e.toString()}");
                     }
-                  });
-                },
-                child: Icon(Icons.cancel_outlined, color: Colors.redAccent)
+                  },
+                  icon: Icon(Icons.close_outlined, size: 30.0,)
               ),
               body: Stack(
                 children: <Widget>[

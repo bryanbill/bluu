@@ -36,9 +36,16 @@ class HomeViewModel extends BaseModel {
     await _firestoreService.likePost(postId, userId);
     setBusy(false);
   }
+
   Future unlikePost(postId, userId) async {
     setBusy(true);
     await _firestoreService.unlikePost(postId, userId);
+    setBusy(false);
+  }
+
+  Future share(postId, userId) async {
+    setBusy(true);
+     await _firestoreService.sharePost(postId, userId);
     setBusy(false);
   }
 
@@ -98,4 +105,3 @@ class HomeViewModel extends BaseModel {
 
   void requestMoreData() => _firestoreService.requestMoreData();
 }
-

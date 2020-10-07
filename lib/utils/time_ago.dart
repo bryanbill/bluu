@@ -8,7 +8,7 @@ String timeAgo(Timestamp time) {
   ///
   ///return the time span(difference) in between
   //NOTE:Span is the time difference
-  
+
   Duration span = DateTime.now().difference(rawTime);
 
   ///converted time ago value
@@ -49,5 +49,7 @@ String timeAgo(Timestamp time) {
   ///return converted time value
   ///{[conTime ?? '']}
   ///if the convertime value is ull, return an empty string
+
+  print("The time: "+conTime);
   return conTime ?? '';
 }
