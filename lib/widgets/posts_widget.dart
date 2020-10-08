@@ -10,6 +10,8 @@ import 'package:get/get.dart';
 import 'package:simple_url_preview/simple_url_preview.dart';
 import 'package:bluu/pages/chatscreens/widgets/cached_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:bluu/widgets/image_card.dart';
+
 const duration = Duration(milliseconds: 3000);
 
 class PostWidget extends StatelessWidget {
@@ -25,11 +27,15 @@ class PostWidget extends StatelessWidget {
   final List likes;
   final List repost;
   final postId;
+  final int type;
+  final List views;
   PostWidget(
       {Key key,
       this.listOfImages,
       this.postId,
       this.model,
+      this.type,
+      this.views,
       this.desc,
       this.uid,
       this.urls,
@@ -48,6 +54,16 @@ class PostWidget extends StatelessWidget {
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
+                type == 4
+                    ? Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text('${user.name ?? ''} shared a post',
+                            style: TextStyle(
+                                fontSize: 9.0,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold)),
+                      )
+                    : SizedBox(),
                 ListTile(
                   leading: Container(
                       alignment: Alignment.centerLeft,
@@ -90,26 +106,37 @@ class PostWidget extends StatelessWidget {
                   height: 300,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                  child: Carousel(
-                      onImageTap: (int index) {
-                        return Get.to(ViewImages(
-                          list: listOfImages,
-                          reposts: repost,
-                          shares: shares,
-                          likes: likes,
-                          desc: desc,
-                        )).then((value) =>
-                            model.view(postId, model.currentUser.uid));
-                      },
-                      boxFit: BoxFit.cover,
-                      images: listOfImages,
-                      autoplay: false,
-                      showIndicator: listOfImages.length > 1 ? true : false,
-                      indicatorBgPadding: 5.0,
-                      dotPosition: DotPosition.topRight,
-                      animationCurve: Curves.easeIn,
-                      animationDuration: Duration(milliseconds: 2000)),
+                  child: GestureDetector(
+                      onTap: () => Get.to(ViewImages(
+                            list: listOfImages,
+                            reposts: views,
+                            shares: shares,
+                            likes: likes,
+                            desc: desc,
+                          )).then((value) =>
+                              model.view(postId, model.currentUser.uid)),
+                      child: ImageCard(images: listOfImages)),
                 ),
+                //   child: Carousel(
+                //       onImageTap: (int index) {
+                //         return Get.to(ViewImages(
+                //           list: listOfImages,
+                //           reposts: views,
+                //           shares: shares,
+                //           likes: likes,
+                //           desc: desc,
+                //         )).then((value) =>
+                //             model.view(postId, model.currentUser.uid));
+                //       },
+                //       boxFit: BoxFit.cover,
+                //       images: listOfImages,
+                //       autoplay: false,
+                //       showIndicator: listOfImages.length > 1 ? true : false,
+                //       indicatorBgPadding: 5.0,
+                //       dotPosition: DotPosition.topRight,
+                //       animationCurve: Curves.easeIn,
+                //       animationDuration: Duration(milliseconds: 2000)),
+                // ),
                 SizedBox(
                   height: 10,
                 ),
@@ -154,7 +181,7 @@ class PostWidget extends StatelessWidget {
                                     shares,
                                     repost,
                                     urls,
-                                    0)
+                                    4)
                                 .then((value) =>
                                     model.share(postId, model.currentUser.uid));
                           },
@@ -162,21 +189,23 @@ class PostWidget extends StatelessWidget {
                         Text(shares.length.toString())
                       ],
                     ),
-                    Column(
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.read_more_sharp),
-                          color: repost.contains(model.currentUser.uid)
-                              ? Colors.green[400]
-                              : Colors.grey[300],
-                          iconSize: 24.0,
-                          onPressed: () {
-                            return Get.defaultDialog(title: 'Viewed by:');
-                          },
-                        ),
-                        Text(repost.length.toString())
-                      ],
-                    ),
+                    views != null
+                        ? Column(
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.read_more_sharp),
+                                color: views.contains(model.currentUser.uid)
+                                    ? Colors.green[400]
+                                    : Colors.grey[300],
+                                iconSize: 24.0,
+                                onPressed: () {
+                                  return Get.defaultDialog(title: 'Viewed by:');
+                                },
+                              ),
+                              Text(views.length.toString())
+                            ],
+                          )
+                        : SizedBox(),
                   ],
                 ),
                 SizedBox(height: 10),

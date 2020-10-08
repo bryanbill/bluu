@@ -109,6 +109,8 @@ class _PostsState extends State<Posts> with AutomaticKeepAliveClientMixin {
                             likes: model.posts[index].likes,
                             shares: model.posts[index].shares,
                             time: time,
+                            views: model.posts[index].views,
+                            type: model.posts[index].type,
                             repost: model.posts[index].reposts,
                             urls: model.posts[index].urls);
                       },
