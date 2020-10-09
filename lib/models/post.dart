@@ -11,13 +11,14 @@ class Post {
   final int type;
   final List likes;
   final List shares;
-  final List reposts;
   final List urls;
   final List views;
+  final String repostBy;
 
   Post({
     @required this.userId,
     @required this.desc,
+    this.repostBy,
     this.documentId,
     this.imageUrl,
     this.time,
@@ -25,7 +26,6 @@ class Post {
     this.type,
     this.likes,
     this.shares,
-    this.reposts,
     this.views,
     this.urls,
   });
@@ -35,12 +35,13 @@ class Post {
       'userId': userId,
       'desc': desc,
       'imageUrl': imageUrl,
+      'repostBy':repostBy,
       'time': time,
       'friends': friend,
       'type': type,
       'likes': likes,
       'shares': shares,
-      'reposts': reposts,
+      
       'views': views,
       'urls': urls
     };
@@ -52,6 +53,7 @@ class Post {
     return Post(
         desc: map['desc'],
         imageUrl: map['imageUrl'],
+        repostBy: map['repostBy'],
         userId: map['userId'],
         documentId: documentId,
         time: map['time'],
@@ -59,7 +61,6 @@ class Post {
         type: map['type'],
         likes: map['likes'],
         shares: map['shares'],
-        reposts: map['reposts'],
         views: map['views'],
         urls: map['urls']);
   }

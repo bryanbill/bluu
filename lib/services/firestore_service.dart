@@ -119,6 +119,37 @@ class FirestoreService {
     }
   }
 
+  Future repost(
+      {userId,
+      time,
+      desc,
+      friends,
+      likes,
+      shares,
+      views,
+      urls,
+      repostBy,
+      imageUrls,
+      type}) async {
+    try {
+      await _postsCollectionReference.add({
+        'userId': userId,
+        'repostBy':repostBy,
+        'desc': desc,
+        'imageUrl': imageUrls,
+        'friends': [],
+        'time':time,
+        'type': type,
+        'likes': likes,
+        'shares': shares,
+        'views': views,
+        "urls": urls
+      });
+    } catch (e) {
+      print("Error from repost: ${e.toString()}");
+    }
+  }
+
   Future getPostsOnceOff() async {
     try {
       var postDocumentSnapshot =
@@ -211,7 +242,7 @@ class FirestoreService {
     }
   }
 
-   Future sharePost(postId, userId) async {
+  Future sharePost(postId, userId) async {
     try {
       await _postsCollectionReference.document(postId).setData({
         'shares': FieldValue.arrayUnion([userId])
@@ -221,7 +252,7 @@ class FirestoreService {
     }
   }
 
-  Future addView(postId, userId) async{
+  Future addView(postId, userId) async {
     try {
       await _postsCollectionReference.document(postId).setData({
         'views': FieldValue.arrayUnion([userId])

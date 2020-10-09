@@ -5,6 +5,7 @@ import 'package:bluu/services/firestore_service.dart';
 import 'package:bluu/utils/locator.dart';
 import 'package:bluu/viewmodels/home_view_model.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:simple_url_preview/simple_url_preview.dart';
@@ -16,10 +17,10 @@ const duration = Duration(milliseconds: 3000);
 
 class PostWidget extends StatelessWidget {
   final HomeViewModel model;
-  final List<NetworkImage> listOfImages;
+  final List listOfImages;
   final FirestoreService _firestoreService = locator<FirestoreService>();
   final String desc;
-
+  final String repostBy;
   final String uid;
   final time;
   final List urls;
@@ -34,6 +35,7 @@ class PostWidget extends StatelessWidget {
       this.listOfImages,
       this.postId,
       this.model,
+      this.repostBy,
       this.type,
       this.views,
       this.desc,
@@ -55,14 +57,23 @@ class PostWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 type == 4
-                    ? Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text('${user.name ?? ''} shared a post',
-                            style: TextStyle(
-                                fontSize: 9.0,
-                                fontStyle: FontStyle.italic,
-                                fontWeight: FontWeight.bold)),
-                      )
+                    ? FutureBuilder<User>(
+                        future: _firestoreService.getUserDetailsById(uid),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            User reposter = snapshot.data;
+                            return Container(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                  '${reposter.name ?? ''} shared a post',
+                                  style: TextStyle(
+                                      fontSize: 9.0,
+                                      fontStyle: FontStyle.italic,
+                                      fontWeight: FontWeight.bold)),
+                            );
+                          }
+                          return SizedBox();
+                        })
                     : SizedBox(),
                 ListTile(
                   leading: Container(
@@ -89,19 +100,19 @@ class PostWidget extends StatelessWidget {
                   subtitle: Text(time ?? "2 am"),
                   trailing: IconButton(
                     icon: Icon(Icons.more_vert),
-                    onPressed: () {},
+                    onPressed: () => Get.defaultDialog(title: 'Post Analytics'),
                   ),
                 ),
                 ListTile(
                   title: Text(desc ?? ""),
                 ),
-                SimpleUrlPreview(
-                  onTap: () => Get.to(WeViewPage(url: urls[0])),
-                  url: urls.length > 0 ? urls[0] : '',
-                  textColor: Theme.of(context).brightness == Brightness.dark
-                      ? Colors.white
-                      : Colors.black,
-                ),
+                // SimpleUrlPreview(
+                //   onTap: () => Get.to(WeViewPage(url: urls[0])),
+                //   url: urls.length > 0 ? urls[0] : '',
+                //   textColor: Theme.of(context).brightness == Brightness.dark
+                //       ? Colors.white
+                //       : Colors.black,
+                // ),
                 Container(
                   height: 300,
                   decoration: BoxDecoration(
@@ -117,26 +128,7 @@ class PostWidget extends StatelessWidget {
                               model.view(postId, model.currentUser.uid)),
                       child: ImageCard(images: listOfImages)),
                 ),
-                //   child: Carousel(
-                //       onImageTap: (int index) {
-                //         return Get.to(ViewImages(
-                //           list: listOfImages,
-                //           reposts: views,
-                //           shares: shares,
-                //           likes: likes,
-                //           desc: desc,
-                //         )).then((value) =>
-                //             model.view(postId, model.currentUser.uid));
-                //       },
-                //       boxFit: BoxFit.cover,
-                //       images: listOfImages,
-                //       autoplay: false,
-                //       showIndicator: listOfImages.length > 1 ? true : false,
-                //       indicatorBgPadding: 5.0,
-                //       dotPosition: DotPosition.topRight,
-                //       animationCurve: Curves.easeIn,
-                //       animationDuration: Duration(milliseconds: 2000)),
-                // ),
+
                 SizedBox(
                   height: 10,
                 ),
@@ -146,7 +138,15 @@ class PostWidget extends StatelessWidget {
                     Column(
                       children: [
                         IconButton(
-                          icon: Icon(Icons.favorite_border),
+                          icon:  likes.contains(model.currentUser.uid)
+                              ?  FlareActor(
+                                'assets/flare/like.flr',
+                                animation: 'like',
+                              ): FlareActor(
+                                'assets/flare/like.flr',
+                                animation: 'unlike',
+                              ),
+                          //icon: Icon(Icons.favorite_border),
                           color: likes.contains(model.currentUser.uid)
                               ? Colors.red
                               : Colors.grey[300],
@@ -169,19 +169,21 @@ class PostWidget extends StatelessWidget {
                               ? Colors.blueGrey
                               : Colors.grey[300],
                           iconSize: 24.0,
-                          onPressed: () {
-                            return model
-                                .uploadImages(
-                                    model.currentUser.uid,
+                          onPressed: () async {
+                            List friends = await model.getFriends(model.currentUser.uid);
+                            return await model
+                                .repost(
+                                    uid,
                                     desc,
                                     listOfImages,
                                     Timestamp.now(),
-                                    [],
+                                    friends,
                                     likes,
                                     shares,
-                                    repost,
+                                    views,
                                     urls,
-                                    4)
+                                    4,
+                                    model.currentUser.uid)
                                 .then((value) =>
                                     model.share(postId, model.currentUser.uid));
                           },

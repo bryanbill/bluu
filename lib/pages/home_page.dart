@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:bluu/utils/time_ago.dart';
 import 'callscreens/pickup/pickup_layout.dart';
-import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -65,7 +64,7 @@ class Posts extends StatefulWidget {
 }
 
 class _PostsState extends State<Posts> with AutomaticKeepAliveClientMixin {
-  List<NetworkImage> _listOfImages = <NetworkImage>[];
+  List _listOfImages = [];
 
   @override
   bool get wantKeepAlive => true;
@@ -82,6 +81,11 @@ class _PostsState extends State<Posts> with AutomaticKeepAliveClientMixin {
                 backgroundColor: Theme.of(context).canvasColor,
                 title: Text("Community"),
               ),
+              floatingActionButton: model.busy
+                  ? Container(
+                      height: 30.0,
+                      decoration: BoxDecoration(shape: BoxShape.circle))
+                  : SizedBox(),
               body: model.posts != null
                   ? ListView.builder(
                       padding: EdgeInsets.only(top: 0),
@@ -95,8 +99,7 @@ class _PostsState extends State<Posts> with AutomaticKeepAliveClientMixin {
                         for (int i = 0;
                             i < model.posts[index].imageUrl.length;
                             i++) {
-                          _listOfImages.add(
-                              NetworkImage(model.posts[index].imageUrl[i]));
+                          _listOfImages.add(model.posts[index].imageUrl[i]);
                         }
                         String time = timeAgo(model.posts[index].time);
 
@@ -111,7 +114,7 @@ class _PostsState extends State<Posts> with AutomaticKeepAliveClientMixin {
                             time: time,
                             views: model.posts[index].views,
                             type: model.posts[index].type,
-                            repost: model.posts[index].reposts,
+                            repostBy: model.posts[index].repostBy,
                             urls: model.posts[index].urls);
                       },
                     )

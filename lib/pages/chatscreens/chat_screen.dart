@@ -9,6 +9,7 @@ import 'package:bluu/utils/locator.dart';
 import 'package:bluu/utils/url_extractor.dart';
 import 'package:bluu/widgets/chat_bubble.dart';
 import 'package:bluu/widgets/chatappbar.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:full_screen_image/full_screen_image.dart';
 import 'package:http/http.dart' as http;
 import 'package:bluu/configs/firebase_configs.dart';
@@ -226,20 +227,33 @@ class _ChatScreenState extends State<ChatScreen> {
             )
           ],
         ),
-        body: Column(
-          children: <Widget>[
-            Flexible(
-              child: messageList(),
+        body: Stack(
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height,
+              child: Theme.of(context).brightness == Brightness.dark
+                  ? FlareActor('assets/flare/cosmos.flr', animation: 'Untitled')
+                  : FlareActor('assets/flare/penguin.flr',
+                      animation: 'music_walk'),
             ),
-            _imageUploadProvider.getViewState == ViewState.LOADING
-                ? Container(
-                    alignment: Alignment.centerRight,
-                    margin: EdgeInsets.only(right: 15),
-                    child: CircularProgressIndicator(),
-                  )
-                : Container(),
-            reply ? chatControlsReply(replyMessage) : chatControlsNormal(),
-            showEmojiPicker ? Container(child: emojiContainer()) : Container(),
+            Column(
+              children: <Widget>[
+                Flexible(
+                  child: messageList(),
+                ),
+                _imageUploadProvider.getViewState == ViewState.LOADING
+                    ? Container(
+                        alignment: Alignment.centerRight,
+                        margin: EdgeInsets.only(right: 15),
+                        child: CircularProgressIndicator(),
+                      )
+                    : Container(),
+                reply ? chatControlsReply(replyMessage) : chatControlsNormal(),
+                showEmojiPicker
+                    ? Container(child: emojiContainer())
+                    : Container(),
+              ],
+            ),
           ],
         ),
       ),
@@ -315,7 +329,9 @@ class _ChatScreenState extends State<ChatScreen> {
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 15),
         child: Container(
-          alignment: _message.senderId == _currentUserId ? Alignment.centerRight : Alignment.centerLeft,
+            alignment: _message.senderId == _currentUserId
+                ? Alignment.centerRight
+                : Alignment.centerLeft,
             child: _message.type != MESSAGE_TYPE_IMAGE
                 ? ChatBubble(
                     isGroup: false,
@@ -847,9 +863,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       },
                       decoration: InputDecoration(
                           hintText: "Type a message",
-                          hintStyle: TextStyle(
-                            color: Colors.grey[800]
-                          ),
+                          hintStyle: TextStyle(color: Colors.grey[800]),
                           border: OutlineInputBorder(
                               borderRadius: const BorderRadius.all(
                                 const Radius.circular(50.0),

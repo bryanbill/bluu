@@ -45,14 +45,16 @@ class HomeViewModel extends BaseModel {
 
   Future share(postId, userId) async {
     setBusy(true);
-     await _firestoreService.sharePost(postId, userId);
+    await _firestoreService.sharePost(postId, userId);
     setBusy(false);
   }
+
   Future view(postId, userId) async {
     setBusy(true);
-     await _firestoreService.addView(postId, userId);
+    await _firestoreService.addView(postId, userId);
     setBusy(false);
   }
+
   Future deletePost(int index) async {
     var dialogResponse = await _dialogService.showConfirmationDialog(
       title: 'Are you sure?',
@@ -80,6 +82,51 @@ class HomeViewModel extends BaseModel {
         arguments: _posts[index]);
   }
 
+  Future repost(
+      String userId,
+      String desc,
+      List imageUrl,
+      Timestamp time,
+      List friends,
+      List likes,
+      List shares,
+      List views,
+      List urls,
+      int type, 
+      String repostBy,
+      ) async {
+    setBusy(true);
+    try {
+      await _firestoreService.repost(
+          userId: userId,
+          desc: desc,
+          friends: friends,
+          imageUrls: imageUrl,
+          time: time,
+          likes: likes,
+          views: views,
+          shares: shares,
+          urls: urls,
+          repostBy: repostBy,
+          type: type).whenComplete(() => setBusy(false));
+    } catch (e) {
+      print('error from uploading: ${e.toString()}');
+    }
+  }
+
+    Future getFriends(uid) async {
+    QuerySnapshot qShot = await Firestore.instance
+        .collection('users')
+        .document(uid)
+        .collection('contacts')
+        .getDocuments();
+    return qShot.documents
+        .map(
+          (doc) => doc.data['contact_id'],
+        )
+        .toList();
+  }
+
   Future uploadImages(
       String userId,
       String desc,
@@ -88,23 +135,27 @@ class HomeViewModel extends BaseModel {
       List friends,
       List likes,
       List shares,
-      List reposts,
+      List views,
       List urls,
       int type) async {
     setBusy(true);
-    await _firestoreService
-        .addPost(Post(
-            userId: userId,
-            desc: desc,
-            imageUrl: imageUrl,
-            time: time,
-            friend: friends,
-            likes: likes,
-            shares: shares,
-            reposts: reposts,
-            urls: urls,
-            type: type))
-        .whenComplete(() => setBusy(false));
+    try {
+      await _firestoreService
+          .addPost(Post(
+              userId: userId,
+              desc: desc,
+              imageUrl: imageUrl,
+              time: time,
+              friend: friends,
+              likes: likes,
+              shares: shares,
+              views: views,
+              urls: urls,
+              type: type))
+          .whenComplete(() => setBusy(false));
+    } catch (e) {
+      print('error from uploading: ${e.toString()}');
+    }
   }
 
   void requestMoreData() => _firestoreService.requestMoreData();

@@ -5,6 +5,7 @@ import 'package:bluu/utils/locator.dart';
 import 'package:bluu/utils/url_extractor.dart';
 import 'package:bluu/viewmodels/home_view_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -74,7 +75,13 @@ class _UploadImagesState extends State<UploadImages> {
         viewModelBuilder: () => HomeViewModel(),
         // onModelReady: (model) => model.handleStartUpLogic(),
         builder: (context, model, child) => Scaffold(
-              floatingActionButton: IconButton(
+              floatingActionButton: model.busy? Container(
+                height:30.0,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle
+                ),
+                child: FlareActor('assets/flare/liquid.flr', animation: 'Indeterminate'),
+              ) :IconButton(
                  onPressed: () {
                     try {
                       widget.page
@@ -264,21 +271,9 @@ class _UploadImagesState extends State<UploadImages> {
         });
   }
 
-  Future getFriends() async {
-    QuerySnapshot qShot = await Firestore.instance
-        .collection('users')
-        .document(_authenticationService.currentUser.uid)
-        .collection('contacts')
-        .getDocuments();
-    return qShot.documents
-        .map(
-          (doc) => doc.data['contact_id'],
-        )
-        .toList();
-  }
-
+ 
   void uploadImages(HomeViewModel model, String desc) async {
-    List friends = await getFriends();
+    List friends = await model.getFriends(model.currentUser.uid);
     List urls = urlLink(desc);
     for (var imageFile in images) {
       _cloudService.postImage(imageFile).then((downloadUrl) async {
@@ -317,7 +312,7 @@ class _UploadImagesState extends State<UploadImages> {
     String error = 'No Error Dectected';
     try {
       resultList = await MultiImagePicker.pickImages(
-        maxImages: 10,
+        maxImages: 2,
         enableCamera: true,
         selectedAssets: images,
         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
@@ -327,7 +322,10 @@ class _UploadImagesState extends State<UploadImages> {
           allViewTitle: "All Photos",
           useDetailsView: false,
           statusBarColor: '#000000',
+          startInAllView: true,
           selectCircleStrokeColor: "#000000",
+          autoCloseOnSelectionLimit: true,
+          selectionLimitReachedText: "Maximum selection limit reached"
         ),
       );
       print(resultList.length);

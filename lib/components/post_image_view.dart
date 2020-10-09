@@ -5,7 +5,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
 class ViewImages extends StatefulWidget {
-  final List<NetworkImage> list;
+  final List list;
   final String desc;
   final List likes;
   final List shares;
@@ -69,7 +69,7 @@ class _ViewImagesState extends State<ViewImages> {
             scrollPhysics: const BouncingScrollPhysics(),
             builder: (BuildContext context, int index) {
               return PhotoViewGalleryPageOptions(
-                imageProvider: widget.list[index],
+                imageProvider: NetworkImage(widget.list[index]),
                 initialScale: PhotoViewComputedScale.contained * 0.8,
                 heroAttributes:
                     PhotoViewHeroAttributes(tag: widget.list[index]),
@@ -138,7 +138,7 @@ class _ViewImagesState extends State<ViewImages> {
                               color: Colors.grey[300],
                               size: 24.0,
                             ),
-                            Text(widget.reposts.length.toString())
+                            Text(widget.reposts != null ?widget.reposts.length.toString():'0' ?? '')
                           ],
                         ),
                       ],
