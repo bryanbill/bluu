@@ -22,18 +22,21 @@ String timeAgo(Timestamp time) {
   } else if (span.inDays < 7) {
     conTime = span.inDays.toString() + 'd ago';
   } else if (span.inDays > 7 && span.inDays < 30) {
-    switch ((span.inDays / 7).round()) {
-      case 1:
+    switch ((span.inDays / 7).round().toString()) {
+      case '1':
         conTime = '1w ago';
         break;
-      case 2:
+      case '2':
         conTime = '2w ago';
         break;
-      case 3:
+      case '3':
         conTime = '3w ago';
         break;
+      case '4':
+        conTime = "4w ago";
+        break;
       default:
-        conTime = '4w ago';
+        conTime = 'error';
     }
   } else {
     ///if the time span is greater than one month
@@ -50,6 +53,6 @@ String timeAgo(Timestamp time) {
   ///{[conTime ?? '']}
   ///if the convertime value is ull, return an empty string
 
-  print("The time: "+conTime);
+  print("The time: " + conTime);
   return conTime ?? '';
 }

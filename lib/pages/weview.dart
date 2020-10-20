@@ -16,7 +16,7 @@ class _WeViewPageState extends State<WeViewPage> {
     return Scaffold(
         appBar: AppBar(
             backgroundColor: Theme.of(context).canvasColor,
-            title: Text("Terms of Service")),
+            title: Text("Preview")),
         body: Column(
           children: [
             Expanded(
