@@ -138,15 +138,7 @@ class PostWidget extends StatelessWidget {
                     Column(
                       children: [
                         IconButton(
-                          icon:  likes.contains(model.currentUser.uid)
-                              ?  FlareActor(
-                                'assets/flare/like.flr',
-                                animation: 'like',
-                              ): FlareActor(
-                                'assets/flare/like.flr',
-                                animation: 'unlike',
-                              ),
-                          //icon: Icon(Icons.favorite_border),
+                          icon: Icon(Icons.favorite_border),
                           color: likes.contains(model.currentUser.uid)
                               ? Colors.red
                               : Colors.grey[300],
@@ -170,7 +162,8 @@ class PostWidget extends StatelessWidget {
                               : Colors.grey[300],
                           iconSize: 24.0,
                           onPressed: () async {
-                            List friends = await model.getFriends(model.currentUser.uid);
+                            List friends =
+                                await model.getFriends(model.currentUser.uid);
                             return await model
                                 .repost(
                                     uid,
