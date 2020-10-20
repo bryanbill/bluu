@@ -63,15 +63,12 @@ class Posts extends StatefulWidget {
   _PostsState createState() => _PostsState();
 }
 
-class _PostsState extends State<Posts> with AutomaticKeepAliveClientMixin {
+class _PostsState extends State<Posts> {
   List _listOfImages = [];
 
   @override
-  bool get wantKeepAlive => true;
-
-  @override
   Widget build(BuildContext context) {
-    super.build(context);
+  
     return ViewModelBuilder<HomeViewModel>.reactive(
         viewModelBuilder: () => HomeViewModel(),
         onModelReady: (model) => model.listenToPosts(),
