@@ -55,11 +55,5 @@ class User {
     this.profilePhoto = mapData['profile_photo'];
     this.firebaseToken = mapData['firebaseToken'];
   }
-  
-  public static void setUser();
-  public static User getUser(
-    return User;
-  );
-  
-  
+   
 }
