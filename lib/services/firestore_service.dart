@@ -256,7 +256,7 @@ class FirestoreService {
     try {
       await _postsCollectionReference.document(postId).setData({
         'views': FieldValue.arrayUnion([userId])
-      }, merge: true);
+      });
     } catch (e) {
       print(e.toString());
     }
