@@ -291,7 +291,7 @@ class FirestoreService {
     var currentRequestIndex = _allPagedResults.length;
 
     pagePostsQuery.snapshots().listen((postsSnapshot) {
-      if (postsSnapshot.documents.isNotEmpty) {
+      if (postsSnapshot.documents.isNotEmpty) { 
         var posts = postsSnapshot.documents
             .map((snapshot) => Post.fromMap(snapshot.data, snapshot.documentID))
             .where((mappedItem) => mappedItem.userId != null)

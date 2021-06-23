@@ -156,7 +156,7 @@ class PostWidget extends StatelessWidget {
                     Column(
                       children: [
                         IconButton(
-                          icon: Icon(Icons.add_to_photos_outlined),
+                          icon: Icon(Icons.add_to_photos),
                           color: shares.contains(model.currentUser.uid)
                               ? Colors.blueGrey
                               : Colors.grey[300],
@@ -188,7 +188,7 @@ class PostWidget extends StatelessWidget {
                         ? Column(
                             children: [
                               IconButton(
-                                icon: Icon(Icons.read_more_sharp),
+                                icon: Icon(Icons.ac_unit),
                                 color: views.contains(model.currentUser.uid)
                                     ? Colors.green[400]
                                     : Colors.grey[300],

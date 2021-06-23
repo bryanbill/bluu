@@ -1,42 +1,78 @@
 {
   "project_info": {
-    "project_number": "48053354393",
-    "firebase_url": "https://bluu-pro.firebaseio.com",
-    "project_id": "bluu-pro",
-    "storage_bucket": "bluu-pro.appspot.com"
+    "project_number": "219324726858",
+    "project_id": "acoustic254-music",
+    "storage_bucket": "acoustic254-music.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:48053354393:android:66f069f8205117fad81d08",
+        "mobilesdk_app_id": "1:219324726858:android:440332489bbb1060b8b0b3",
         "android_client_info": {
-          "package_name": "com.space.bluu"
+          "package_name": "com.bnt.acoustic"
         }
       },
       "oauth_client": [
         {
-          "client_id": "48053354393-eg0m45t1mo6ik0fl43eiro96oektvqqg.apps.googleusercontent.com",
+          "client_id": "219324726858-m1v0uh04kn2m3c4ejdam6f02h3n2j7rv.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.space.bluu",
-            "certificate_hash": "dab7177f373eb66744d0c3d2216dcc9777b90c66"
+            "package_name": "com.bnt.acoustic",
+            "certificate_hash": "904776d7b0e85315f6c1885373f81e3a8c1e96a6"
           }
         },
         {
-          "client_id": "48053354393-0j212n33ta9fgeprfubaucjasedqp9s4.apps.googleusercontent.com",
+          "client_id": "219324726858-9fim33bb8481cnu89v8i01phufru3i4r.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCn19qbk5Hx5rqJbS1qXj31vKXgjuKD36M"
+          "current_key": "AIzaSyAg6Fc-cGsDKd5_JIoDOGkvpCe0c7-_Py8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "48053354393-0j212n33ta9fgeprfubaucjasedqp9s4.apps.googleusercontent.com",
+              "client_id": "219324726858-9fim33bb8481cnu89v8i01phufru3i4r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:219324726858:android:fd3fa17f6f7dc7e5b8b0b3",
+        "android_client_info": {
+          "package_name": "com.space.bluu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "219324726858-uklcevft4h82pv5908lha2cvdfl1vp2i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.space.bluu",
+            "certificate_hash": "0440e2c9fd37ba23b3aa2e157baec751d92b5063"
+          }
+        },
+        {
+          "client_id": "219324726858-9fim33bb8481cnu89v8i01phufru3i4r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAg6Fc-cGsDKd5_JIoDOGkvpCe0c7-_Py8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "219324726858-9fim33bb8481cnu89v8i01phufru3i4r.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
