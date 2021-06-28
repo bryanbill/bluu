@@ -124,7 +124,7 @@ class _ViewImagesState extends State<ViewImages> {
                         Column(
                           children: [
                             Icon(
-                              Icons.add_to_photos_outlined,
+                              Icons.add_to_photos,
                               color: Colors.grey[300],
                               size: 24.0,
                             ),
@@ -134,7 +134,7 @@ class _ViewImagesState extends State<ViewImages> {
                         Column(
                           children: [
                             Icon(
-                              Icons.read_more_sharp,
+                              Icons.more_horiz,
                               color: Colors.grey[300],
                               size: 24.0,
                             ),

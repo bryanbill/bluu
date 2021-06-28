@@ -93,7 +93,7 @@ class _UploadImagesState extends State<UploadImages> {
                       print("error from page: ${e.toString()}");
                     }
                   },
-                  icon: Icon(Icons.close_outlined, size: 30.0,)
+                  icon: Icon(Icons.close, size: 30.0,)
               ),
               body: Stack(
                 children: <Widget>[

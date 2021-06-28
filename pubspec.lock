@@ -28,7 +28,11 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.6.1"
+=======
+    version: "2.4.2"
+>>>>>>> df857bdc9b6f24524c4e290c335cc8176dff450e
   audioplayers:
     dependency: "direct main"
     description:
@@ -42,7 +46,25 @@ packages:
       name: boolean_selector
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.1.0"
+=======
+    version: "2.0.0"
+  built_collection:
+    dependency: transitive
+    description:
+      name: built_collection
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.3.2"
+  built_value:
+    dependency: transitive
+    description:
+      name: built_value
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "7.1.0"
+>>>>>>> df857bdc9b6f24524c4e290c335cc8176dff450e
   cached_network_image:
     dependency: "direct main"
     description:
@@ -63,21 +85,33 @@ packages:
       name: characters
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.1.0"
+=======
+    version: "1.0.0"
+>>>>>>> df857bdc9b6f24524c4e290c335cc8176dff450e
   charcode:
     dependency: transitive
     description:
       name: charcode
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.2.0"
+=======
+    version: "1.1.3"
+>>>>>>> df857bdc9b6f24524c4e290c335cc8176dff450e
   clock:
     dependency: transitive
     description:
       name: clock
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.1.0"
+=======
+    version: "1.0.1"
+>>>>>>> df857bdc9b6f24524c4e290c335cc8176dff450e
   cloud_firestore:
     dependency: "direct main"
     description:
@@ -105,7 +139,11 @@ packages:
       name: collection
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.15.0"
+=======
+    version: "1.14.13"
+>>>>>>> df857bdc9b6f24524c4e290c335cc8176dff450e
   connectivity:
     dependency: "direct main"
     description:
@@ -196,7 +234,11 @@ packages:
       name: fake_async
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.2.0"
+=======
+    version: "1.1.0"
+>>>>>>> df857bdc9b6f24524c4e290c335cc8176dff450e
   ffi:
     dependency: transitive
     description:
@@ -309,6 +351,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.6"
+  fixnum:
+    dependency: transitive
+    description:
+      name: fixnum
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.10.11"
   flare_dart:
     dependency: transitive
     description:
@@ -570,7 +619,7 @@ packages:
       name: intl_phone_number_input
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.2+2"
+    version: "0.5.1"
   introduction_screen:
     dependency: "direct main"
     description:
@@ -591,21 +640,29 @@ packages:
       name: libphonenumber
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.1"
   matcher:
     dependency: transitive
     description:
       name: matcher
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.12.10"
+=======
+    version: "0.12.8"
+>>>>>>> df857bdc9b6f24524c4e290c335cc8176dff450e
   meta:
     dependency: transitive
     description:
       name: meta
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.3.0"
+=======
+    version: "1.1.8"
+>>>>>>> df857bdc9b6f24524c4e290c335cc8176dff450e
   multi_image_picker:
     dependency: "direct main"
     description:
@@ -640,7 +697,11 @@ packages:
       name: path
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.8.0"
+=======
+    version: "1.7.0"
+>>>>>>> df857bdc9b6f24524c4e290c335cc8176dff450e
   path_provider:
     dependency: transitive
     description:
@@ -682,7 +743,7 @@ packages:
       name: pedantic
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.9.2"
+    version: "1.9.0"
   permission_handler:
     dependency: "direct main"
     description:
@@ -696,7 +757,7 @@ packages:
       name: petitparser
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.1.0"
+    version: "3.0.4"
   photo_view:
     dependency: "direct main"
     description:
@@ -827,7 +888,11 @@ packages:
       name: source_span
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.8.1"
+=======
+    version: "1.7.0"
+>>>>>>> df857bdc9b6f24524c4e290c335cc8176dff450e
   sqflite:
     dependency: "direct main"
     description:
@@ -848,7 +913,11 @@ packages:
       name: stack_trace
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.10.0"
+=======
+    version: "1.9.5"
+>>>>>>> df857bdc9b6f24524c4e290c335cc8176dff450e
   stacked:
     dependency: "direct main"
     description:
@@ -883,7 +952,11 @@ packages:
       name: stream_channel
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.1.0"
+=======
+    version: "2.0.0"
+>>>>>>> df857bdc9b6f24524c4e290c335cc8176dff450e
   stream_transform:
     dependency: transitive
     description:
@@ -897,7 +970,11 @@ packages:
       name: string_scanner
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.1.0"
+=======
+    version: "1.0.5"
+>>>>>>> df857bdc9b6f24524c4e290c335cc8176dff450e
   string_validator:
     dependency: transitive
     description:
@@ -925,14 +1002,22 @@ packages:
       name: term_glyph
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.2.0"
+=======
+    version: "1.1.0"
+>>>>>>> df857bdc9b6f24524c4e290c335cc8176dff450e
   test_api:
     dependency: transitive
     description:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "0.3.0"
+=======
+    version: "0.2.17"
+>>>>>>> df857bdc9b6f24524c4e290c335cc8176dff450e
   transformer_page_view:
     dependency: "direct main"
     description:
@@ -946,7 +1031,11 @@ packages:
       name: typed_data
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "1.3.0"
+=======
+    version: "1.2.0"
+>>>>>>> df857bdc9b6f24524c4e290c335cc8176dff450e
   url_launcher:
     dependency: "direct main"
     description:
@@ -1002,7 +1091,11 @@ packages:
       name: vector_math
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.1.0"
+=======
+    version: "2.0.8"
+>>>>>>> df857bdc9b6f24524c4e290c335cc8176dff450e
   video_player:
     dependency: "direct main"
     description:
@@ -1051,7 +1144,7 @@ packages:
       name: xdg_directories
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.2"
+    version: "0.1.0"
   xml:
     dependency: transitive
     description:
@@ -1060,5 +1153,10 @@ packages:
     source: hosted
     version: "4.5.1"
 sdks:
+<<<<<<< HEAD
   dart: ">=2.12.0 <3.0.0"
   flutter: ">=1.20.0"
+=======
+  dart: ">=2.9.0 <3.0.0"
+  flutter: ">=1.20.0 <2.0.0"
+>>>>>>> df857bdc9b6f24524c4e290c335cc8176dff450e
